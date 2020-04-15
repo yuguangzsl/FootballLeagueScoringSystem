@@ -1,5 +1,6 @@
 package FootballLeagueScoringSystem.View;
 
+import FootballLeagueScoringSystem.Module.FootballPlayer;
 import javafx.scene.layout.Pane;
 /**
  * 球员射手视图模型
@@ -7,5 +8,11 @@ import javafx.scene.layout.Pane;
  * 显示姓名，所属球队，进球数，排名
  */
 public class PlayerView extends Pane {
-    private String name;
+    private FootballPlayer player;
+    PlayerView(FootballPlayer player){
+        this.player = player;
+    }
+    public void mainPart(){
+
+    }
 }
