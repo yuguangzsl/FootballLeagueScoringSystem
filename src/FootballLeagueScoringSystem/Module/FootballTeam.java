@@ -1,10 +1,11 @@
 package FootballLeagueScoringSystem.Module;
+
 /**
+ * @param :
  * @author QuanHao
  * 球队的抽象模型:
  * 包含参数：名次，胜场数，负场数，进球，失球，积分
- * @param :
- * */
+ */
 public class FootballTeam {
     private int rank;
     private int winNum;

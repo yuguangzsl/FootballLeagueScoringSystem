@@ -1,10 +1,11 @@
 package FootballLeagueScoringSystem.Module;
+
 /**
+ * @param : name,teamName,goalNUm，rank
  * @author QuanHao
  * 球员射手的抽象模型
  * 包含参数：姓名，所属球队，进球数，排名
- * @param : name,teamName,goalNUm，rank
- * */
+ */
 public class FootballPlayer {
     private String name;
     private String teamName;

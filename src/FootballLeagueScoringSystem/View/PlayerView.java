@@ -7,4 +7,5 @@ import javafx.scene.layout.Pane;
  * 显示姓名，所属球队，进球数，排名
  */
 public class PlayerView extends Pane {
+    private String name;
 }
