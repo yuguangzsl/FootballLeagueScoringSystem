@@ -1,6 +1,6 @@
 package FootballLeagueScoringSystem.View;
 
-import cn.edu.ncu.quanhao.FootballLeagueScoringSystem.Module.FootballTeam;
+import FootballLeagueScoringSystem.Module.FootballTeam;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
