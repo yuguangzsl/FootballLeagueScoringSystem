@@ -16,25 +16,23 @@ public class FootballPlayer {
     private String teamName;//所属球队名字
     private int goalNum;//进球数
     private int rank;//排名
+    private String recordFileName;//记录的文件地址
 
     public String getName() {
-        readPlayerInfo();
-        return this.name;
+        return name;
     }
 
     public String getTeamName() {
-        readPlayerInfo();
-        return this.teamName;
+        return teamName;
     }
 
     public int getGoalNum() {
-        readPlayerInfo();
-        return this.goalNum;
+        return goalNum;
     }
 
+
     public int getRank() {
-        readPlayerInfo();
-        return this.rank;
+        return rank;
     }
 
     FootballPlayer(String name, String teamName, int goalNum, int rank) {
@@ -139,7 +137,7 @@ public class FootballPlayer {
                 file.createNewFile();
             }
             FileWriter fileWriter = new FileWriter(this.getRecordFileDirectory() + "/" + this.teamName + "_" + this.name + "GoalInfo.txt", true);
-            fileWriter.write(teamAName + "\n" + teamBName + "\n" + minute + "\n" + second + "\n");
+            fileWriter.write(teamAName+"\n"+teamBName+"\n"+minute+"\n"+second+"\n");
             fileWriter.close();
             System.out.println("GoalRecord write success!");
         } finally {
@@ -160,7 +158,7 @@ public class FootballPlayer {
             String line = bufferedReader.readLine();
             while (line != null) {
                 stringBuffer.append(line);
-                stringBuffer.append("\n");
+                stringBuffer.append(" ");
                 line = bufferedReader.readLine();
             }
             goalInfo = stringBuffer.toString();
