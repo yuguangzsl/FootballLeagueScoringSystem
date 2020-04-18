@@ -50,7 +50,7 @@ public class FootballPlayer {
         this.goalNum = 0;
         this.rank = -1;
         this.mkdir();
-        writePlayerInfo(i);
+        writePlayerInfo(name,teamName,goalNum,rank);
     }
 
     public String getRecordFileDirectory() {
@@ -85,26 +85,6 @@ public class FootballPlayer {
             }
             FileWriter fileWriter = new FileWriter(this.getRecordFileDirectory() + "/" + this.teamName + "_" + this.name + "Info.txt", false);
             fileWriter.write(name + "\n" + teamName + "\n" + goalNum + "\n" + rank + "\n");
-            System.out.println("Record write success!");
-        } finally {
-            return;
-        }
-    }
-
-    public void writePlayerInfo(int i) {
-        /**
-         * 将球员信息写入到文件中
-         * 用于自动设置第i个球员的信息
-         * */
-        try {
-
-            File file = new File(this.getRecordFileDirectory() + "/" + this.teamName + "_" + this.name + "Info.txt");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileWriter fileWriter = new FileWriter(this.getRecordFileDirectory() + "/" + this.teamName + "_" + this.name + "Info.txt", false);
-            fileWriter.write(this.teamName + "_" + i + "\n" + this.teamName + "\n" + 0 + "\n" + -1 + "\n");
-            fileWriter.close();
             System.out.println("Record write success!");
         } finally {
             return;
