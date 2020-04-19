@@ -16,6 +16,7 @@ import javafx.scene.text.TextAlignment;
 
 
 /**
+ * @author QuanHao
  * 球员射手视图模型
  * 仅显示单个射手
  * 显示姓名，所属球队，进球数，排名
@@ -35,6 +36,9 @@ public class PlayerView extends Pane {
     }
 
     private void Generate(FootballPlayer player) {
+        /**
+         * 各个控件之间的坐标采用相近控件的相对坐标
+         * */
         TopButton topButton = new TopButton();//顶部的四个按钮
         //左上一，队名按钮
         this.teamName = new Button();
@@ -42,41 +46,42 @@ public class PlayerView extends Pane {
         teamName.setText(player.getTeamName());
         teamName.setLayoutX(topButton.getNewBaseX());
         teamName.setLayoutY(topButton.getNewBaseY() + 10);
-        teamName.setMinSize(topButton.getButtonWidth() * 1.5 + 40, topButton.getButtonHeight() * 2);
+        teamName.setMinSize(topButton.getButtonWidth() * 2 + topButton.getSpace(), topButton.getButtonHeight() * 2);
         //右上一，排名按钮
         this.rank = new Button();
         rank.setFont(new Font("Microsoft YaHei", 28));
         rank.setText("当前排名：" + player.getRank());
-        rank.setLayoutX(topButton.getNewBaseX() + topButton.getButtonWidth() * 1.5 + 185);
-        rank.setLayoutY(topButton.getNewBaseY() + 10);
-        rank.setMinSize(topButton.getButtonWidth() * 2.25, topButton.getButtonHeight() * 2);
+        rank.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth() + topButton.getSpace());
+        rank.setLayoutY(teamName.getLayoutY());
+        rank.setMinSize(topButton.getButtonWidth() * 2 + topButton.getSpace(), topButton.getButtonHeight() * 2);
         //左下一，头像标签
         Label playerLogo = new Label();
-        Image image = new Image("file:D:\\FootballLeagueScoringSystem\\ModuleTest\\src\\player.png");
+        Image image = new Image(getPic(player.getName()));
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         playerLogo.setGraphic(imageView);
-        playerLogo.setLayoutX(topButton.getNewBaseX());
-        playerLogo.setLayoutY(topButton.getNewBaseY() + 10 + topButton.getButtonHeight() * 2 + 10);
-        playerLogo.setMinSize(topButton.getButtonWidth() * 1.5 + 40, (topButton.getButtonHeight() * 2) * 3.5);
+        playerLogo.setLayoutX(teamName.getLayoutX());
+        playerLogo.setLayoutY(teamName.getLayoutY() + teamName.getMinHeight() + 10);
+        playerLogo.setMinSize(topButton.getButtonWidth() * 1.5 + topButton.getSpace(), (topButton.getButtonHeight() * 2) * 5);
+        playerLogo.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         //中一，球员名字标签
         Label playerName = new Label();
         playerName.setTextAlignment(TextAlignment.CENTER);
-        playerName.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+        playerName.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         playerName.setFont(new Font("Microsoft YaHei", 28));
         playerName.setText(player.getName());
-        playerName.setLayoutX(topButton.getNewBaseX() + topButton.getButtonWidth() * 1.5 + 55);
-        playerName.setLayoutY(topButton.getNewBaseY() + 10 + topButton.getButtonHeight() * 2 + 10);
-        playerName.setMinSize(170, 55);
+        playerName.setLayoutX(playerLogo.getLayoutX() + playerLogo.getMinWidth() + 10);
+        playerName.setLayoutY(playerLogo.getLayoutY());
+        playerName.setMinSize(topButton.getButtonWidth() * 3 / 4, (playerLogo.getMinHeight() - 10) / 2);
         //中二，进球数标签
         Label goalNum = new Label();
         goalNum.setTextAlignment(TextAlignment.CENTER);
-        goalNum.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+        goalNum.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         goalNum.setFont(new Font("Microsoft YaHei", 28));
-        goalNum.setText(String.valueOf(player.getGoalNum()));
-        goalNum.setLayoutX(topButton.getNewBaseX() + topButton.getButtonWidth() * 1.5 + 55);
-        goalNum.setLayoutY(topButton.getNewBaseY() + 10 + topButton.getButtonHeight() * 2 + 75);
-        goalNum.setMinSize(170, 55);
+        goalNum.setText("进球数：\n" + player.getGoalNum());
+        goalNum.setLayoutX(playerName.getLayoutX());
+        goalNum.setLayoutY(playerName.getLayoutY() + playerName.getMinHeight() + 10);
+        goalNum.setMinSize(playerName.getMinWidth(), playerName.getMinHeight());
         //右下，进球详细信息
         ScrollPane scrollPane = new ScrollPane();
         FlowPane container = new FlowPane();
@@ -85,20 +90,26 @@ public class PlayerView extends Pane {
         for (int i = 3; i < Infos.length; i += 4) {
             Label info = new Label();
             info.setFont(new Font("Microsoft YaHei", 28));
-            info.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+            info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
             info.setText(Infos[i - 3] + "VS" + Infos[i - 2] + "\n" + "in" + Infos[i - 1] + ":" + Infos[i]);
             info.setTextAlignment(TextAlignment.CENTER);
             info.setMinSize(500, 120);
             container.getChildren().add(info);
         }
         scrollPane.setContent(container);
-        scrollPane.setLayoutX(topButton.getNewBaseX() + topButton.getButtonWidth() * 1.5 + 250);
-        scrollPane.setLayoutY(topButton.getNewBaseY() + 10 + topButton.getButtonHeight() * 2 + 10);
-        scrollPane.setMaxSize(500, 400);
+        scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
+        scrollPane.setLayoutY(rank.getLayoutY() + rank.getMinHeight() + 10);
+        scrollPane.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - scrollPane.getLayoutX(),
+                playerLogo.getMinHeight());
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,
                 topButton.todaySchedule, topButton.schedule,
                 this.teamName, this.rank, playerLogo, playerName, goalNum, scrollPane);
+    }
+
+    public String getPic(String name) {
+        return "file:./GameData/Pic/" + name + ".png";
     }
 }

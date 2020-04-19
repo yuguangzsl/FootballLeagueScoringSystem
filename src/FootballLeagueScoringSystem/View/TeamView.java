@@ -7,8 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
@@ -41,64 +44,74 @@ public class TeamView extends Pane {
         teamName.setText(thisTeam.getTeamName());
         teamName.setLayoutX(topButton.getNewBaseX());
         teamName.setLayoutY(topButton.getNewBaseY() + 10);
-        teamName.setMinSize(360, 90);
+        teamName.setMinSize(topButton.getButtonWidth() * 2 + topButton.getSpace(),
+                topButton.getButtonHeight() * 2);
+        teamName.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         //中右，按钮：当前排名，当前球队积分
         this.rank = new Button();
         rank.setFont(new Font("Microsoft YaHei", 28));
         rank.setText("当前排名：" + thisTeam.getRank() + ";当前积分：" + thisTeam.getIntegral());
-        rank.setLayoutX(topButton.getNewBaseX() + teamName.getMinWidth() + 80);
-        rank.setLayoutY(topButton.getNewBaseY() + 10);
-        rank.setMinSize(480, 90);
+        rank.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth() + topButton.getSpace());
+        rank.setLayoutY(teamName.getLayoutY());
+        rank.setMinSize(teamName.getMinWidth(), teamName.getMinHeight());
         //下左，标签：球队LOGO
         Label teamLOGO = new Label();
-        Image image = new Image("file:D:\\FootballLeagueScoringSystem\\ModuleTest\\src\\player.png");
+        Image image = new Image(getPic("LOGO"));
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         teamLOGO.setGraphic(imageView);
-        teamLOGO.setLayoutX(topButton.getNewBaseX());
-        teamLOGO.setLayoutY(topButton.getNewBaseY() + teamName.getMinHeight() + 10);
-        teamLOGO.setMinSize(260, 300);
+        teamLOGO.setLayoutX(teamName.getLayoutX());
+        teamLOGO.setLayoutY(teamName.getLayoutY() + teamName.getMinHeight() + 10);
+        teamLOGO.setMinSize(topButton.getButtonWidth() * 1.5 + topButton.getSpace(),
+                (topButton.getButtonHeight() * 2) * 5);
         //下中，滚动面板：球员列表
         ScrollPane playersSP = new ScrollPane();
         FlowPane playerC = new FlowPane();
+        playersSP.setLayoutX(teamLOGO.getLayoutX()+teamLOGO.getMinWidth()+10);
+        playersSP.setLayoutY(teamLOGO.getLayoutY());
+        playersSP.setMaxSize(topButton.getButtonWidth(), teamLOGO.getMinHeight());
+        playersSP.setMinHeight(topButton.getButtonHeight()*5);
+        playersSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        playerC.setMaxWidth(topButton.getButtonWidth());
         for (int i = 0; i < thisTeam.getPlayers().length; i++) {
             Button player = new Button();
-            player.setFont(new Font("Microsoft YaHei", 28));
+            player.setFont(new Font("Microsoft YaHei", 24));
             player.setText(thisTeam.getPlayers()[i].getName());
             player.setTextAlignment(TextAlignment.CENTER);
-            player.setMinSize(180, 50);
+            player.setMinSize(topButton.getButtonWidth(), topButton.getButtonHeight());
             playerC.getChildren().add(player);
         }
         playersSP.setContent(playerC);
-        playersSP.setLayoutX(topButton.getNewBaseX() + teamLOGO.getMinWidth()+ 100);
-        playersSP.setLayoutY(topButton.getNewBaseY() + teamName.getMinHeight() + 10);
-        playersSP.setMaxSize(180, 300);
-        playersSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         //下右，滚动面板：赛事列表
         ScrollPane gameSP = new ScrollPane();
         FlowPane gameC = new FlowPane();
+        gameSP.setLayoutX(playersSP.getLayoutX()+playersSP.getMaxWidth()+10);
+        gameSP.setLayoutY(playersSP.getLayoutY());
+        gameSP.setMaxSize(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX(),
+                teamLOGO.getMinHeight());
+        gameSP.setMinHeight(topButton.getButtonHeight()*15/2);
+        gameSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        gameC.setMaxWidth(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX());
         String gameInfo = thisTeam.readGameRecord();
         String[] Infos = gameInfo.split(" ");
-        for (int i = 2; i < Infos.length; i+=3) {
+        for (int i = 2; i < Infos.length; i += 3) {
             Button game = new Button();
             game.setFont(new Font("Microsoft YaHei", 28));
-            game.setText(Infos[i-2]+"VS"+Infos[i-1]+"\n"+Infos[i-2]+Infos[i]);
-            game.setTextAlignment(TextAlignment.CENTER);
-            game.setMinSize(200, 60);
+            game.setText(Infos[i - 2] + "VS" + Infos[i - 1] + "\n" + Infos[i - 2] + Infos[i]);
+            game.setMinSize(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX(),
+                    topButton.getButtonHeight()*1.5);
             gameC.getChildren().add(game);
         }
         gameSP.setContent(gameC);
-        gameSP.setLayoutX(playersSP.getLayoutX()+playersSP.getMinWidth()+200);
-        gameSP.setLayoutY(playersSP.getLayoutY());
-        gameSP.setMaxSize(200, 300);
-        gameSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-
         //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,
                 topButton.todaySchedule, topButton.schedule,
                 teamName, rank, teamLOGO,
-                playersSP,gameSP);
+                playersSP, gameSP);
+    }
 
+    public String getPic(String name) {
+        return "file:./GameData/Pic/" + name + ".png";
     }
 }

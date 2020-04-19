@@ -2,7 +2,10 @@ package FootballLeagueScoringSystem.View;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-
+/**
+ * @author QuanHao
+ * 顶部的四个按钮，事件后期补上
+ * */
 public class TopButton {
     public Button teamRank;
     public Button playerRank;
@@ -73,4 +76,5 @@ public class TopButton {
     public double getButtonHeight(){
         return 40;
     }
+    public double getSpace(){return 40;}
 }
