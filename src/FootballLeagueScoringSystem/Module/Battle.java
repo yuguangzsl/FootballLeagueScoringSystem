@@ -3,39 +3,39 @@ package FootballLeagueScoringSystem.Module;
 import java.sql.Timestamp;
 
 public class Battle implements Comparable<Battle>{
-    private Timestamp battletime ;  //对战时间
+    private Timestamp battleTime;  //对战时间
     private String teamA;
     private String teamB;
-    private String battleside;      //比赛场地
-    private String battleresult;    //比赛结果，1表示A胜，0表示平局，-1表示A负
-    private String battlescore;     //比赛比分
+    private String battleSide;      //比赛场地
+    private String battleResult;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+    private String battleScore;     //比赛比分
 
     /**
      * @author :long
      * 比赛还没开始之前的构造函数
      */
-    public Battle(String teamA,String teamB,Timestamp battletime,String battleside){
+    public Battle(String teamA, String teamB, Timestamp battleTime, String battleSide){
         this.teamA=teamA;
         this.teamB=teamB;
-        this.battletime=battletime;
-        this.battleside=battleside;
+        this.battleTime = battleTime;
+        this.battleSide = battleSide;
     }
 
     /**
      * @author :long
      * 比赛结束后的构造函数
      */
-    public Battle(String teamA,String teamB,Timestamp battletime,String battleside,String battleresult,String battlescore){
+    public Battle(String teamA, String teamB, Timestamp battleTime, String battleSide, String battleResult, String battleScore){
         this.teamA=teamA;
         this.teamB=teamB;
-        this.battletime=battletime;
-        this.battleside=battleside;
-        this.battleresult=battleresult;
-        this.battlescore=battlescore;
+        this.battleTime = battleTime;
+        this.battleSide = battleSide;
+        this.battleResult = battleResult;
+        this.battleScore = battleScore;
     }
 
-    public Timestamp getBattletime() {
-        return battletime;
+    public Timestamp getBattleTime() {
+        return battleTime;
     }
 
     public String getTeamA() {
@@ -46,32 +46,32 @@ public class Battle implements Comparable<Battle>{
         return teamB;
     }
 
-    public String getBattleside() {
-        return battleside;
+    public String getBattleSide() {
+        return battleSide;
     }
 
-    public String getBattleresult() {
-        return battleresult;
+    public String getBattleResult() {
+        return battleResult;
     }
 
-    public String getBattlescore() {
-        return battlescore;
+    public String getBattleScore() {
+        return battleScore;
     }
 
     @Override
     public String toString() {
         return "Battle{" +
-                "battletime=" + battletime +
+                "battleTime=" + battleTime +
                 ", teamA='" + teamA + '\'' +
                 ", teamB='" + teamB + '\'' +
-                ", battleside='" + battleside + '\'' +
-                ", battleresult='" + battleresult + '\'' +
-                ", battlescore='" + battlescore + '\'' +
+                ", battleSide='" + battleSide + '\'' +
+                ", battleResult='" + battleResult + '\'' +
+                ", battleScore='" + battleScore + '\'' +
                 '}';
     }
 
     @Override
     public int compareTo(Battle o) {
-        return o.battletime.compareTo(this.battletime);
+        return o.battleTime.compareTo(this.battleTime);
     }
 }

@@ -28,22 +28,22 @@ public class PlayerSql {
             String sql = "select * from footballplayer";
             ResultSet rs = statement.executeQuery(sql);
 
-            String playername = null;
-            String playerphoto = null;
-            String teamname = null;
+            String playerName = null;
+            String playerPhoto = null;
+            String teamName = null;
             String foul = null;
-            int playerscore = 0;
+            int playerScore = 0;
             int i=0;
             while (rs.next()){
-                playername = rs.getString("playername");
-                teamname = rs.getString("playerteam");
-                playerscore = rs.getInt("playerscore");
-                this.players[i]=new Player(playername,teamname,playerscore);
+                playerName = rs.getString("playerName");
+                teamName = rs.getString("playerteam");
+                playerScore = rs.getInt("playerScore");
+                this.players[i]=new Player(playerName,teamName,playerScore);
                 i++;
             }
             Arrays.sort(this.players);
             for(i=0;i<players.length;i++){
-                sql = "update footballplayer set playerrank=" +(i+1)+ " where " + "playername=\""+players[i].getName()+"\"";
+                sql = "update footballplayer set playerRank=" +(i+1)+ " where " + "playerName=\""+players[i].getName()+"\"";
                 statement.executeUpdate(sql);
             }
             System.out.println("Player Sort Succeeded");
@@ -68,19 +68,19 @@ public class PlayerSql {
             String sql = "select * from footballplayer";
             ResultSet rs = statement.executeQuery(sql);
 
-            String playername = null;
-            String playerphoto = null;
-            String teamname = null;
+            String playerName = null;
+            String playerPhoto = null;
+            String teamName = null;
             String foul = null;
-            int playerscore = 0;
+            int playerScore = 0;
             int rank = 0;
             int i=0;
             while (rs.next()){
-                playername = rs.getString("playername");
-                teamname = rs.getString("playerteam");
-                playerscore = rs.getInt("playerscore");
+                playerName = rs.getString("playerName");
+                teamName = rs.getString("playerteam");
+                playerScore = rs.getInt("playerScore");
                 rank = rs.getInt("playerrank");
-                this.players[i]=new Player(playername,teamname,playerscore,rank);
+                this.players[i]=new Player(playerName,teamName,playerScore,rank);
                 System.out.println(players[i].toString());
                 i++;
             }

@@ -26,23 +26,23 @@ public class BattleSql {
             Date todaydate = new Date();    //今天的日期
             SimpleDateFormat ft2 = new SimpleDateFormat("yyyy-MM-dd");
             String date = ft2.format(todaydate);
-            String sql = "select * from battledetail where DATE_FORMAT(battletime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
+            String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
 
-            Timestamp battletime ;  //对战时间
+            Timestamp battleTime ;  //对战时间
             String teamA = null;
             String teamB = null;
-            String battleside = null;      //比赛场地
-            String battleresult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
-            String battlescore = null;     //比赛比分
+            String battleSide = null;      //比赛场地
+            String battleResult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+            String battleScore = null;     //比赛比分
             int i=0;
             while (rs.next()){
-                battletime = rs.getTimestamp("battletime");
-                teamA = rs.getString("teamone");
-                teamB = rs.getString("teamtwo");
-                battleside = rs.getString("battleside");
-                this.battles[i]=new Battle(teamA,teamB,battletime,battleside);
+                battleTime = rs.getTimestamp("battleTime");
+                teamA = rs.getString("teamA");
+                teamB = rs.getString("teamB");
+                battleSide = rs.getString("battleSide");
+                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide);
                 System.out.println(battles[i].toString());
                 i++;
             }
@@ -69,26 +69,26 @@ public class BattleSql {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            Date todaydate = new Date();    //今天的日期
+            Date todayDate = new Date();    //今天的日期
             SimpleDateFormat ft2 = new SimpleDateFormat("yyyy-MM-dd");
-            String date = ft2.format(todaydate);
+            String date = ft2.format(todayDate);
             String sql = "select * from battledetail ";
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
 
-            Timestamp battletime ;  //对战时间
+            Timestamp battleTime ;  //对战时间
             String teamA = null;
             String teamB = null;
-            String battleside = null;      //比赛场地
-            String battleresult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
-            String battlescore = null;     //比赛比分
+            String battleSide = null;      //比赛场地
+            String battleResult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+            String battleScore = null;     //比赛比分
             int i=0;
             while (rs.next()){
-                battletime = rs.getTimestamp("battletime");
-                teamA = rs.getString("teamone");
-                teamB = rs.getString("teamtwo");
-                battleside = rs.getString("battleside");
-                this.battles[i]=new Battle(teamA,teamB,battletime,battleside);
+                battleTime = rs.getTimestamp("battleTime");
+                teamA = rs.getString("teamA");
+                teamB = rs.getString("teamB");
+                battleSide = rs.getString("battleSide");
+                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide);
                 System.out.println(battles[i].toString());
                 i++;
             }
