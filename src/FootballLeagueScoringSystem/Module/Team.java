@@ -1,44 +1,44 @@
 package FootballLeagueScoringSystem.Module;
 
 public class Team implements Comparable<Team> {
-    private int teamscore;
-    private int teamrank;
-    private String teamname;
+    private int teamScore;
+    private int teamRank;
+    private String teamName;
 
-    public Team(String teamname, int teamscore){
-        this.teamname=teamname;
-        this.teamscore=teamscore;
-        this.teamrank=0;
+    public Team(String teamName, int teamScore){
+        this.teamName = teamName;
+        this.teamScore = teamScore;
+        this.teamRank =0;
     }
-    public Team(String teamname, int teamscore,int teamrank){
-        this.teamname=teamname;
-        this.teamscore=teamscore;
-        this.teamrank=teamrank;
-    }
-
-    public int getTeamscore() {
-        return teamscore;
+    public Team(String teamName, int teamScore, int teamRank){
+        this.teamName = teamName;
+        this.teamScore = teamScore;
+        this.teamRank = teamRank;
     }
 
-    public int getTeamrank() {
-        return teamrank;
+    public int getTeamScore() {
+        return teamScore;
     }
 
-    public String getTeamname() {
-        return teamname;
+    public int getTeamRank() {
+        return teamRank;
+    }
+
+    public String getTeamName() {
+        return teamName;
     }
 
     @Override
     public String toString() {
         return "Team{" +
-                "teamscore=" + teamscore +
-                ", teamrank=" + teamrank +
-                ", teamname='" + teamname + '\'' +
+                "teamScore=" + teamScore +
+                ", teamRank=" + teamRank +
+                ", teamName='" + teamName + '\'' +
                 '}';
     }
 
     @Override
     public int compareTo(Team o) {
-        return o.teamscore-this.teamscore;
+        return o.teamScore -this.teamScore;
     }
 }

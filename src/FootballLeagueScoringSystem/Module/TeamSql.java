@@ -26,22 +26,22 @@ public class TeamSql {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            String sql = "select teamname,teamscore from footballteam";
+            String sql = "select teamName,teamScore from footballteam";
             ResultSet rs = statement.executeQuery(sql);
 
-            String teamname = null;
-            int teamscore = 0;
+            String teamName = null;
+            int teamScore = 0;
             int i=0;
             while (rs.next()){
 
-                teamname = rs.getString("teamname");
-                teamscore = rs.getInt("teamscore");
-                this.teams[i]=new Team(teamname,teamscore);
+                teamName = rs.getString("teamName");
+                teamScore = rs.getInt("teamScore");
+                this.teams[i]=new Team(teamName,teamScore);
                 i++;
             }
             Arrays.sort(this.teams);
             for(i=0;i<teams.length;i++){
-                sql = "update footballteam set teamrank=" +(i+1)+ " where " + "teamname=\""+teams[i].getTeamname()+"\"";
+                sql = "update footballteam set teamRank=" +(i+1)+ " where " + "teamName=\""+teams[i].getTeamName()+"\"";
                 statement.executeUpdate(sql);
                 //System.out.println(teams[i].toString());
             }
@@ -67,17 +67,17 @@ public class TeamSql {
             String sql = "select * from footballteam";
             ResultSet rs = statement.executeQuery(sql);
 
-            String teamname = null;
-            int teamscore = 0;
-            int teamrank = 0;
+            String teamName = null;
+            int teamScore = 0;
+            int teamRank = 0;
             int i =0;
             while (rs.next()){
 
-                teamname = rs.getString("teamname");
-                teamscore = rs.getInt("teamscore");
-                teamrank = rs.getInt("teamrank");
-                System.out.println(teamname+teamscore+teamrank);
-                this.teams[i]=new Team(teamname,teamscore,teamrank);
+                teamName = rs.getString("teamName");
+                teamScore = rs.getInt("teamScore");
+                teamRank = rs.getInt("teamRank");
+                System.out.println(teamName+teamScore+teamRank);
+                this.teams[i]=new Team(teamName,teamScore,teamRank);
                 i++;
 
             }

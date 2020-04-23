@@ -3,27 +3,27 @@ package FootballLeagueScoringSystem.Module;
 public class Player implements Comparable<Player> {
     private String name;
     private String photo_address;
-    private String teamname;
+    private String teamName;
     private String foul;    //违规信息
     private int score;
     private int rank;
 
-    public Player(String name,String teamname,int score){
+    public Player(String name, String teamName, int score){
         this.name=name;
-        this.teamname=teamname;
+        this.teamName = teamName;
         this.score=score;
     }
 
-    public Player(String name,String teamname,int score,int rank){
+    public Player(String name, String teamName, int score, int rank){
         this.name=name;
-        this.teamname=teamname;
+        this.teamName = teamName;
         this.score=score;
         this.rank=rank;
     }
 
-    public Player(String name,String teamname,String foul,int score){
+    public Player(String name, String teamName, String foul, int score){
         this.name=name;
-        this.teamname=teamname;
+        this.teamName = teamName;
         this.foul=foul;
         this.score=score;
     }
@@ -35,8 +35,8 @@ public class Player implements Comparable<Player> {
         return photo_address;
     }
 
-    public String getTeamname() {
-        return teamname;
+    public String getTeamName() {
+        return teamName;
     }
 
     public int getScore() {
@@ -57,7 +57,7 @@ public class Player implements Comparable<Player> {
         return "Player{" +
                 "name='" + name + '\'' +
                 ", photo_address='" + photo_address + '\'' +
-                ", teamname='" + teamname + '\'' +
+                ", teamName='" + teamName + '\'' +
                 ", foul='" + foul + '\'' +
                 ", score=" + score +
                 ", rank=" + rank +
