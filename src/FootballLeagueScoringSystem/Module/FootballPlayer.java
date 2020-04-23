@@ -35,7 +35,7 @@ public class FootballPlayer {
         return rank;
     }
 
-    FootballPlayer(String name, String teamName, int goalNum, int rank) {
+    public FootballPlayer(String name, String teamName, int goalNum, int rank) {
         this.name = name;
         this.teamName = teamName;
         this.goalNum = goalNum;
@@ -85,6 +85,7 @@ public class FootballPlayer {
             }
             FileWriter fileWriter = new FileWriter(this.getRecordFileDirectory() + "/" + this.teamName + "_" + this.name + "Info.txt", false);
             fileWriter.write(name + "\n" + teamName + "\n" + goalNum + "\n" + rank + "\n");
+            fileWriter.close();
             System.out.println("Record write success!");
         } finally {
             return;

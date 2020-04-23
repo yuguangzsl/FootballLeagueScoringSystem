@@ -1,11 +1,14 @@
 package FootballLeagueScoringSystem.View;
 
+import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.FootballPlayer;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
@@ -13,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 
 /**
@@ -20,21 +24,29 @@ import javafx.scene.text.TextAlignment;
  * 球员射手视图模型
  * 仅显示单个射手
  * 显示姓名，所属球队，进球数，排名
+ * 部分应该使用Label控件的使用了Button控件仅仅是为了方便让文字居中
  */
 public class PlayerView extends Pane {
+    public Stage stage;
     private FootballPlayer player;
     private ScrollPane scrollPane;
     private Button teamName;
     private Button rank;
-
-    PlayerView(FootballPlayer player) {
+    public PlayerView(FootballPlayer player, Stage stage) {
+        this.stage = stage;
         this.scrollPane = new ScrollPane();
         this.player = player;
         Generate(player);
         this.setMinSize(1200, 600);
         this.setMaxSize(1920, 1080);
     }
-
+    private void getInfo(String playerName){
+        /**
+         * 传入一个球员的名字，然后从数据库中读取到这个球员的信息
+         * 再以此实例化一个球员的个人信息面板
+         * */
+        
+    }
     private void Generate(FootballPlayer player) {
         /**
          * 各个控件之间的坐标采用相近控件的相对坐标
@@ -47,6 +59,14 @@ public class PlayerView extends Pane {
         teamName.setLayoutX(topButton.getNewBaseX());
         teamName.setLayoutY(topButton.getNewBaseY() + 10);
         teamName.setMinSize(topButton.getButtonWidth() * 2 + topButton.getSpace(), topButton.getButtonHeight() * 2);
+        teamName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ViewTrans vt = new ViewTrans();
+                vt.toTeamView(stage,teamName.getText());
+                System.out.println("to player View");
+            }
+        });
         //右上一，排名按钮
         this.rank = new Button();
         rank.setFont(new Font("Microsoft YaHei", 28));
@@ -65,7 +85,7 @@ public class PlayerView extends Pane {
         playerLogo.setMinSize(topButton.getButtonWidth() * 1.5 + topButton.getSpace(), (topButton.getButtonHeight() * 2) * 5);
         playerLogo.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         //中一，球员名字标签
-        Label playerName = new Label();
+        Button playerName = new Button();
         playerName.setTextAlignment(TextAlignment.CENTER);
         playerName.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         playerName.setFont(new Font("Microsoft YaHei", 28));
@@ -74,7 +94,7 @@ public class PlayerView extends Pane {
         playerName.setLayoutY(playerLogo.getLayoutY());
         playerName.setMinSize(topButton.getButtonWidth() * 3 / 4, (playerLogo.getMinHeight() - 10) / 2);
         //中二，进球数标签
-        Label goalNum = new Label();
+        Button goalNum = new Button();
         goalNum.setTextAlignment(TextAlignment.CENTER);
         goalNum.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         goalNum.setFont(new Font("Microsoft YaHei", 28));
@@ -83,12 +103,11 @@ public class PlayerView extends Pane {
         goalNum.setLayoutY(playerName.getLayoutY() + playerName.getMinHeight() + 10);
         goalNum.setMinSize(playerName.getMinWidth(), playerName.getMinHeight());
         //右下，进球详细信息
-        ScrollPane scrollPane = new ScrollPane();
         FlowPane container = new FlowPane();
         String goalInfo = player.readGoalInfo();
         String[] Infos = goalInfo.split(" ");
         for (int i = 3; i < Infos.length; i += 4) {
-            Label info = new Label();
+            Button info = new Button();
             info.setFont(new Font("Microsoft YaHei", 28));
             info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
             info.setText(Infos[i - 3] + "VS" + Infos[i - 2] + "\n" + "in" + Infos[i - 1] + ":" + Infos[i]);
@@ -108,7 +127,6 @@ public class PlayerView extends Pane {
                 topButton.todaySchedule, topButton.schedule,
                 this.teamName, this.rank, playerLogo, playerName, goalNum, scrollPane);
     }
-
     public String getPic(String name) {
         return "file:./GameData/Pic/" + name + ".png";
     }

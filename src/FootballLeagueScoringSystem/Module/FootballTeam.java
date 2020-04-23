@@ -47,7 +47,7 @@ public class FootballTeam {
     /**
      * 构造方法2，用于自动创建球队
      */
-    FootballTeam(String groupName, int i) {
+    public FootballTeam(String groupName, int i) {
         this.groupName = groupName;
         this.teamName = groupName + i;
         //自动生成对应的球员

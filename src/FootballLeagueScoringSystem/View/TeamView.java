@@ -1,12 +1,14 @@
 package FootballLeagueScoringSystem.View;
 
+import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.FootballTeam;
-import javafx.scene.canvas.Canvas;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
@@ -14,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 
 /**
@@ -22,12 +25,12 @@ import javafx.scene.text.TextAlignment;
  * 显示队名，球队logo，进球数，失球数，胜场数，负场数，积分，排名
  */
 public class TeamView extends Pane {
-    private Canvas canvas;
+    public Stage stage;
     private ScrollPane players;//显示球员信息的滚动面板
     private ScrollPane schedule;//显示赛程的滚动面板
     private Button rank;//显示积分的按钮
-
-    TeamView(FootballTeam thisTeam) {
+    public TeamView(FootballTeam thisTeam, Stage stage) {
+        this.stage = stage;
         this.players = new ScrollPane();
         this.schedule = new ScrollPane();
         this.rank = new Button();
@@ -36,10 +39,17 @@ public class TeamView extends Pane {
         this.setMaxSize(1920, 1080);
     }
 
+    private void getInfo(String teamName) {
+        /**
+         * 传入一个球队的名字，然后从数据库中读取到这支球队的信息
+         * 再以此实例化一个球队的信息面板
+         * */
+    }
+
     public void generate(FootballTeam thisTeam) {
         TopButton topButton = new TopButton();//顶部的四个按钮
         //中左，标签：球队名
-        Label teamName = new Label();
+        Button teamName = new Button();
         teamName.setFont(new Font("Microsoft YaHei", 28));
         teamName.setText(thisTeam.getTeamName());
         teamName.setLayoutX(topButton.getNewBaseX());
@@ -65,13 +75,13 @@ public class TeamView extends Pane {
         teamLOGO.setMinSize(topButton.getButtonWidth() * 1.5 + topButton.getSpace(),
                 (topButton.getButtonHeight() * 2) * 5);
         //下中，滚动面板：球员列表
-        ScrollPane playersSP = new ScrollPane();
+
         FlowPane playerC = new FlowPane();
-        playersSP.setLayoutX(teamLOGO.getLayoutX()+teamLOGO.getMinWidth()+10);
-        playersSP.setLayoutY(teamLOGO.getLayoutY());
-        playersSP.setMaxSize(topButton.getButtonWidth(), teamLOGO.getMinHeight());
-        playersSP.setMinHeight(topButton.getButtonHeight()*5);
-        playersSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        this.players.setLayoutX(teamLOGO.getLayoutX() + teamLOGO.getMinWidth() + 10);
+        this.players.setLayoutY(teamLOGO.getLayoutY());
+        this.players.setMaxSize(topButton.getButtonWidth(), teamLOGO.getMinHeight());
+        this.players.setMinHeight(topButton.getButtonHeight() * 5);
+        this.players.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         playerC.setMaxWidth(topButton.getButtonWidth());
         for (int i = 0; i < thisTeam.getPlayers().length; i++) {
             Button player = new Button();
@@ -79,39 +89,47 @@ public class TeamView extends Pane {
             player.setText(thisTeam.getPlayers()[i].getName());
             player.setTextAlignment(TextAlignment.CENTER);
             player.setMinSize(topButton.getButtonWidth(), topButton.getButtonHeight());
+            player.setOnMouseClicked(new EventHandler< MouseEvent>(){
+                @Override
+                public void handle(MouseEvent event) {
+                    ViewTrans vt = new ViewTrans();
+                    vt.toPlayerView(stage,player.getText());
+                   System.out.println("to player View");
+                }
+            });
             playerC.getChildren().add(player);
         }
-        playersSP.setContent(playerC);
+        this.players.setContent(playerC);
         //下右，滚动面板：赛事列表
-        ScrollPane gameSP = new ScrollPane();
         FlowPane gameC = new FlowPane();
-        gameSP.setLayoutX(playersSP.getLayoutX()+playersSP.getMaxWidth()+10);
-        gameSP.setLayoutY(playersSP.getLayoutY());
-        gameSP.setMaxSize(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX(),
+        this.schedule.setLayoutX(this.players.getLayoutX() + this.players.getMaxWidth() + 10);
+        this.schedule.setLayoutY(this.players.getLayoutY());
+        this.schedule.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
                 teamLOGO.getMinHeight());
-        gameSP.setMinHeight(topButton.getButtonHeight()*15/2);
-        gameSP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        gameC.setMaxWidth(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX());
+        this.schedule.setMinHeight(topButton.getButtonHeight() * 15 / 2);
+        this.schedule.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        gameC.setMaxWidth(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX());
         String gameInfo = thisTeam.readGameRecord();
         String[] Infos = gameInfo.split(" ");
         for (int i = 2; i < Infos.length; i += 3) {
             Button game = new Button();
             game.setFont(new Font("Microsoft YaHei", 28));
             game.setText(Infos[i - 2] + "VS" + Infos[i - 1] + "\n" + Infos[i - 2] + Infos[i]);
-            game.setMinSize(rank.getLayoutX()+rank.getMinWidth()-gameSP.getLayoutX(),
-                    topButton.getButtonHeight()*1.5);
+            game.setMinSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
+                    topButton.getButtonHeight() * 1.5);
             gameC.getChildren().add(game);
         }
-        gameSP.setContent(gameC);
+        this.schedule.setContent(gameC);
         //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,
                 topButton.todaySchedule, topButton.schedule,
                 teamName, rank, teamLOGO,
-                playersSP, gameSP);
+                this.players, this.schedule);
     }
 
     public String getPic(String name) {
         return "file:./GameData/Pic/" + name + ".png";
     }
 }
+
