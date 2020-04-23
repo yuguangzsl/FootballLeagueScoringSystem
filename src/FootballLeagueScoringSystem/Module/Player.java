@@ -27,6 +27,16 @@ public class Player implements Comparable<Player> {
         this.foul=foul;
         this.score=score;
     }
+
+    public Player(String name, String teamName,String photo_address,String foul, int score, int rank){
+        this.name=name;
+        this.teamName = teamName;
+        this.score=score;
+        this.rank=rank;
+        this.photo_address = photo_address;
+        this.foul=foul;
+    }
+
     public String getName() {
         return name;
     }
