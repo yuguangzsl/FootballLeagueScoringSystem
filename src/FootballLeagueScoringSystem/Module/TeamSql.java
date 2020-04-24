@@ -1,10 +1,6 @@
 package FootballLeagueScoringSystem.Module;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 
 public class TeamSql {
@@ -70,14 +66,24 @@ public class TeamSql {
             String teamName = null;
             int teamScore = 0;
             int teamRank = 0;
+            int winNum = 0;
+            int loseNum = 0;
+            int drawNum = 0;
+            int goalNum = 0;
+            int goalLostNum = 0;
             int i =0;
             while (rs.next()){
 
                 teamName = rs.getString("teamName");
                 teamScore = rs.getInt("teamScore");
                 teamRank = rs.getInt("teamRank");
-                System.out.println(teamName+teamScore+teamRank);
-                this.teams[i]=new Team(teamName,teamScore,teamRank);
+                winNum = rs.getInt("winNum");
+                loseNum = rs.getInt("loseNum");
+                drawNum = rs.getInt("drawNum");
+                goalNum = rs.getInt("goalNum");
+                goalLostNum = rs.getInt("goalLostNum");
+                this.teams[i]=new Team(teamName,teamScore,teamRank,winNum,loseNum,drawNum,goalNum,goalLostNum);
+                System.out.println(this.teams[i].toString());
                 i++;
 
             }
