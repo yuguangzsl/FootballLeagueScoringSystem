@@ -1,7 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
-import FootballLeagueScoringSystem.Module.FootballPlayer;
+import FootballLeagueScoringSystem.Module.Player;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,11 +28,11 @@ import javafx.stage.Stage;
  */
 public class PlayerView extends Pane {
     public Stage stage;
-    private FootballPlayer player;
+    private Player player;
     private ScrollPane scrollPane;
     private Button teamName;
     private Button rank;
-    public PlayerView(FootballPlayer player, Stage stage) {
+    public PlayerView(Player player, Stage stage) {
         this.stage = stage;
         this.scrollPane = new ScrollPane();
         this.player = player;
@@ -47,11 +47,11 @@ public class PlayerView extends Pane {
          * */
         
     }
-    private void Generate(FootballPlayer player) {
+    private void Generate(Player player) {
         /**
          * 各个控件之间的坐标采用相近控件的相对坐标
          * */
-        TopButton topButton = new TopButton();//顶部的四个按钮
+        TopButton topButton = new TopButton(this.stage);//顶部的四个按钮
         //左上一，队名按钮
         this.teamName = new Button();
         teamName.setFont(new Font("Microsoft YaHei", 28));
@@ -98,29 +98,29 @@ public class PlayerView extends Pane {
         goalNum.setTextAlignment(TextAlignment.CENTER);
         goalNum.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         goalNum.setFont(new Font("Microsoft YaHei", 28));
-        goalNum.setText("进球数：\n" + player.getGoalNum());
+        goalNum.setText("进球数：\n" + player.getScore());
         goalNum.setLayoutX(playerName.getLayoutX());
         goalNum.setLayoutY(playerName.getLayoutY() + playerName.getMinHeight() + 10);
         goalNum.setMinSize(playerName.getMinWidth(), playerName.getMinHeight());
         //右下，进球详细信息
-        FlowPane container = new FlowPane();
-        String goalInfo = player.readGoalInfo();
-        String[] Infos = goalInfo.split(" ");
-        for (int i = 3; i < Infos.length; i += 4) {
-            Button info = new Button();
-            info.setFont(new Font("Microsoft YaHei", 28));
-            info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
-            info.setText(Infos[i - 3] + "VS" + Infos[i - 2] + "\n" + "in" + Infos[i - 1] + ":" + Infos[i]);
-            info.setTextAlignment(TextAlignment.CENTER);
-            info.setMinSize(500, 120);
-            container.getChildren().add(info);
-        }
-        scrollPane.setContent(container);
-        scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
-        scrollPane.setLayoutY(rank.getLayoutY() + rank.getMinHeight() + 10);
-        scrollPane.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - scrollPane.getLayoutX(),
-                playerLogo.getMinHeight());
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+//        FlowPane container = new FlowPane();
+//        String goalInfo = player.readGoalInfo();
+//        String[] Infos = goalInfo.split(" ");
+//        for (int i = 3; i < Infos.length; i += 4) {
+//            Button info = new Button();
+//            info.setFont(new Font("Microsoft YaHei", 28));
+//            info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
+//            info.setText(Infos[i - 3] + "VS" + Infos[i - 2] + "\n" + "in" + Infos[i - 1] + ":" + Infos[i]);
+//            info.setTextAlignment(TextAlignment.CENTER);
+//            info.setMinSize(500, 120);
+//            container.getChildren().add(info);
+//        }
+//        scrollPane.setContent(container);
+//        scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
+//        scrollPane.setLayoutY(rank.getLayoutY() + rank.getMinHeight() + 10);
+//        scrollPane.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - scrollPane.getLayoutX(),
+//                playerLogo.getMinHeight());
+//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,

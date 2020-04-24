@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 public class TeamSql {
     private Team[] teams= new Team[3];//这里的3等全部数据录入后改成64
-
     /**
      * @param :
      * @author : long
@@ -24,22 +23,18 @@ public class TeamSql {
             Statement statement = conn.createStatement();
             String sql = "select teamName,teamScore from footballteam";
             ResultSet rs = statement.executeQuery(sql);
-
             String teamName = null;
             int teamScore = 0;
             int i=0;
             while (rs.next()){
-
                 teamName = rs.getString("teamName");
-                teamScore = rs.getInt("teamScore");
-                this.teams[i]=new Team(teamName,teamScore);
+                this.teams[i]=new Team(teamName);
                 i++;
             }
             Arrays.sort(this.teams);
             for(i=0;i<teams.length;i++){
-                sql = "update footballteam set teamRank=" +(i+1)+ " where " + "teamName=\""+teams[i].getTeamName()+"\"";
+                sql = "update footballteam set teamRank=" +(i+1)+ " where " + "teamName='"+teams[i].getTeamName()+"'";
                 statement.executeUpdate(sql);
-                //System.out.println(teams[i].toString());
             }
             System.out.println("Team Sort Succeeded");
             rs.close();
@@ -48,7 +43,6 @@ public class TeamSql {
             e.printStackTrace();
         }
     }
-
     public Team[] getTeams(){
         Connection conn ;
         String driver = "com.mysql.cj.jdbc.Driver";
@@ -62,7 +56,6 @@ public class TeamSql {
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam";
             ResultSet rs = statement.executeQuery(sql);
-
             String teamName = null;
             int teamScore = 0;
             int teamRank = 0;
@@ -73,7 +66,6 @@ public class TeamSql {
             int goalLostNum = 0;
             int i =0;
             while (rs.next()){
-
                 teamName = rs.getString("teamName");
                 teamScore = rs.getInt("teamScore");
                 teamRank = rs.getInt("teamRank");
@@ -85,11 +77,9 @@ public class TeamSql {
                 this.teams[i]=new Team(teamName,teamScore,teamRank,winNum,loseNum,drawNum,goalNum,goalLostNum);
                 System.out.println(this.teams[i].toString());
                 i++;
-
             }
             rs.close();
             conn.close();
-
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

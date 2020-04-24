@@ -2,6 +2,8 @@ package FootballLeagueScoringSystem.View;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
 /**
  * @author QuanHao
  * 顶部的四个按钮，事件后期补上
@@ -12,7 +14,7 @@ public class TopButton {
     public Button todaySchedule;
     public Button schedule;
 
-    TopButton() {
+    TopButton(Stage stage) {
         /**
          * 顶部的四个按钮
          * */

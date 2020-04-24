@@ -29,7 +29,6 @@ public class BattleSql {
             String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
-
             Timestamp battleTime ;  //对战时间
             String teamA = null;
             String teamB = null;
@@ -92,7 +91,6 @@ public class BattleSql {
                 System.out.println(battles[i].toString());
                 i++;
             }
-
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {

@@ -27,7 +27,6 @@ public class PlayerSql {
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer";
             ResultSet rs = statement.executeQuery(sql);
-
             String playerName = null;
             String playerPhoto = null;
             String teamName = null;
@@ -36,14 +35,13 @@ public class PlayerSql {
             int i=0;
             while (rs.next()){
                 playerName = rs.getString("playerName");
-                teamName = rs.getString("playerteam");
-                playerScore = rs.getInt("playerScore");
-                this.players[i]=new Player(playerName,teamName,playerScore);
+                teamName = rs.getString("playerteamName");
+                this.players[i]=new Player(teamName,playerName);
                 i++;
             }
             Arrays.sort(this.players);
             for(i=0;i<players.length;i++){
-                sql = "update footballplayer set playerRank=" +(i+1)+ " where " + "playerName=\""+players[i].getName()+"\"";
+                sql = "update footballplayer set playerRank=" +(i+1)+ " where " + "playerName='"+players[i].getName()+"'";
                 statement.executeUpdate(sql);
             }
             System.out.println("Player Sort Succeeded");
@@ -67,31 +65,27 @@ public class PlayerSql {
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer";
             ResultSet rs = statement.executeQuery(sql);
-
             String playerName = null;
-            String playerPhoto = null;
             String teamName = null;
-            String foul = null;
-            int playerScore = 0;
-            int rank = 0;
             int i=0;
             while (rs.next()){
                 playerName = rs.getString("playerName");
-                teamName = rs.getString("playerteam");
-                playerScore = rs.getInt("playerScore");
-                rank = rs.getInt("playerrank");
-                this.players[i]=new Player(playerName,teamName,playerScore,rank);
+                teamName = rs.getString("playerteamName");
+                this.players[i]=new Player(teamName,playerName);
                 System.out.println(players[i].toString());
                 i++;
             }
             rs.close();
             conn.close();
-
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return this.players;
-
     }
 
+    public static void main(String[] args) {
+        PlayerSql p = new PlayerSql();
+        p.playerSort();
+        p.players = p.getPlayers();
+    }
 }

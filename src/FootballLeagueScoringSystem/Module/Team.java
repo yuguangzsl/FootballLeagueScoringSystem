@@ -1,37 +1,168 @@
 package FootballLeagueScoringSystem.Module;
 
+import java.sql.*;
+
+/**
+ * @param :teamScore,teamRank,teamName,winNum,loseNum,drawNum,goalNum,goalLostNum
+ * @author:Long
+ */
 public class Team implements Comparable<Team> {
-    private int teamScore;
-    private int teamRank;
-    private String teamName;
+    private String teamName;//球队名字
+    private int teamRank;//球队排名
     private int winNum;     //总赢局数
     private int loseNum;    //总输局数
     private int drawNum;    //总平局数
     private int goalNum;    //总进球数
     private int goalLostNum;//总失球数
+    private int teamScore;//球队积分
+    private Player[] players;//球员列表
 
-    public Team(String teamName, int teamScore){
+    public Team(String teamName, int teamRank, int winNum, int loseNum, int drawNum, int goalNum, int goalLostNum, int teamScore) {
+        /**
+         * 全参数传入，生成一个新的球队对象
+         * */
         this.teamName = teamName;
-        this.teamScore = teamScore;
-        this.teamRank =0;
-    }
-    public Team(String teamName, int teamScore, int teamRank){
-        this.teamName = teamName;
-        this.teamScore = teamScore;
-        this.teamRank = teamRank;
-    }
-
-    public Team(String teamName, int teamScore, int teamRank, int winNum, int loseNum,int drawNum, int goalNum, int goalLostNum){
-        this.teamName = teamName;
-        this.teamScore = teamScore;
         this.teamRank = teamRank;
         this.winNum = winNum;
         this.loseNum = loseNum;
         this.drawNum = drawNum;
         this.goalNum = goalNum;
-        this.goalLostNum =goalLostNum;
+        this.goalLostNum = goalLostNum;
+        this.teamScore = teamScore;
+        this.players = new Player[11];
     }
 
+    public Team(String teamName) {
+        /**@author:Long
+         * 仅传入队名，从数据库中读取数据生成一个team对象
+         * */
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "select * from footballteam where teamName='" + teamName + "'";
+            System.out.println(sql);
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                this.teamName = rs.getString("teamName");
+                this.teamRank = rs.getInt("teamRank");
+                this.winNum = rs.getInt("winNum");
+                this.loseNum = rs.getInt("loseNum");
+                this.drawNum = rs.getInt("drawNum");
+                this.goalNum = rs.getInt("goalNum");
+                this.goalLostNum = rs.getInt("goalLostNum");
+                this.teamScore = rs.getInt("teamScore");
+            }
+            rs.close();
+            conn.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateData() {
+        /**@author:QUANHAO
+         * 将这个对象的更新数据写入数据库
+         * */
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "update footballteam set teamname = '" + this.teamName + "' where teamName='" + teamName + "'";
+            ResultSet rs = statement.executeQuery(sql);
+            sql = "update footballteam set teamrank = '" + this.teamRank + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set winNum = '" + this.winNum + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set loseNum = '" + this.loseNum + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set drawNum = '" + this.drawNum + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set goalNum = '" + this.goalNum + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set goalLostNum = '" + this.goalLostNum + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            sql = "update footballteam set teamscore = '" + this.teamScore + "' where teamName='" + teamName + "'";
+            statement.executeQuery(sql);
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertData() {
+        /**
+         * @author :QUANHAO
+         * 将新生成的对象的数据写入数据库
+         * */
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "INSERT INTO footballteam values ('"
+                    + this.teamName + "',"+
+                    "'"+this.teamRank+"',"+
+                    "'"+this.winNum+"',"+
+                    "'"+this.loseNum+"',"+
+                    "'"+this.drawNum+"',"+
+                    "'"+this.goalNum+"',"+
+                    "'"+this.goalLostNum+"',"+
+                    "'"+this.teamScore+"')";
+            ResultSet rs = statement.executeQuery(sql);
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Player[] getPlayers(){
+        Connection conn ;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver) ;
+            conn = DriverManager.getConnection(url,user,password);
+            if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "select * from footballplayer where playerteamName ='"+this.teamName+"'";
+            ResultSet rs = statement.executeQuery(sql);
+            String playerName = null;
+            int i=0;
+            while (rs.next()){
+                playerName = rs.getString("playerName");
+                this.players[i]=new Player(this.teamName,playerName);
+                System.out.println(players[i].toString());
+                i++;
+            }
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return this.players;
+    }
     public int getWinNum() {
         return winNum;
     }
@@ -64,6 +195,38 @@ public class Team implements Comparable<Team> {
         return teamName;
     }
 
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setTeamRank(int teamRank) {
+        this.teamRank = teamRank;
+    }
+
+    public void setWinNum(int winNum) {
+        this.winNum = winNum;
+    }
+
+    public void setLoseNum(int loseNum) {
+        this.loseNum = loseNum;
+    }
+
+    public void setDrawNum(int drawNum) {
+        this.drawNum = drawNum;
+    }
+
+    public void setGoalNum(int goalNum) {
+        this.goalNum = goalNum;
+    }
+
+    public void setGoalLostNum(int goalLostNum) {
+        this.goalLostNum = goalLostNum;
+    }
+
+    public void setTeamScore(int teamScore) {
+        this.teamScore = teamScore;
+    }
+
     @Override
     public String toString() {
         return "Team{" +
@@ -80,6 +243,6 @@ public class Team implements Comparable<Team> {
 
     @Override
     public int compareTo(Team o) {
-        return o.getTeamScore() -this.getTeamScore();
+        return o.getTeamScore() - this.getTeamScore();
     }
 }
