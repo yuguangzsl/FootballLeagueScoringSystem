@@ -17,7 +17,7 @@ public class TopButton {
     public Button todaySchedule;
     public Button schedule;
 
-   public TopButton() {
+   public TopButton(Stage stage) {
         /**
          * 顶部的四个按钮
          * */

@@ -7,7 +7,7 @@ public class Battle implements Comparable<Battle>{
     private String teamA;
     private String teamB;
     private String battleSide;      //比赛场地
-    private String battleResult;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+    private int battleResult;    //比赛结果，1表示A胜，0表示平局，-1表示A负
     private String battleScore;     //比赛比分
 
     /**
@@ -25,7 +25,7 @@ public class Battle implements Comparable<Battle>{
      * @author :long
      * 比赛结束后的构造函数
      */
-    public Battle(String teamA, String teamB, Timestamp battleTime, String battleSide, String battleResult, String battleScore){
+    public Battle(String teamA, String teamB, Timestamp battleTime, String battleSide, int battleResult, String battleScore){
         this.teamA=teamA;
         this.teamB=teamB;
         this.battleTime = battleTime;
@@ -50,7 +50,7 @@ public class Battle implements Comparable<Battle>{
         return battleSide;
     }
 
-    public String getBattleResult() {
+    public int getBattleResult() {
         return battleResult;
     }
 

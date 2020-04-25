@@ -1,7 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
-import FootballLeagueScoringSystemTest.Module.Battle;
-import FootballLeagueScoringSystemTest.Module.BattleSql;
+import FootballLeagueScoringSystem.Module.Battle;
+import FootballLeagueScoringSystem.Module.BattleSql;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
