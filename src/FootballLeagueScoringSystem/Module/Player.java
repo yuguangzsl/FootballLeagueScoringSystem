@@ -1,15 +1,13 @@
 package FootballLeagueScoringSystem.Module;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @param :name,photo_address,teamName,score,foul,rank
  * @author QuanHao
  * @author Long
  */
-public class Player implements Comparable<Player>{
+public class Player implements Comparable<Player> {
     private String name;//姓名
     private String teamName;//所属球队名
     private String foul;    //违规信息
@@ -111,12 +109,12 @@ public class Player implements Comparable<Player>{
             if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "insert INTO footballplayer values ('"
-                    +this.name+"',"
-                    +"'"+this.photo_address+"',"
-                    +"'"+this.teamName+"',"
-                    +"'"+this.score+"',"
-                    +"'"+this.foul+"',"
-                    +"'"+this.rank+"')";
+                    + this.name + "',"
+                    + "'" + this.photo_address + "',"
+                    + "'" + this.teamName + "',"
+                    + "'" + this.score + "',"
+                    + "'" + this.foul + "',"
+                    + "'" + this.rank + "')";
             ResultSet rs = statement.executeQuery(sql);
 
             rs.close();
@@ -124,6 +122,38 @@ public class Player implements Comparable<Player>{
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getGoalInfo() {
+        /**
+         * @author :QUANHAO
+         * 从数据库中读取该球员的进球信息
+         * */
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        String result = null;
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "select * from goaldetail where playerName = '" + this.name + "'";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                result += rs.getString("playerName")+" ";
+                result += rs.getString("teamA")+" ";
+                result += rs.getString("teamB")+" ";
+                result += rs.getString("time")+" ";
+            }
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     public String getName() {

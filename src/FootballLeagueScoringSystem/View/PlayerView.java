@@ -103,24 +103,24 @@ public class PlayerView extends Pane {
         goalNum.setLayoutY(playerName.getLayoutY() + playerName.getMinHeight() + 10);
         goalNum.setMinSize(playerName.getMinWidth(), playerName.getMinHeight());
         //右下，进球详细信息
-//        FlowPane container = new FlowPane();
-//        String goalInfo = player.readGoalInfo();
-//        String[] Infos = goalInfo.split(" ");
-//        for (int i = 3; i < Infos.length; i += 4) {
-//            Button info = new Button();
-//            info.setFont(new Font("Microsoft YaHei", 28));
-//            info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
-//            info.setText(Infos[i - 3] + "VS" + Infos[i - 2] + "\n" + "in" + Infos[i - 1] + ":" + Infos[i]);
-//            info.setTextAlignment(TextAlignment.CENTER);
-//            info.setMinSize(500, 120);
-//            container.getChildren().add(info);
-//        }
-//        scrollPane.setContent(container);
-//        scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
-//        scrollPane.setLayoutY(rank.getLayoutY() + rank.getMinHeight() + 10);
-//        scrollPane.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - scrollPane.getLayoutX(),
-//                playerLogo.getMinHeight());
-//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        FlowPane container = new FlowPane();
+        String goalInfo = player.getGoalInfo();
+        String[] Infos = goalInfo.split(" ");
+        for (int i = 3; i < Infos.length; i += 4) {
+            Button info = new Button();
+            info.setFont(new Font("Microsoft YaHei", 28));
+            info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
+            info.setText(Infos[i - 2] + "VS" + Infos[i - 1] + "\n" + "in" + Infos[i]);
+            info.setTextAlignment(TextAlignment.CENTER);
+            info.setMinSize(500, 120);
+            container.getChildren().add(info);
+        }
+        scrollPane.setContent(container);
+        scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
+        scrollPane.setLayoutY(rank.getLayoutY() + rank.getMinHeight() + 10);
+        scrollPane.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - scrollPane.getLayoutX(),
+                playerLogo.getMinHeight());
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,

@@ -101,25 +101,25 @@ public class TeamView extends Pane {
         }
         this.players.setContent(playerC);
         //下右，滚动面板：赛事列表
-//        FlowPane gameC = new FlowPane();
-//        this.schedule.setLayoutX(this.players.getLayoutX() + this.players.getMaxWidth() + 10);
-//        this.schedule.setLayoutY(this.players.getLayoutY());
-//        this.schedule.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
-//                teamLOGO.getMinHeight());
-//        this.schedule.setMinHeight(topButton.getButtonHeight() * 15 / 2);
-//        this.schedule.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-//        gameC.setMaxWidth(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX());
-//        String gameInfo = thisTeam.readGameRecord();
-//        String[] Infos = gameInfo.split(" ");
-//        for (int i = 2; i < Infos.length; i += 3) {
-//            Button game = new Button();
-//            game.setFont(new Font("Microsoft YaHei", 28));
-//            game.setText(Infos[i - 2] + "VS" + Infos[i - 1] + "\n" + Infos[i - 2] + Infos[i]);
-//            game.setMinSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
-//                    topButton.getButtonHeight() * 1.5);
-//            gameC.getChildren().add(game);
-//        }
-//        this.schedule.setContent(gameC);
+        FlowPane gameC = new FlowPane();
+        this.schedule.setLayoutX(this.players.getLayoutX() + this.players.getMaxWidth() + 10);
+        this.schedule.setLayoutY(this.players.getLayoutY());
+        this.schedule.setMaxSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
+                teamLOGO.getMinHeight());
+        this.schedule.setMinHeight(topButton.getButtonHeight() * 15 / 2);
+        this.schedule.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        gameC.setMaxWidth(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX());
+        String gameInfo = thisTeam.getGameInfo();
+        String[] Infos = gameInfo.split(" ");
+        for (int i = 4; i < Infos.length; i += 5) {
+            Button game = new Button();
+            game.setFont(new Font("Microsoft YaHei", 28));
+            game.setText(Infos[i - 4] + "VS" + Infos[i - 3] + "in" + Infos[i - 2] +"\n"+ Infos[i]);
+            game.setMinSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
+                    topButton.getButtonHeight() * 1.5);
+            gameC.getChildren().add(game);
+        }
+        this.schedule.setContent(gameC);
         //将所有控件添加到面板
         this.getChildren().addAll(
                 topButton.teamRank, topButton.playerRank,
