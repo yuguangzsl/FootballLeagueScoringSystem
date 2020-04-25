@@ -11,13 +11,13 @@ import java.util.Date;
  * 联赛模型，用于主视图，球队排名界面
  */
 public class League {
-    Player[] players;
-    Team[] teams;
-    Battle[] battles;
+    private Player[] players;
+    private Team[] teams;
+    private Battle[] battles = new Battle[4];
     public void League() {
-        players = new Player[768];
-        teams = new Team[64];
-        battles = new Battle[8192];
+        this.players = new Player[768];
+        this.teams = new Team[64];
+        //this.battles = new Battle[3];
     }
 
     public void playerSort(){
@@ -189,16 +189,18 @@ public class League {
             String teamA = null;
             String teamB = null;
             String battleSide = null;      //比赛场地
-            String battleResult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+            int battleResult = 0;    //比赛结果，1表示A胜，0表示平局，-1表示A负,-2表示未开始
             String battleScore = null;     //比赛比分
             int i=0;
             while (rs.next()){
                 battleTime = rs.getTimestamp("battleTime");
-                teamA = rs.getString("teamA");
-                teamB = rs.getString("teamB");
+                teamA = rs.getString("teamOne");
+                teamB = rs.getString("teamTwo");
                 battleSide = rs.getString("battleSide");
-                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide);
-                System.out.println(battles[i].toString());
+                battleResult = rs.getInt("battleResult");
+                battleScore = rs.getString("battleScore");
+                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                System.out.println(this.battles[i].toString());
                 i++;
             }
 
@@ -223,9 +225,6 @@ public class League {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            java.util.Date todayDate = new Date();    //今天的日期
-            SimpleDateFormat ft2 = new SimpleDateFormat("yyyy-MM-dd");
-            String date = ft2.format(todayDate);
             String sql = "select * from battledetail ";
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
@@ -233,16 +232,18 @@ public class League {
             String teamA = null;
             String teamB = null;
             String battleSide = null;      //比赛场地
-            String battleResult = null;    //比赛结果，1表示A胜，0表示平局，-1表示A负
+            int battleResult = 0;    //比赛结果，1表示A胜，0表示平局，-1表示A负
             String battleScore = null;     //比赛比分
             int i=0;
             while (rs.next()){
-                battleTime = rs.getTimestamp("battleTime");
-                teamA = rs.getString("teamA");
-                teamB = rs.getString("teamB");
+                teamA = rs.getString("teamOne");
+                teamB = rs.getString("teamTwo");
+                battleTime = rs.getTimestamp("battletime");
                 battleSide = rs.getString("battleSide");
-                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide);
-                System.out.println(battles[i].toString());
+                battleResult = rs.getInt("battleResult");
+                battleScore = rs.getString("battleScore");
+                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                System.out.println(this.battles[i].toString());
                 i++;
             }
             rs.close();

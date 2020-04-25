@@ -1,7 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Module.Battle;
-import FootballLeagueScoringSystem.Module.BattleSql;
+import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Team;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 
 public class AllBattleView extends Pane {
     public Stage stage;
-    private BattleSql battleSql;
+    private League league;
     private ScrollPane scrollPane = new ScrollPane();
 
     public ScrollPane getScrollPane() {
@@ -31,11 +31,16 @@ public class AllBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.battleSql = new BattleSql();
-        Battle[] battles = battleSql.getAllBattles();
+        this.league = new League();
+        Battle[] battles = league.getAllBattles();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(270);
         for(int i=0;i<battles.length;i++){
+            try {
+                battles[i].getTeamA();
+            }catch (NullPointerException e){
+                continue;
+            }
             Timestamp battleTime = battles[i].getBattleTime();  //对战时间
             String teamA = battles[i].getTeamA();
             String teamB = battles[i].getTeamB();
@@ -44,7 +49,7 @@ public class AllBattleView extends Pane {
             String battleScore = battles[i].getBattleScore();
             Button topButton = new Button(battleTime.toString()+"\t\t"+battleSide);
             topButton.setMaxWidth(flowPane.getMaxWidth()-3);
-            topButton.setMinWidth(270);
+            topButton.setMinWidth(flowPane.getMaxWidth()-3);
             topButton.setMinHeight(30);
             topButton.setLayoutX(100);
             topButton.setLayoutY(0+i*120);
