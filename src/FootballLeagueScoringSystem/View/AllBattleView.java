@@ -2,13 +2,12 @@ package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Module.Battle;
 import FootballLeagueScoringSystem.Module.League;
-import FootballLeagueScoringSystem.Module.Team;
-import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -17,7 +16,7 @@ import java.sql.Timestamp;
 
 public class AllBattleView extends Pane {
     public Stage stage;
-    private League league;
+    private League battleSql;
     private ScrollPane scrollPane = new ScrollPane();
 
     public ScrollPane getScrollPane() {
@@ -32,8 +31,8 @@ public class AllBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.league = new League();
-        Battle[] battles = league.getAllBattles();
+        this.battleSql = new League();
+        Battle[] battles = battleSql.getAllBattles();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(400);      //设置全部赛程界面大小
         for(int i=0;i<battles.length;i++){

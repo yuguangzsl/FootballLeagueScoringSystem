@@ -15,7 +15,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 
@@ -83,18 +82,16 @@ public class TeamView extends Pane {
         this.players.setMinHeight(topButton.getButtonHeight() * 5);
         this.players.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         playerC.setMaxWidth(topButton.getButtonWidth());
-        for (int i = 0; i < thisTeam.getPlayers().length; i++) {
+        for (int i = 0; thisTeam.getPlayers()[i]!=null; i++) {
             Button player = new Button();
             player.setFont(new Font("Microsoft YaHei", 24));
             player.setText(thisTeam.getPlayers()[i].getName());
-            player.setTextAlignment(TextAlignment.CENTER);
             player.setMinSize(topButton.getButtonWidth(), topButton.getButtonHeight());
             player.setOnMouseClicked(new EventHandler< MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
                     ViewTrans vt = new ViewTrans();
-                    vt.toPlayerView(stage,player.getText());
-                   System.out.println("to player View");
+                    vt.toPlayerView(stage,thisTeam.getTeamName(),player.getText());
                 }
             });
             playerC.getChildren().add(player);

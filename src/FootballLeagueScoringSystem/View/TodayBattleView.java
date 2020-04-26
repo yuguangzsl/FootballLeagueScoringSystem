@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 
 public class TodayBattleView extends Pane {
     public Stage stage;
-    private League league;
+    private League battleSql;
     private ScrollPane scrollPane = new ScrollPane();
 
     public ScrollPane getScrollPane() {
@@ -32,8 +32,8 @@ public class TodayBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.league = new League();
-        Battle[] battles = league.getTodayBattle();
+        this.battleSql = new League();
+        Battle[] battles = battleSql.getTodayBattle();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(400);      //设置今日赛程界面大小
         System.out.println(battles.length);
