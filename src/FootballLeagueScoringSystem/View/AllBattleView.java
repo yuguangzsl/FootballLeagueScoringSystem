@@ -9,6 +9,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.sql.Timestamp;
@@ -33,8 +34,13 @@ public class AllBattleView extends Pane {
         this.battleSql = new League();
         Battle[] battles = battleSql.getAllBattles();
         FlowPane flowPane = new FlowPane();
-        flowPane.setMaxWidth(270);
+        flowPane.setMaxWidth(400);      //设置全部赛程界面大小
         for(int i=0;i<battles.length;i++){
+            try {
+                battles[i].getTeamA();
+            }catch (NullPointerException e){
+                continue;
+            }
             Timestamp battleTime = battles[i].getBattleTime();  //对战时间
             String teamA = battles[i].getTeamA();
             String teamB = battles[i].getTeamB();
@@ -43,7 +49,7 @@ public class AllBattleView extends Pane {
             String battleScore = battles[i].getBattleScore();
             Button topButton = new Button(battleTime.toString()+"\t\t"+battleSide);
             topButton.setMaxWidth(flowPane.getMaxWidth()-3);
-            topButton.setMinWidth(270);
+            topButton.setMinWidth(flowPane.getMaxWidth()-3);
             topButton.setMinHeight(30);
             topButton.setLayoutX(100);
             topButton.setLayoutY(0+i*120);
@@ -55,7 +61,8 @@ public class AllBattleView extends Pane {
             leftButton.setMinHeight(60);
             leftButton.setLayoutX(topButton.getLayoutX());
             leftButton.setLayoutY(topButton.getMinHeight()+i*120);
-            leftButton.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+            leftButton.setFont(new Font("KaiTi",16));
+            leftButton.setBackground(new Background(new BackgroundFill(new Color(1,0,0,0.5),null,null)));
 
             Button centerButton = new Button(battleScore);
             centerButton.setMaxWidth(topButton.getMaxWidth()/3);
@@ -63,8 +70,8 @@ public class AllBattleView extends Pane {
             centerButton.setMinHeight(60);
             centerButton.setLayoutX(leftButton.getLayoutX()+leftButton.getMaxWidth());
             centerButton.setLayoutY(topButton.getMinHeight()+i*120);
+            centerButton.setFont(new Font("LiSu",20));
             centerButton.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
-            centerButton.setText("0:0");
 
             Button rightButton = new Button(teamB);
             rightButton.setMaxWidth(topButton.getMaxWidth()/3);
@@ -72,7 +79,8 @@ public class AllBattleView extends Pane {
             rightButton.setMinHeight(60);
             rightButton.setLayoutX(centerButton.getLayoutX()+centerButton.getMaxWidth());
             rightButton.setLayoutY(topButton.getMinHeight()+i*120);
-            rightButton.setBackground(new Background(new BackgroundFill(Color.BLUE,null,null)));
+            rightButton.setFont(new Font("KaiTi",16));
+            rightButton.setBackground(new Background(new BackgroundFill(new Color(0,0,1,0.5),null,null)));
 
             Button buttomButton = new Button();
             buttomButton.setMaxWidth(topButton.getMaxWidth());

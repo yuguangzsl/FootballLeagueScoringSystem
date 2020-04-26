@@ -2,6 +2,11 @@ package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
 import FootballLeagueScoringSystem.Module.Team;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -130,6 +135,16 @@ public class MainView extends TabPane {
         //射手排行榜
         Tab playerRank = new Tab();
         playerRank.setText("射手排名");
+        //今日赛程
+        TodayBattleView todayBattleView = new TodayBattleView();
+        Tab todayBattle = new Tab("今日赛程",todayBattleView.getScrollPane());
+        //全部赛程
+        AllBattleView allBattleView = new AllBattleView();
+        Tab allBattle = new Tab("全部赛程",allBattleView.getScrollPane());
+
+
+        //battlepane.s
+        this.getTabs().addAll(teamRank,playerRank,todayBattle,allBattle);
         playerRank.setClosable(false);
         playerRank.setStyle(tabStyle);
         //赛程表
