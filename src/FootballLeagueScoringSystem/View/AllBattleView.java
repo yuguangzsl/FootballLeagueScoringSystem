@@ -35,12 +35,7 @@ public class AllBattleView extends Pane {
         Battle[] battles = battleSql.getAllBattles();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(400);      //设置全部赛程界面大小
-        for(int i=0;i<battles.length;i++){
-            try {
-                battles[i].getTeamA();
-            }catch (NullPointerException e){
-                continue;
-            }
+        for(int i=0;battles[i]!=null;i++){
             Timestamp battleTime = battles[i].getBattleTime();  //对战时间
             String teamA = battles[i].getTeamA();
             String teamB = battles[i].getTeamB();

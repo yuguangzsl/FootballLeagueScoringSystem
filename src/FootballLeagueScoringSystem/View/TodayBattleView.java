@@ -24,10 +24,11 @@ public class TodayBattleView extends Pane {
         return scrollPane;
     }
 
-    TodayBattleView(){
+    TodayBattleView() {
         generate();
     }
-    public void generate(){
+
+    public void generate() {
         /**
          * @author :Long
          * 生成所有赛程
@@ -36,14 +37,12 @@ public class TodayBattleView extends Pane {
         Battle[] battles = battleSql.getTodayBattle();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(400);      //设置今日赛程界面大小
-        System.out.println(battles.length);
-        if(battles[0]==null){
-            Label label= new Label("今日无赛程");
-            label.setFont(new Font("Arial", 30));
+        if (battles[0] == null) {
+            Label label = new Label("今日无赛程");
+            label.setFont(new Font("KaiTi", 30));
             flowPane.getChildren().add(label);
-        }
-        else {
-            for (int i = 0;battles[i]!=null; i++) {
+        } else {
+            for (int i = 0; battles[i] != null; i++) {
                 Timestamp battleTime = battles[i].getBattleTime();  //对战时间
                 String teamA = battles[i].getTeamA();
                 String teamB = battles[i].getTeamB();
@@ -52,7 +51,7 @@ public class TodayBattleView extends Pane {
                 String battleScore = battles[i].getBattleScore();
                 Button topButton = new Button(battleTime.toString() + "\t\t" + battleSide);
                 topButton.setMaxWidth(flowPane.getMaxWidth() - 3);
-                topButton.setMinWidth(270);
+                topButton.setMinWidth(flowPane.getMaxWidth() - 3);
                 topButton.setMinHeight(30);
                 topButton.setLayoutX(100);
                 topButton.setLayoutY(0 + i * 120);
@@ -63,8 +62,9 @@ public class TodayBattleView extends Pane {
                 leftButton.setMinWidth(topButton.getMaxWidth() / 3);
                 leftButton.setMinHeight(60);
                 leftButton.setLayoutX(topButton.getLayoutX());
-                leftButton.setFont(new Font("KaiTi",16));
-                leftButton.setBackground(new Background(new BackgroundFill(new Color(1,0,0,0.5),null,null)));
+                leftButton.setLayoutY(topButton.getMinHeight() + i * 120);
+                leftButton.setFont(new Font("KaiTi", 16));
+                leftButton.setBackground(new Background(new BackgroundFill(new Color(1, 0, 0, 0.5), null, null)));
 
                 Button centerButton = new Button(battleScore);
                 centerButton.setMaxWidth(topButton.getMaxWidth() / 3);
@@ -72,7 +72,7 @@ public class TodayBattleView extends Pane {
                 centerButton.setMinHeight(60);
                 centerButton.setLayoutX(leftButton.getLayoutX() + leftButton.getMaxWidth());
                 centerButton.setLayoutY(topButton.getMinHeight() + i * 120);
-                centerButton.setFont(new Font("LiSu",20));
+                centerButton.setFont(new Font("LiSu", 20));
                 centerButton.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
 
                 Button rightButton = new Button(teamB);
@@ -80,8 +80,9 @@ public class TodayBattleView extends Pane {
                 rightButton.setMinWidth(topButton.getMaxWidth() / 3);
                 rightButton.setMinHeight(60);
                 rightButton.setLayoutX(centerButton.getLayoutX() + centerButton.getMaxWidth());
-                rightButton.setFont(new Font("KaiTi",16));
-                rightButton.setBackground(new Background(new BackgroundFill(new Color(0,0,1,0.5),null,null)));
+                rightButton.setLayoutY(topButton.getMinHeight() + i * 120);
+                rightButton.setFont(new Font("KaiTi", 16));
+                rightButton.setBackground(new Background(new BackgroundFill(new Color(0, 0, 1, 0.5), null, null)));
 
                 Button buttomButton = new Button();
                 buttomButton.setMaxWidth(topButton.getMaxWidth());
@@ -97,9 +98,8 @@ public class TodayBattleView extends Pane {
                 flowPane.getChildren().addAll(topButton, leftButton, centerButton, rightButton, buttomButton);
             }
         }
-            this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);    //设置水平滚动条用不出现
-            this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);    //设置垂直滚动条需要时出现
-            this.scrollPane.setContent(flowPane);
-
+        this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);    //设置水平滚动条用不出现
+        this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);    //设置垂直滚动条需要时出现
+        this.scrollPane.setContent(flowPane);
     }
 }

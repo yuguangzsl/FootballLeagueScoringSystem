@@ -14,10 +14,12 @@ public class League {
     Player[] players;
     Team[] teams;
     Battle[] battles;
+    Battle[] todayBattles;
     public League() {
         players = new Player[768];
         teams = new Team[64];
         battles = new Battle[8192];
+        todayBattles = new Battle[50];
         getPlayers();
         getTeams();
         getAllBattles();
@@ -234,8 +236,8 @@ public class League {
                 battleSide = rs.getString("battleSide");
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
-                this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
-                System.out.println(this.battles[i].toString());
+                this.todayBattles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                System.out.println(this.todayBattles[i].toString());
                 i++;
             }
 
@@ -244,7 +246,7 @@ public class League {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return battles;
+        return todayBattles;
     }
     /**
      *查询所有赛程
