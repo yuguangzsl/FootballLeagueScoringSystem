@@ -3,7 +3,6 @@ package FootballLeagueScoringSystem.Module;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * @param : FootballPlayers,FootballTeams,Battles,...
@@ -78,7 +77,7 @@ public class League {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            String sql = "select * from footballplayer";
+            String sql = "select * from footballplayer ORDER BY playerscore DESC";
             ResultSet rs = statement.executeQuery(sql);
             String playerName = null;
             String teamName = null;
