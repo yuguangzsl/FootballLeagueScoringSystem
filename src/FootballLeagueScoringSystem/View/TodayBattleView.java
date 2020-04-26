@@ -1,7 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Module.Battle;
-import FootballLeagueScoringSystem.Module.BattleSql;
+import FootballLeagueScoringSystem.Module.League;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 
 public class TodayBattleView extends Pane {
     public Stage stage;
-    private BattleSql battleSql;
+    private League battleSql;
     private ScrollPane scrollPane = new ScrollPane();
 
     public ScrollPane getScrollPane() {
@@ -32,7 +32,7 @@ public class TodayBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.battleSql = new BattleSql();
+        this.battleSql = new League();
         Battle[] battles = battleSql.getTodayBattle();
         FlowPane flowPane = new FlowPane();
         flowPane.setMaxWidth(270);

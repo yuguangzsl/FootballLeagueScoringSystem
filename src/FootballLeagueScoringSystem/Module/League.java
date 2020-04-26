@@ -14,10 +14,13 @@ public class League {
     Player[] players;
     Team[] teams;
     Battle[] battles;
-    public void League() {
+    public League() {
         players = new Player[768];
         teams = new Team[64];
         battles = new Battle[8192];
+        getPlayers();
+        getTeams();
+        getAllBattles();
     }
 
     public void playerSort(){
@@ -134,7 +137,12 @@ public class League {
             e.printStackTrace();
         }
     }
-    public Team[] getTeams(){
+    public void getTeams(){
+        /**
+         * 获取全部队伍的比赛信息
+         * 在小组赛结束后进入淘汰时，一次获取所有队伍的比赛信息
+         * 女子组（如果必要），用重载方法独立获取排名信息
+         * */
         Connection conn ;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
@@ -145,7 +153,7 @@ public class League {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            String sql = "select * from footballteam";
+            String sql = "select * from footballteam Order BY teamscore DESC ";
             ResultSet rs = statement.executeQuery(sql);
             String teamName = null;
             int i =0;
@@ -154,15 +162,42 @@ public class League {
                 this.teams[i]=new Team(teamName);
                 i++;
             }
-            for(;i<this.teams.length;i++){
-                this.teams[i] = null;
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Team[] getTeams(String groupName){
+        /**
+         * 获取特定组别的排名信息
+         * */
+        Team[] teams = new Team[16];
+        Connection conn ;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver) ;
+            conn = DriverManager.getConnection(url,user,password);
+            if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "select * from footballteam where teamgroup='"+groupName+"' Order BY teamscore DESC ";
+            ResultSet rs = statement.executeQuery(sql);
+            String teamName = null;
+            int i =0;
+            while (rs.next()){
+                teamName = rs.getString("teamName");
+                teams[i]=new Team(teamName);
+                i++;
             }
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return this.teams;
+        return teams;
     }
     /**
      * @author: long
@@ -238,8 +273,8 @@ public class League {
             int i=0;
             while (rs.next()){
                 battleTime = rs.getTimestamp("battleTime");
-                teamA = rs.getString("teamA");
-                teamB = rs.getString("teamB");
+                teamA = rs.getString("teamOne");
+                teamB = rs.getString("teamTwo");
                 battleSide = rs.getString("battleSide");
                 this.battles[i]=new Battle(teamA,teamB,battleTime,battleSide);
                 System.out.println(battles[i].toString());

@@ -16,7 +16,7 @@ public class Team implements Comparable<Team> {
     private int goalLostNum;//总失球数
     private int teamScore;//球队积分
     private String teamGroup;//球队所属组
-    private Player[] players;//球员列表
+    public Player[] players;//球员列表
 
     public Team(String teamName, int teamRank, int winNum, int loseNum, int drawNum, int goalNum, int goalLostNum, String teamGroup, int teamScore) {
         /**
@@ -32,6 +32,7 @@ public class Team implements Comparable<Team> {
         this.teamGroup = teamGroup;
         this.teamScore = teamScore;
         this.players = new Player[11];
+        getPlayers();
     }
 
     public Team(String teamName) {
@@ -61,6 +62,8 @@ public class Team implements Comparable<Team> {
                 this.goalLostNum = rs.getInt("goalLostNum");
                 this.teamGroup = rs.getString("teamGroup");
                 this.teamScore = rs.getInt("teamScore");
+                this.players = new Player[11];
+                getPlayers();
             }
             rs.close();
             conn.close();
@@ -160,7 +163,6 @@ public class Team implements Comparable<Team> {
             while (rs.next()) {
                 playerName = rs.getString("playerName");
                 this.players[i] = new Player(this.teamName, playerName);
-                System.out.println(players[i].toString());
                 i++;
             }
             rs.close();
