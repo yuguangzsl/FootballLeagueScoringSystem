@@ -35,7 +35,7 @@ public class TodayBattleView extends Pane {
         this.league = new League();
         Battle[] battles = league.getTodayBattle();
         FlowPane flowPane = new FlowPane();
-        flowPane.setMaxWidth(270);
+        flowPane.setMaxWidth(400);      //设置今日赛程界面大小
         System.out.println(battles.length);
         if(battles[0]==null){
             Label label= new Label("今日无赛程");
@@ -63,8 +63,8 @@ public class TodayBattleView extends Pane {
                 leftButton.setMinWidth(topButton.getMaxWidth() / 3);
                 leftButton.setMinHeight(60);
                 leftButton.setLayoutX(topButton.getLayoutX());
-                leftButton.setLayoutY(topButton.getMinHeight() + i * 120);
-                leftButton.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+                leftButton.setFont(new Font("KaiTi",16));
+                leftButton.setBackground(new Background(new BackgroundFill(new Color(1,0,0,0.5),null,null)));
 
                 Button centerButton = new Button(battleScore);
                 centerButton.setMaxWidth(topButton.getMaxWidth() / 3);
@@ -72,16 +72,16 @@ public class TodayBattleView extends Pane {
                 centerButton.setMinHeight(60);
                 centerButton.setLayoutX(leftButton.getLayoutX() + leftButton.getMaxWidth());
                 centerButton.setLayoutY(topButton.getMinHeight() + i * 120);
+                centerButton.setFont(new Font("LiSu",20));
                 centerButton.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
-                centerButton.setText("0:0");
 
                 Button rightButton = new Button(teamB);
                 rightButton.setMaxWidth(topButton.getMaxWidth() / 3);
                 rightButton.setMinWidth(topButton.getMaxWidth() / 3);
                 rightButton.setMinHeight(60);
                 rightButton.setLayoutX(centerButton.getLayoutX() + centerButton.getMaxWidth());
-                rightButton.setLayoutY(topButton.getMinHeight() + i * 120);
-                rightButton.setBackground(new Background(new BackgroundFill(Color.BLUE, null, null)));
+                rightButton.setFont(new Font("KaiTi",16));
+                rightButton.setBackground(new Background(new BackgroundFill(new Color(0,0,1,0.5),null,null)));
 
                 Button buttomButton = new Button();
                 buttomButton.setMaxWidth(topButton.getMaxWidth());

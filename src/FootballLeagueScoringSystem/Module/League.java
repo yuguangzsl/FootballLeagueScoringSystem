@@ -225,7 +225,7 @@ public class League {
             conn = DriverManager.getConnection(url,user,password);
             if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            String sql = "select * from battledetail ";
+            String sql = "select * from battledetail ORDER BY battletime";
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             Timestamp battleTime ;  //对战时间
