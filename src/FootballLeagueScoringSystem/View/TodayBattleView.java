@@ -43,7 +43,7 @@ public class TodayBattleView extends Pane {
             flowPane.getChildren().add(label);
         }
         else {
-            for (int i = 0; i < battles.length; i++) {
+            for (int i = 0;battles[i]!=null; i++) {
                 Timestamp battleTime = battles[i].getBattleTime();  //对战时间
                 String teamA = battles[i].getTeamA();
                 String teamB = battles[i].getTeamB();
