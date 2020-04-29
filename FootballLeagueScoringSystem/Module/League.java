@@ -16,11 +16,13 @@ public class League {
     Player[] players;
     Team[] teams;
     Battle[] battles;
-
+    Battle[] todayBattles;
+    Battle[] oneDayBattles;
     public League() {
         players = new Player[768];
         teams = new Team[64];
         battles = new Battle[8192];
+        todayBattles = new Battle[50];
         getPlayers();
         getTeams();
         getAllBattles();
@@ -239,8 +241,8 @@ public class League {
                 battleSide = rs.getString("battleSide");
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
-                this.battles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
-                System.out.println(this.battles[i].toString());
+                this.todayBattles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                System.out.println(this.todayBattles[i].toString());
                 i++;
             }
 
@@ -249,7 +251,52 @@ public class League {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return battles;
+        return todayBattles;
+    }
+    /**
+     * @author :long
+     * 查询某天赛程
+     */
+    public Battle[] getOneDayBattles(String date){
+        oneDayBattles = new Battle[50];
+        Connection conn ;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver) ;
+            conn = DriverManager.getConnection(url,user,password);
+            if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
+            Statement statement = conn.createStatement();
+            String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
+            System.out.println(sql);
+            ResultSet rs = statement.executeQuery(sql);
+            Timestamp battleTime ;  //对战时间
+            String teamA = null;
+            String teamB = null;
+            String battleSide = null;      //比赛场地
+            int battleResult = 0;    //比赛结果，1表示A胜，0表示平局，-1表示A负,-2表示未开始
+            String battleScore = null;     //比赛比分
+            int i=0;
+            while (rs.next()){
+                battleTime = rs.getTimestamp("battleTime");
+                teamA = rs.getString("teamOne");
+                teamB = rs.getString("teamTwo");
+                battleSide = rs.getString("battleSide");
+                battleResult = rs.getInt("battleResult");
+                battleScore = rs.getString("battleScore");
+                this.oneDayBattles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                System.out.println(this.oneDayBattles[i].toString());
+                i++;
+            }
+
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return oneDayBattles;
     }
 
     /**

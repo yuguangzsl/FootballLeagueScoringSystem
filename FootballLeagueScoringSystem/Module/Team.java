@@ -200,10 +200,10 @@ public class Team implements Comparable<Team> {
                 result+=rs.getString("battleTime")+" ";
                 int status = rs.getInt("battleResult");
                 switch (status){
-                    case 1->result+=rs.getString("teamOne")+"获胜"+" ";
-                    case 0->result+="平局"+" ";
-                    case -1->result+=rs.getString("teamTwo")+"获胜"+" ";
-                    case -2->result+="比赛未开始"+" ";
+                    case 1:result+=rs.getString("teamOne")+"获胜"+" ";break;
+                    case 0:result+="平局"+" ";break;
+                    case -1:result+=rs.getString("teamTwo")+"获胜"+" ";break;
+                    case -2:result+="比赛未开始"+" ";break;
                 }
             }
             rs.close();
