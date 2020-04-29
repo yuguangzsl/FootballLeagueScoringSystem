@@ -14,6 +14,7 @@ public class MainStage extends Application {
         League league = new League();
         MainView mainView = new MainView(league,primaryStage);
         Scene scene = new Scene(mainView);
+        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
