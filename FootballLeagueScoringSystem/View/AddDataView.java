@@ -1,5 +1,6 @@
 package FootballLeagueScoringSystem.View;
 
+import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import FootballLeagueScoringSystem.Module.Team;
@@ -27,6 +28,18 @@ public class AddDataView extends Pane {
         addTeam();
         addPlayer(theLeague);
         addJudger(theLeague);
+        Button back = new Button("返回");
+        back.setLayoutX(900);
+        back.setLayoutY(465);
+        back.setMinSize(180, 60);
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewTrans vt = new ViewTrans();
+                vt.toMainView(theLeague,stage);
+            }
+        });
+        this.getChildren().add(back);
     }
 
     private void addTeam() {
@@ -245,7 +258,6 @@ public class AddDataView extends Pane {
                 }
                 Team team = new Team(teamName, teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, groupName[0], score);
                 team.insertData();
-                System.out.println("测试成功！");
             }
         });
         this.getChildren().addAll(tips, teamNameL, teamNameInput, groupNameL, groupNameInput,
@@ -360,7 +372,6 @@ public class AddDataView extends Pane {
                 }
                 Player player = new Player(playerName,teamName,"",score,rank,"");
                 player.insertData();
-                System.out.println("测试成功！");
             }
         });
         this.getChildren().addAll(playerNameL,playerNameInput,teamNameL,teamNameInput,container,registerPlayer);
@@ -439,7 +450,6 @@ public class AddDataView extends Pane {
                 userPassword= userPasswordInput.getText();
                 position= positionInput.getText();
                 if(theLeague.addSystemUser(userName,userAccount,userPassword,position)){
-                    System.out.println("测试成功！");
                 }
             }
         });

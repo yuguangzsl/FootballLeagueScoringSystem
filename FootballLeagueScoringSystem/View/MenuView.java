@@ -29,7 +29,7 @@ public class MenuView extends AnchorPane {
             @Override
             public void handle(MouseEvent event) {
                 ViewTrans vt = new ViewTrans();
-                vt.toRegisterTeamView(stage,theLeague);
+                vt.toAddDataView(stage,theLeague);
             }
         });
         updateBattle.setLayoutX(registerTeam.getLayoutX() + registerTeam.getMinWidth());

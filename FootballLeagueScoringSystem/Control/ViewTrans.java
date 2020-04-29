@@ -16,25 +16,21 @@ public class ViewTrans {
         PlayerView playerView = new PlayerView(player,stage);
         Scene scene = new Scene(playerView);
         stage.setScene(scene);
-        stage.show();
     }
     public void toTeamView(Stage stage,String teamName){
         Team team = new Team(teamName);
         TeamView teamView = new TeamView(team,stage);
         Scene scene = new Scene(teamView);
         stage.setScene(scene);
-        stage.show();
     }
-    public void toRegisterTeamView(Stage stage,League theLeague){
+    public void toAddDataView(Stage stage,League theLeague){
         AddDataView registerTeamView = new AddDataView(stage,theLeague);
         Scene scene = new Scene(registerTeamView);
         stage.setScene(scene);
-        stage.show();
     }
-    public void toMainView(Stage stage){
-        League league = new League();
-        MainView mainView = new MainView(league,stage);
+    public void toMainView(League theLeague,Stage stage){
+        MainView mainView = new MainView(theLeague,stage);
         Scene scene = new Scene(mainView);
-        stage.show();
+        stage.setScene(scene);
     }
 }

@@ -23,11 +23,9 @@ public class AllBattleView extends Pane {
     public Stage stage;
     private League battleSql;
     private ScrollPane scrollPane = new ScrollPane();
-
     public ScrollPane getScrollPane() {
         return scrollPane;
     }
-
     AllBattleView(){
         generate();
     }
@@ -42,9 +40,7 @@ public class AllBattleView extends Pane {
         gridPane.setHgap(5);        //修改为battles.length/3
         gridPane.setVgap(4);
         gridPane.setPadding(new Insets(20,20,20,20));
-
         String [] colors = new String[]{"panel-success","panel-info","panel-warning"};      //panel顶部颜色选择
-
         FlowPane flowPane =  new FlowPane();    //添加label，datePicker,button
         //日期选择器
         DatePicker datePicker = new DatePicker();
@@ -72,7 +68,6 @@ public class AllBattleView extends Pane {
         datePicker.setPromptText("yyyy-MM-dd".toLowerCase());
         Label label = new Label("Choose one day");
         Button button = new Button("确定");
-
         flowPane.getChildren().addAll(label,datePicker,button);
         gridPane.add(flowPane,3,0);
 
@@ -134,12 +129,12 @@ public class AllBattleView extends Pane {
             String battleSide = battles[i].getBattleSide();      //比赛场地
             int battleResult = battles[i].getBattleResult();    //比赛结果，1表示A胜，0表示平局，-1表示A负
             String battleScore = battles[i].getBattleScore();
-
             org.kordamp.bootstrapfx.scene.layout.Panel panel = new org.kordamp.bootstrapfx.scene.layout.Panel();
             panel.getStyleClass().addAll("panel-primary",colors[i%3],"panel-default");
             panel.setPadding(new Insets(20,20,20,20));
             Label headLable = new Label(battleTime+"\t"+battleSide);
             Label bodyLable  = new Label(teamA+"\t\t"+battleScore+"\t\t"+teamB);
+
             Label footLable = new Label();
             switch (battleResult){
                 case -2:footLable.setText("\t\t未开始");break;

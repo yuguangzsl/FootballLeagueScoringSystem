@@ -1,6 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
+import FootballLeagueScoringSystem.Module.League;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -14,7 +15,8 @@ public class InitialView extends Pane {
         Label label = new Label("程序准备中......");
         label.setFont(new Font("Microsoft YaHei",36));
         ViewTrans vt = new ViewTrans();
-        vt.toMainView(stage);
+        League league = new League();
+        vt.toMainView(league,stage);
         this.getChildren().add(label);
     }
 }
