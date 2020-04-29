@@ -14,7 +14,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.sql.Timestamp;
-
+/**
+ * @author Long
+ * 显示今日赛程
+ * */
 public class TodayBattleView extends Pane {
     public Stage stage;
     private League battleSql;

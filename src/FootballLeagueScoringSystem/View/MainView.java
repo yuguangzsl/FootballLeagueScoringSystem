@@ -31,7 +31,7 @@ public class MainView extends TabPane {
          * setStyle("-fx-CSS代码")
          * */
         //设置标签属性
-        String tabStyle = "-fx-pref-width:300px;-fx-pref-height:40px;-fx-text-align:center;-fx-font-size:18px;";
+        String tabStyle = "-fx-pref-width:240px;-fx-pref-height:40px;-fx-text-align:center;-fx-font-size:18px;";
         //球队排行榜
         TeamRankView teamRankView = new TeamRankView(stage, theLeague);
         Tab teamRank = new Tab("球队排名", teamRankView);
@@ -41,6 +41,7 @@ public class MainView extends TabPane {
         PlayerRankView playerRankView = new PlayerRankView(stage, theLeague);
         Tab playerRank = new Tab("射手排名", playerRankView);
         playerRank.setStyle(tabStyle);
+        playerRank.setClosable(false);
         //今日赛程
         TodayBattleView todayBattleView = new TodayBattleView();
         Tab todayBattle = new Tab("今日赛程", todayBattleView.getScrollPane());
@@ -51,8 +52,13 @@ public class MainView extends TabPane {
         Tab allBattle = new Tab("全部赛程", allBattleView.getScrollPane());
         allBattle.setStyle(tabStyle);
         allBattle.setClosable(false);
+        //菜单功能界面
+        MenuView menuView = new MenuView(stage,theLeague);
+        Tab menu = new Tab("更多功能",menuView);
+        menu.setStyle(tabStyle);
+        menu.setClosable(false);
         //
-        this.getTabs().addAll(teamRank, playerRank,todayBattle,allBattle);
+        this.getTabs().addAll(teamRank, playerRank,todayBattle,allBattle,menu);
     }
 
 }

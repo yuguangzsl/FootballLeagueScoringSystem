@@ -10,6 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * @author QuanHao ,Long
+ * 射手榜，显示球员排名
+ * */
 public class PlayerRankView extends AnchorPane {
     PlayerRankView(Stage stage, League theLeague) {
         AnchorPane AP0 = new AnchorPane();
@@ -19,9 +23,10 @@ public class PlayerRankView extends AnchorPane {
         RankData(theLeague.getPlayers(),AP,stage);
         SP.setLayoutX(0);
         SP.setLayoutY(36);
-        SP.setMinSize(1200,550);
-        SP.setMaxSize(1200,700);
+        SP.setMinSize(1200,450);
+        SP.setMaxSize(1920,1080);
         SP.setContent(AP);
+        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         AP0.getChildren().add(SP);
         this.getChildren().add(AP0);
     }
@@ -41,7 +46,7 @@ public class PlayerRankView extends AnchorPane {
                 Rank.setText("" + players[i].getRank());
                 Rank.setLayoutX(0);
                 Rank.setLayoutY(i * 30);
-                Rank.setMinSize(240, 30);
+                Rank.setMinSize(240, 36);
                 Button name = new Button();
                 name.setText(players[i].getName());
                 name.setLayoutX(Rank.getLayoutX() + Rank.getMinWidth());

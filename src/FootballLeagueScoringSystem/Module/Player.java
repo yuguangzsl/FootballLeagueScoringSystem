@@ -15,7 +15,7 @@ public class Player implements Comparable<Player> {
     private int rank;//排名
     private String photo_address;//图片地址
 
-    Player(String name, String teamName, String foul, int score, int rank, String photo_address) {
+    public Player(String name, String teamName, String foul, int score, int rank, String photo_address) {
         /**
          * 全参数传入，生成一个新的player对象
          * */
@@ -80,11 +80,11 @@ public class Player implements Comparable<Player> {
             statement.executeQuery(sql);
             sql = "update footballplayer set playerphoto = '" + this.photo_address + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
             rs = statement.executeQuery(sql);
-            sql = "update footballplayer set playerscore = '" + this.score + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
+            sql = "update footballplayer set playerscore = " + this.score + " where playerName='" + name + "' and playerTeam='" + teamName + "'";
             rs = statement.executeQuery(sql);
             sql = "update footballplayer set playerfoul = '" + this.foul + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballplayer set playerrank = '" + this.rank + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
+            sql = "update footballplayer set playerrank = " + this.rank + " where playerName='" + name + "' and playerTeam='" + teamName + "'";
             statement.executeQuery(sql);
             rs.close();
             conn.close();
@@ -112,12 +112,13 @@ public class Player implements Comparable<Player> {
                     + this.name + "',"
                     + "'" + this.photo_address + "',"
                     + "'" + this.teamName + "',"
-                    + "'" + this.score + "',"
+                    + this.score + ","
                     + "'" + this.foul + "',"
-                    + "'" + this.rank + "')";
-            ResultSet rs = statement.executeQuery(sql);
-
-            rs.close();
+                    + this.rank + ")";
+            int status = statement.executeUpdate(sql);
+            if(status==0){
+                System.out.println("操作失败！");
+            }
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

@@ -89,19 +89,19 @@ public class Team implements Comparable<Team> {
             Statement statement = conn.createStatement();
             String sql = "update footballteam set teamname = '" + this.teamName + "' where teamName='" + teamName + "'";
             ResultSet rs = statement.executeQuery(sql);
-            sql = "update footballteam set teamrank = '" + this.teamRank + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set teamrank = " + this.teamRank + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set winNum = '" + this.winNum + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set winNum = " + this.winNum + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set loseNum = '" + this.loseNum + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set loseNum = " + this.loseNum + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set drawNum = '" + this.drawNum + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set drawNum = " + this.drawNum + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set goalNum = '" + this.goalNum + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set goalNum = " + this.goalNum + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set goalLostNum = '" + this.goalLostNum + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set goalLostNum = " + this.goalLostNum + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
-            sql = "update footballteam set teamscore = '" + this.teamScore + "' where teamName='" + teamName + "'";
+            sql = "update footballteam set teamscore = " + this.teamScore + " where teamName='" + teamName + "'";
             statement.executeQuery(sql);
             sql = "update footballteam set teamgroup = '" + this.teamGroup + "' where teamName='" + teamName + "'";
             statement.executeQuery(sql);
@@ -129,16 +129,17 @@ public class Team implements Comparable<Team> {
             Statement statement = conn.createStatement();
             String sql = "INSERT INTO footballteam values ('"
                     + this.teamName + "'," +
-                    "'" + this.teamRank + "'," +
-                    "'" + this.winNum + "'," +
-                    "'" + this.loseNum + "'," +
-                    "'" + this.drawNum + "'," +
-                    "'" + this.goalNum + "'," +
-                    "'" + this.goalLostNum + "'," +
-                    "'" + this.teamScore + "'," +
+                    + this.teamRank + "," +
+                    + this.winNum + "," +
+                    + this.loseNum + "," +
+                    + this.drawNum + "," +
+                    + this.goalNum + "," +
+                     + this.goalLostNum + "," +
+                    + this.teamScore + "," +
                     "'" + this.teamGroup + "')";
-            ResultSet rs = statement.executeQuery(sql);
-            rs.close();
+            int status = statement.executeUpdate(sql);
+            //ResultSet rs = statement.executeUpdate(sql.toString());
+            //rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

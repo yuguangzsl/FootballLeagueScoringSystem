@@ -11,7 +11,11 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/***
+ * @author QuanHao ,
+ * @author Long ,
+ * 球队积分排名界面
+ * */
 public class TeamRankView extends Accordion{
     public TeamRankView(Stage stage, League theLeague){
         String titleStyle = "-fx-pref-width:1200px;-fx-pref-height:60px;-fx-text-align:center;-fx-font-size:18px;";

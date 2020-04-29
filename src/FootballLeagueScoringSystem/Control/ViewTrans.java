@@ -1,8 +1,11 @@
 package FootballLeagueScoringSystem.Control;
 
+import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import FootballLeagueScoringSystem.Module.Team;
+import FootballLeagueScoringSystem.View.MainView;
 import FootballLeagueScoringSystem.View.PlayerView;
+import FootballLeagueScoringSystem.View.AddDataView;
 import FootballLeagueScoringSystem.View.TeamView;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,6 +23,18 @@ public class ViewTrans {
         TeamView teamView = new TeamView(team,stage);
         Scene scene = new Scene(teamView);
         stage.setScene(scene);
+        stage.show();
+    }
+    public void toRegisterTeamView(Stage stage,League theLeague){
+        AddDataView registerTeamView = new AddDataView(stage,theLeague);
+        Scene scene = new Scene(registerTeamView);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void toMainView(Stage stage){
+        League league = new League();
+        MainView mainView = new MainView(league,stage);
+        Scene scene = new Scene(mainView);
         stage.show();
     }
 }
