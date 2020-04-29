@@ -73,7 +73,7 @@ public class AllBattleView extends Pane {
         };
         datePicker.setConverter(converter);
         datePicker.setPromptText("yyyy-MM-dd".toLowerCase());
-        Label label = new Label("Choose one day");
+        Label label = new Label("Choose one day:  ");
         Button button = new Button("确定");
 
         flowPane.getChildren().addAll(label,datePicker,button);
