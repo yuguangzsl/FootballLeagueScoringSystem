@@ -9,9 +9,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import javafx.fxml.FXMLLoader;
 
 public class TodayBattleView extends Pane {
     public Stage stage;
@@ -22,11 +25,11 @@ public class TodayBattleView extends Pane {
         return scrollPane;
     }
 
-    TodayBattleView() {
+    TodayBattleView() throws IOException {
         generate();
     }
 
-    public void generate() {
+    public void generate() throws IOException {
         /**
          * @author :Long
          * 生成所有赛程
@@ -35,18 +38,22 @@ public class TodayBattleView extends Pane {
         Battle[] battles = battleSql.getTodayBattle();
         GridPane gridPane  = new GridPane();
         gridPane.setHgap(5);    //修改为battles.length/3
-        gridPane.setVgap(3);
+
         gridPane.setPadding(new Insets(20,20,20,20));
 
         String [] colors = new String[]{"panel-success","panel-info","panel-warning"};      //panel顶部颜色选择
 
         if (battles[0] == null) {
-            Label label = new Label("今日无赛程");
-            label.setFont(new Font("LiShu", 30));
+
+            //gridPane.setVgap(1);
+            gridPane = FXMLLoader.load(getClass().getResource("TodayBattleView.fxml"));
+            Text  text = new Text("Today  is no battle");
+            //text.setStyle("alert:alert-info");
             FlowPane flowPane = new FlowPane();
-            flowPane.getChildren().add(label);
-            gridPane.add(flowPane,0,0);
+            //flowPane.getChildren().add(label);
+            //gridPane.add(text,1,0);
         } else {
+            gridPane.setVgap(3);
             for (int i = 0,j=0; battles[i] != null; i++,j/=3) {
                 Timestamp battleTime = battles[i].getBattleTime();  //对战时间
                 String teamA = battles[i].getTeamA();

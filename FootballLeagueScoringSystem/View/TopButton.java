@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * @author QuanHao
  * 顶部的四个按钮，事件后期补上
@@ -47,7 +49,12 @@ public class TopButton {
             public void handle(MouseEvent mouseEvent) {
                 Stage secondStage = new Stage();
 
-                TodayBattleView todayBattleView = new TodayBattleView();
+                TodayBattleView todayBattleView = null;
+                try {
+                    todayBattleView = new TodayBattleView();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Scene secondScene = new Scene(todayBattleView.getScrollPane(), 270, 600);
                 secondStage.setScene(secondScene);
                 secondStage.show();
