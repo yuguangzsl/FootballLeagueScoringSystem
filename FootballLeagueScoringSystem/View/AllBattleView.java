@@ -96,16 +96,16 @@ public class AllBattleView extends Pane {
                 }
                 else {
                     for(int i=0,j=0;oneDayBattles[i]!=null;i++,j/=3){
-                        Timestamp battleTime = battles[i].getBattleTime();  //对战时间
-                        String teamA = battles[i].getTeamA();
-                        String teamB = battles[i].getTeamB();
-                        String battleSide = battles[i].getBattleSide();      //比赛场地
-                        int battleResult = battles[i].getBattleResult();    //比赛结果，1表示A胜，0表示平局，-1表示A负
-                        String battleScore = battles[i].getBattleScore();
+                        Timestamp battleTime = oneDayBattles[i].getBattleTime();  //对战时间
+                        String teamA = oneDayBattles[i].getTeamA();
+                        String teamB = oneDayBattles[i].getTeamB();
+                        String battleSide = oneDayBattles[i].getBattleSide();      //比赛场地
+                        int battleResult = oneDayBattles[i].getBattleResult();    //比赛结果，1表示A胜，0表示平局，-1表示A负
+                        String battleScore = oneDayBattles  [i].getBattleScore();
                         org.kordamp.bootstrapfx.scene.layout.Panel panel = new org.kordamp.bootstrapfx.scene.layout.Panel();
                         panel.getStyleClass().addAll("panel-primary",colors[i%3],"panel-default");
                         panel.setPadding(new Insets(20,20,20,20));
-                        Label headLable = new Label(battleTime+"\t"+battleSide);
+                        Label headLable = new Label(battleTime.toString().split("\\.")[0]+"\t"+battleSide);
                         Label bodyLable  = new Label(teamA+"\t\t"+battleScore+"\t\t"+teamB);
                         Label footLable = new Label();
                         switch (battleResult){
@@ -141,7 +141,7 @@ public class AllBattleView extends Pane {
             org.kordamp.bootstrapfx.scene.layout.Panel panel = new org.kordamp.bootstrapfx.scene.layout.Panel();
             panel.getStyleClass().addAll("panel-primary",colors[i%3],"panel-default");
             panel.setPadding(new Insets(20,20,20,20));
-            Label headLable = new Label(battleTime+"\t"+battleSide);
+            Label headLable = new Label(battleTime.toString().split("\\.")[0]+"\t"+battleSide);
             Label bodyLable  = new Label(teamA+"\t\t"+battleScore+"\t\t"+teamB);
             Label footLable = new Label();
             switch (battleResult){
