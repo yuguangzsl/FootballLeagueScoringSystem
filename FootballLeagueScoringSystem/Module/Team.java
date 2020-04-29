@@ -47,10 +47,8 @@ public class Team implements Comparable<Team> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam where teamName='" + teamName + "'";
-            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 this.teamName = rs.getString("teamName");
@@ -85,27 +83,18 @@ public class Team implements Comparable<Team> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
-            String sql = "update footballteam set teamname = '" + this.teamName + "' where teamName='" + teamName + "'";
-            ResultSet rs = statement.executeQuery(sql);
-            sql = "update footballteam set teamrank = " + this.teamRank + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set winNum = " + this.winNum + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set loseNum = " + this.loseNum + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set drawNum = " + this.drawNum + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set goalNum = " + this.goalNum + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set goalLostNum = " + this.goalLostNum + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set teamscore = " + this.teamScore + " where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballteam set teamgroup = '" + this.teamGroup + "' where teamName='" + teamName + "'";
-            statement.executeQuery(sql);
-            rs.close();
+            String sql = "update footballteam set teamname = '" + this.teamName
+                    + "',teamrank=" + this.teamRank
+                    + ",winNum=" + this.winNum
+                    + ",loseNum=" + this.loseNum
+                    + ",drawNum=" + this.drawNum
+                    + ",goalNum=" + this.goalNum
+                    + ",goalLostNum=" + this.goalLostNum
+                    + ",teamscore=" + this.teamScore
+                    + ",teamgroup='" + this.teamGroup
+                    + "',where teamName='" + teamName + "'";
+            statement.executeUpdate(sql);
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -125,21 +114,18 @@ public class Team implements Comparable<Team> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "INSERT INTO footballteam values ('"
                     + this.teamName + "'," +
-                    + this.teamRank + "," +
-                    + this.winNum + "," +
-                    + this.loseNum + "," +
-                    + this.drawNum + "," +
-                    + this.goalNum + "," +
-                     + this.goalLostNum + "," +
-                    + this.teamScore + "," +
+                    +this.teamRank + "," +
+                    +this.winNum + "," +
+                    +this.loseNum + "," +
+                    +this.drawNum + "," +
+                    +this.goalNum + "," +
+                    +this.goalLostNum + "," +
+                    +this.teamScore + "," +
                     "'" + this.teamGroup + "')";
-            int status = statement.executeUpdate(sql);
-            //ResultSet rs = statement.executeUpdate(sql.toString());
-            //rs.close();
+            statement.executeUpdate(sql);
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -155,7 +141,6 @@ public class Team implements Comparable<Team> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer where playerteamName ='" + this.teamName + "'";
             ResultSet rs = statement.executeQuery(sql);
@@ -188,22 +173,28 @@ public class Team implements Comparable<Team> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from battledetail where teamone='" + teamName + "'" + "or teamtwo='" + this.teamName + "'";
-            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                result+=rs.getString("teamOne")+" ";
-                result+=rs.getString("teamTwo")+" ";
-                result+=rs.getString("battleSide")+" ";
-                result+=rs.getString("battleTime")+" ";
+                result += rs.getString("teamOne") + " ";
+                result += rs.getString("teamTwo") + " ";
+                result += rs.getString("battleSide") + " ";
+                result += rs.getString("battleTime") + " ";
                 int status = rs.getInt("battleResult");
-                switch (status){
-                    case 1:result+=rs.getString("teamOne")+"获胜"+" ";break;
-                    case 0:result+="平局"+" ";break;
-                    case -1:result+=rs.getString("teamTwo")+"获胜"+" ";break;
-                    case -2:result+="比赛未开始"+" ";break;
+                switch (status) {
+                    case 1:
+                        result += rs.getString("teamOne") + "获胜" + " ";
+                        break;
+                    case 0:
+                        result += "平局" + " ";
+                        break;
+                    case -1:
+                        result += rs.getString("teamTwo") + "获胜" + " ";
+                        break;
+                    case -2:
+                        result += "比赛未开始" + " ";
+                        break;
                 }
             }
             rs.close();

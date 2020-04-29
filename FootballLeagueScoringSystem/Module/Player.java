@@ -39,10 +39,8 @@ public class Player implements Comparable<Player> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer where playerName='" + name + "' and playerteamName='" + teamName + "'";
-            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 this.name = rs.getString("playerName");
@@ -72,21 +70,16 @@ public class Player implements Comparable<Player> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            
             Statement statement = conn.createStatement();
-            String sql = "update footballplayer set playername = '" + this.name + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            ResultSet rs = statement.executeQuery(sql);
-            sql = "update footballplayer set playerteamName = '" + this.teamName + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballplayer set playerphoto = '" + this.photo_address + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            rs = statement.executeQuery(sql);
-            sql = "update footballplayer set playerscore = " + this.score + " where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            rs = statement.executeQuery(sql);
-            sql = "update footballplayer set playerfoul = '" + this.foul + "' where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            statement.executeQuery(sql);
-            sql = "update footballplayer set playerrank = " + this.rank + " where playerName='" + name + "' and playerTeam='" + teamName + "'";
-            statement.executeQuery(sql);
-            rs.close();
+            String sql = "update footballplayer set playername ='" +this.name
+                    +"',playerphoto='" +this.photo_address
+                    +"',playerteamName='" +this.teamName
+                    +"',playerscore=" +this.score
+                    +",playerfoul='" +this.foul
+                    +"',playerrank=" +this.rank
+                    +" where playerName='" + name + "' and playerTeam='" + teamName + "'";
+            statement.executeUpdate(sql);
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -106,7 +99,6 @@ public class Player implements Comparable<Player> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "insert INTO footballplayer values ('"
                     + this.name + "',"
@@ -115,10 +107,7 @@ public class Player implements Comparable<Player> {
                     + this.score + ","
                     + "'" + this.foul + "',"
                     + this.rank + ")";
-            int status = statement.executeUpdate(sql);
-            if(status==0){
-                System.out.println("操作失败！");
-            }
+            statement.executeUpdate(sql);
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -139,7 +128,6 @@ public class Player implements Comparable<Player> {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from goaldetail where playerName = '" + this.name + "'";
             ResultSet rs = statement.executeQuery(sql);

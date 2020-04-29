@@ -42,15 +42,11 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer";
             ResultSet rs = statement.executeQuery(sql);
             String playerName = null;
-            String playerPhoto = null;
             String teamName = null;
-            String foul = null;
-            int playerScore = 0;
             int i = 0;
             while (rs.next()) {
                 playerName = rs.getString("playerName");
@@ -63,7 +59,6 @@ public class League {
                 sql = "update footballplayer set playerRank=" + (i + 1) + " where " + "playerName='" + players[i].getName() + "'";
                 statement.executeUpdate(sql);
             }
-            System.out.println("Player Sort Succeeded");
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -80,7 +75,6 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballplayer ORDER BY playerscore DESC";
             ResultSet rs = statement.executeQuery(sql);
@@ -118,12 +112,10 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select teamName,teamScore from footballteam";
             ResultSet rs = statement.executeQuery(sql);
             String teamName = null;
-            int teamScore = 0;
             int i = 0;
             while (rs.next()) {
                 teamName = rs.getString("teamName");
@@ -135,7 +127,6 @@ public class League {
                 sql = "update footballteam set teamRank=" + (i + 1) + " where " + "teamName='" + teams[i].getTeamName() + "'";
                 statement.executeUpdate(sql);
             }
-            System.out.println("Team Sort Succeeded");
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -157,7 +148,6 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam Order BY teamscore DESC ";
             ResultSet rs = statement.executeQuery(sql);
@@ -188,7 +178,7 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
+            
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam where teamgroup='" + groupName + "' Order BY teamscore DESC ";
             ResultSet rs = statement.executeQuery(sql);
@@ -220,7 +210,6 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            if (!conn.isClosed()) System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             java.util.Date todaydate = new java.util.Date();    //今天的日期
             SimpleDateFormat ft2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -267,10 +256,8 @@ public class League {
         try {
             Class.forName(driver) ;
             conn = DriverManager.getConnection(url,user,password);
-            if(!conn.isClosed())System.out.println("Succeeded connecting to the Database!");
             Statement statement = conn.createStatement();
             String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
-            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             Timestamp battleTime ;  //对战时间
             String teamA = null;
