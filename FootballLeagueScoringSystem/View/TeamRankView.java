@@ -10,6 +10,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /***
  * @author QuanHao ,
@@ -106,23 +110,29 @@ public class TeamRankView extends Accordion{
         if (Teams[0] == null) {
             //数据库中没有查到对应数据
             Button NoData = new Button();
+            NoData.getStyleClass().addAll("btn","btn-warning");
             NoData.setText("没有找到对应数据！");
             NoData.setLayoutX(0);
             NoData.setLayoutY(0);
             NoData.setMinSize(1200, 30);
             AP.getChildren().add(NoData);
+            AP.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
         } else {
             for (int i = 0; Teams[i] != null; i++) {
                 Button Rank = new Button();
+                Rank.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 Rank.setText("" + Teams[i].getTeamRank());
                 Rank.setLayoutX(0);
                 Rank.setLayoutY(i * 30);
                 Rank.setMinSize(150, 30);
+
                 Button name = new Button();
+                name.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 name.setText(Teams[i].getTeamName());
                 name.setLayoutX(Rank.getLayoutX() + Rank.getMinWidth());
                 name.setLayoutY(i * 30);
                 name.setMinSize(150, 30);
+                name.setFont(new Font("LiShu",24));
                 name.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -130,83 +140,125 @@ public class TeamRankView extends Accordion{
                         vt.toTeamView(stage,name.getText(),theLeague);
                     }
                 });
+                name.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        name.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, null, null)));
+                    }
+                });
+
+                name.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        name.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
+                    }
+                });
+
                 Button WinNum = new Button();
+                WinNum.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 WinNum.setText("" + Teams[i].getWinNum());
                 WinNum.setLayoutX(name.getLayoutX() + name.getMinWidth());
                 WinNum.setLayoutY(i * 30);
                 WinNum.setMinSize(150, 30);
+
                 Button LoseNum = new Button();
+                LoseNum.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 LoseNum.setText("" + Teams[i].getLoseNum());
                 LoseNum.setLayoutX(WinNum.getLayoutX() + WinNum.getMinWidth());
                 LoseNum.setLayoutY(i * 30);
                 LoseNum.setMinSize(150, 30);
+
                 Button DrawNum = new Button();
+                DrawNum.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 DrawNum.setText("" + Teams[i].getDrawNum());
                 DrawNum.setLayoutX(LoseNum.getLayoutX() + LoseNum.getMinWidth());
                 DrawNum.setLayoutY(i * 30);
                 DrawNum.setMinSize(150, 30);
+
                 Button GoalNum = new Button();
+                GoalNum.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 GoalNum.setText("" + Teams[i].getGoalNum());
                 GoalNum.setLayoutX(DrawNum.getLayoutX() + DrawNum.getMinWidth());
                 GoalNum.setLayoutY(i * 30);
                 GoalNum.setMinSize(150, 30);
+
                 Button GoalLostNum = new Button();
+                GoalLostNum.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 GoalLostNum.setText("" + Teams[i].getGoalLostNum());
                 GoalLostNum.setLayoutX(GoalNum.getLayoutX() + GoalNum.getMinWidth());
                 GoalLostNum.setLayoutY(i * 30);
                 GoalLostNum.setMinSize(150, 30);
+
                 Button Score = new Button();
+                Score.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 Score.setText("" + Teams[i].getTeamScore());
                 Score.setLayoutX(GoalLostNum.getLayoutX() + GoalLostNum.getMinWidth());
                 Score.setLayoutY(i * 30);
                 Score.setMinSize(150, 30);
                 AP.getChildren().addAll(Rank, name, WinNum, LoseNum, DrawNum,
                         GoalNum, GoalLostNum, Score);
+                AP.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
             }
         }
     }
 
     private void TitleLabels(AnchorPane Ap) {
         Button rank = new Button();
+        rank.getStyleClass().addAll("btn-success","btn");
         rank.setText("当前名次");
-        rank.setLayoutX(0);
+        rank.setLayoutX(30);
         rank.setLayoutY(0);
         rank.setMinSize(150, 30);
+
         Button name = new Button();
+        name.getStyleClass().addAll("btn","btn-primary");
         name.setText("队名");
         name.setLayoutX(rank.getLayoutX() + rank.getMinWidth());
         rank.setLayoutY(rank.getLayoutY());
         name.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button winNum = new Button();
+        winNum.getStyleClass().addAll("btn","btn-info");
         winNum.setText("胜场数");
         winNum.setLayoutX(name.getLayoutX() + name.getMinWidth());
         winNum.setLayoutY(name.getLayoutY());
         winNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button loseNum = new Button();
+        loseNum.getStyleClass().addAll("btn","btn-info");
         loseNum.setText("负场数");
         loseNum.setLayoutX(winNum.getLayoutX() + winNum.getMinWidth());
         loseNum.setLayoutY(winNum.getLayoutY());
         loseNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button drawNum = new Button();
+        drawNum.getStyleClass().addAll("btn","btn-info");
         drawNum.setText("平局数");
         drawNum.setLayoutX(loseNum.getLayoutX() + loseNum.getMinWidth());
         drawNum.setLayoutY(loseNum.getLayoutY());
         drawNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button goalNum = new Button();
+        goalNum.getStyleClass().addAll("btn","btn-warning");
         goalNum.setText("进球数");
         goalNum.setLayoutX(drawNum.getLayoutX() + drawNum.getMinWidth());
         goalNum.setLayoutY(drawNum.getLayoutY());
         goalNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button goalLostNum = new Button();
+        goalLostNum.getStyleClass().addAll("btn","btn-warning");
         goalLostNum.setText("失球数");
         goalLostNum.setLayoutX(goalNum.getLayoutX() + goalNum.getMinWidth());
         goalLostNum.setLayoutY(goalNum.getLayoutY());
         goalLostNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button score = new Button();
+        score.getStyleClass().addAll("btn","btn-danger");
         score.setText("积分");
         score.setLayoutX(goalLostNum.getLayoutX() + goalLostNum.getMinWidth());
         score.setLayoutY(goalLostNum.getLayoutY());
         score.setMinSize(rank.getMinWidth(), rank.getMinHeight());
         Ap.getChildren().addAll(rank, name, winNum, loseNum, drawNum, goalNum, goalLostNum, score);
+        Ap.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
     }
 }

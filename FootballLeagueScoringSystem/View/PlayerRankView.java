@@ -47,16 +47,21 @@ public class PlayerRankView extends AnchorPane {
         } else {
             for (int i = 0; players[i] != null; i++) {
                 Button Rank = new Button();
+                Rank.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                 Rank.setText("" + players[i].getRank());
                 Rank.setLayoutX(0);
                 Rank.setLayoutY(i * 30);
                 Rank.setMinSize(240, 36);
+
                 Button name = new Button();
+                name.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                 name.setText(players[i].getName());
                 name.setLayoutX(Rank.getLayoutX() + Rank.getMinWidth());
                 name.setLayoutY(i * 30);
                 name.setMinSize(Rank.getMinWidth(), Rank.getMinHeight());
+
                 Button teamName = new Button();
+                teamName.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                 teamName.setText("" + players[i].getTeamName());
                 teamName.setLayoutX(name.getLayoutX() + name.getMinWidth());
                 teamName.setLayoutY(i * 30);
@@ -68,6 +73,19 @@ public class PlayerRankView extends AnchorPane {
                         vt.toTeamView(stage, teamName.getText(), theLeague);
                     }
                 });
+                teamName.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        teamName.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, null, null)));
+                    }
+                });
+                teamName.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        teamName.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
+                    }
+                });
+
                 name.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -78,16 +96,26 @@ public class PlayerRankView extends AnchorPane {
                 name.setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        name.setBackground(new Background(new BackgroundFill(Color.BLUE, null, null)));
+                        name.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, null, null)));
+                    }
+                });
+
+                name.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        name.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                     }
                 });
 
                 Button GoalNum = new Button();
+                GoalNum.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                 GoalNum.setText("" + players[i].getScore());
                 GoalNum.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth());
                 GoalNum.setLayoutY(i * 30);
                 GoalNum.setMinSize(Rank.getMinWidth(), Rank.getMinHeight());
+
                 Button Score = new Button();
+                Score.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
                 Score.setText("" + players[i].getScore());
                 Score.setLayoutX(GoalNum.getLayoutX() + GoalNum.getMinWidth());
                 Score.setLayoutY(i * 30);
@@ -100,30 +128,41 @@ public class PlayerRankView extends AnchorPane {
 
     private void TitleLabels(AnchorPane Ap) {
         Button rank = new Button();
+        rank.getStyleClass().addAll("btn","btn-success");
         rank.setText("当前名次");
-        rank.setLayoutX(0);
+        rank.setLayoutX(80);
         rank.setLayoutY(0);
         rank.setMinSize(240, 30);
+        rank.setMaxSize(240,30);
+
         Button name = new Button();
+        name.getStyleClass().addAll("btn","btn-warning");
         name.setText("姓名");
         name.setLayoutX(rank.getLayoutX() + rank.getMinWidth());
         name.setLayoutY(rank.getLayoutY());
         name.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button teamName = new Button();
+        teamName.getStyleClass().addAll("btn","btn-info");
         teamName.setText("球队");
         teamName.setLayoutX(name.getLayoutX() + name.getMinWidth());
         teamName.setLayoutY(name.getLayoutY());
         teamName.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button goalNum = new Button();
+        goalNum.getStyleClass().addAll("btn","btn-primary");
         goalNum.setText("进球数");
         goalNum.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth());
         goalNum.setLayoutY(teamName.getLayoutY());
         goalNum.setMinSize(rank.getMinWidth(), rank.getMinHeight());
+
         Button score = new Button();
+        score.getStyleClass().addAll("btn","btn-danger");
         score.setText("积分");
         score.setLayoutX(goalNum.getLayoutX() + goalNum.getMinWidth());
         score.setLayoutY(goalNum.getLayoutY());
         score.setMinSize(rank.getMinWidth(), rank.getMinHeight());
         Ap.getChildren().addAll(rank, name, teamName, goalNum, score);
+        Ap.setBackground(new Background(new BackgroundFill(Color.LAVENDER,null,null)));
     }
 }
