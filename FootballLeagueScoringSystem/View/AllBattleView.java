@@ -112,7 +112,7 @@ public class AllBattleView extends Pane {
                     }
                     scrollPane2.setContent(gridPane2);
                     Stage secondStage = new Stage();
-                    Scene secondScene = new Scene(scrollPane2, 600, 600);
+                    Scene secondScene = new Scene(scrollPane2, 900, 600);
                     secondScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
                     secondStage.setScene(secondScene);
                     secondStage.show();

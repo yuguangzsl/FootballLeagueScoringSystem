@@ -37,7 +37,7 @@ public class TodayBattleView extends Pane {
 
         Battle[] battles = battleSql.getTodayBattle();
         GridPane gridPane  = new GridPane();
-        gridPane.setHgap(5);    //修改为battles.length/3
+        gridPane.setHgap(10);    //修改为battles.length/3
 
         gridPane.setPadding(new Insets(20,20,20,20));
 
@@ -52,13 +52,11 @@ public class TodayBattleView extends Pane {
                 System.out.println(e);
             }
             Text  text = new Text("Today  is no battle");
-            //text.setStyle("alert:alert-info");
             FlowPane flowPane = new FlowPane();
-            //flowPane.getChildren().add(label);
             //gridPane.add(text,1,0);
         } else {
             gridPane.setVgap(3);
-            for (int i = 0,j=0; battles[i] != null; i++,j/=3) {
+            for (int i = 0; battles[i] != null; i++) {
                 Timestamp battleTime = battles[i].getBattleTime();  //对战时间
                 String teamA = battles[i].getTeamA();
                 String teamB = battles[i].getTeamB();
@@ -88,7 +86,7 @@ public class TodayBattleView extends Pane {
                 panel.setHeading(headLable);
                 panel.setBody(bodyLable);
                 panel.setFooter(footLable);
-                gridPane.add(panel, i % 3, j);
+                gridPane.add(panel, i % 3, i/3);
             }
         }
         this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);    //设置水平滚动条用不出现

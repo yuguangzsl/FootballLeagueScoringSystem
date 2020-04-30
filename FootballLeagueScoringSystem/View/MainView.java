@@ -24,7 +24,7 @@ public class MainView extends TabPane {
         this.stage = stage;
         generate();
         this.setMinSize(1200, 600);
-        this.setMaxSize(1920, 1080);
+        this.setMaxSize(1200, 600);
     }
 
     public void generate(){

@@ -37,7 +37,11 @@ public class TopButton {
         teamRank.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                vt.toMainView(theLeague,stage,"球队排名");
+                try {
+                    vt.toMainView(theLeague,stage,"球队排名");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         this.playerRank = new Button();//射手积分榜
@@ -50,7 +54,11 @@ public class TopButton {
         playerRank.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                vt.toMainView(theLeague,stage,"射手排名");
+                try {
+                    vt.toMainView(theLeague,stage,"射手排名");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -65,8 +73,14 @@ public class TopButton {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Stage secondStage = new Stage();
-                TodayBattleView todayBattleView = new TodayBattleView(stage,theLeague);
-                Scene secondScene = new Scene(todayBattleView.getScrollPane(), 270, 600);
+                TodayBattleView todayBattleView = null;
+                try {
+                    todayBattleView = new TodayBattleView(stage,theLeague);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scene secondScene = new Scene(todayBattleView.getScrollPane(), 1200
+                        , 600);
                 secondStage.setScene(secondScene);
                 secondStage.show();
             }
@@ -81,7 +95,11 @@ public class TopButton {
         schedule.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                vt.toMainView(theLeague,stage,"全部赛程");
+                try {
+                    vt.toMainView(theLeague,stage,"全部赛程");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

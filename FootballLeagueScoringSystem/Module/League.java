@@ -25,9 +25,9 @@ public class League {
         teams = new Team[64];
         battles = new Battle[768];
         todayBattles = new Battle[50];
-        getPlayers();
+/*        getPlayers();
         getTeams();
-        getAllBattles();
+        getAllBattles();*/
     }
 
     public void playerSort() {
@@ -233,7 +233,6 @@ public class League {
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
                 this.todayBattles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
-                System.out.println(this.todayBattles[i].toString());
                 i++;
             }
 
@@ -325,7 +324,7 @@ public class League {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return battles;
+        return this.battles;
     }
 
     public boolean checkTeam(String teamName) {
@@ -387,6 +386,7 @@ public class League {
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
         String user = "root";
         String password = "123456";
+        String position = null;
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
@@ -394,6 +394,7 @@ public class League {
             String sql = "SELECT * from systemuser where Account='" + account +
                     "' and password='" + passwd +
                     "'";
+            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 if (rs != null) {
@@ -403,6 +404,7 @@ public class League {
             }
             rs.close();
             conn.close();
+            return position;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
