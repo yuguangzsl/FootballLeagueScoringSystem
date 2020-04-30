@@ -43,24 +43,36 @@ public class MainView extends TabPane {
         playerRank.setStyle(tabStyle);
         playerRank.setClosable(false);
         //今日赛程
-        TodayBattleView todayBattleView = new TodayBattleView();
+        TodayBattleView todayBattleView = new TodayBattleView(stage, theLeague);
         Tab todayBattle = new Tab("今日赛程", todayBattleView.getScrollPane());
         todayBattle.setStyle(tabStyle);
         todayBattle.setClosable(false);
         //全部赛程
-        AllBattleView allBattleView = new AllBattleView();
+        AllBattleView allBattleView = new AllBattleView(stage, theLeague);
         Tab allBattle = new Tab("全部赛程", allBattleView.getScrollPane());
         allBattle.setStyle(tabStyle);
         allBattle.setClosable(false);
         //菜单功能界面
-        MenuView menuView = new MenuView(stage,theLeague);
-        Tab menu = new Tab("更多功能",menuView);
+        MenuView menuView = new MenuView(stage, theLeague);
+        Tab menu = new Tab("更多功能", menuView);
         menu.setStyle(tabStyle);
         menu.setClosable(false);
         //
-        this.getTabs().addAll(teamRank, playerRank,todayBattle,allBattle,menu);
+        this.getTabs().addAll(teamRank, playerRank, todayBattle, allBattle, menu);
     }
 
+    public void selectTab(String tab) {
+        if(tab.equals("球队排名")){
+            this.getSelectionModel().select(0);
+        }
+        if(tab.equals("射手排名")){
+            this.getSelectionModel().select(1);
+        }if(tab.equals("今日赛程")){
+            this.getSelectionModel().select(2);
+        }if(tab.equals("全部赛程")){
+            this.getSelectionModel().select(3);
+        }
+    }
 }
 
 

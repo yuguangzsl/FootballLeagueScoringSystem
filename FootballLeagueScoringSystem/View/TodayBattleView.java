@@ -22,7 +22,8 @@ public class TodayBattleView extends Pane {
         return scrollPane;
     }
 
-    TodayBattleView() {
+    TodayBattleView(Stage stage, League theLeague) {
+        this.battleSql = theLeague;
         generate();
     }
 
@@ -31,7 +32,7 @@ public class TodayBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.battleSql = new League();
+
         Battle[] battles = battleSql.getTodayBattle();
         GridPane gridPane  = new GridPane();
         gridPane.setHgap(5);    //修改为battles.length/3

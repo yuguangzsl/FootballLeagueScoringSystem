@@ -3,35 +3,39 @@ package FootballLeagueScoringSystem.View;
 import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
  * @author QuanHao ,Long
  * 射手榜，显示球员排名
- * */
+ */
 public class PlayerRankView extends AnchorPane {
     PlayerRankView(Stage stage, League theLeague) {
         AnchorPane AP0 = new AnchorPane();
         TitleLabels(AP0);
         ScrollPane SP = new ScrollPane();
         AnchorPane AP = new AnchorPane();
-        RankData(theLeague.getPlayers(),AP,stage);
+        RankData(theLeague.getPlayers(), AP, stage, theLeague);
         SP.setLayoutX(0);
         SP.setLayoutY(36);
-        SP.setMinSize(1200,450);
-        SP.setMaxSize(1920,1080);
+        SP.setMinSize(1200, 450);
+        SP.setMaxSize(1920, 1080);
         SP.setContent(AP);
         SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         AP0.getChildren().add(SP);
         this.getChildren().add(AP0);
     }
 
-    private void RankData(Player[] players, AnchorPane AP, Stage stage) {
+    private void RankData(Player[] players, AnchorPane AP, Stage stage, League theLeague) {
         if (players[0] == null) {
             //数据库中没有查到对应数据
             Button NoData = new Button();
@@ -52,13 +56,6 @@ public class PlayerRankView extends AnchorPane {
                 name.setLayoutX(Rank.getLayoutX() + Rank.getMinWidth());
                 name.setLayoutY(i * 30);
                 name.setMinSize(Rank.getMinWidth(), Rank.getMinHeight());
-                name.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        ViewTrans vt = new ViewTrans();
-                        vt.toTeamView(stage, name.getText());
-                    }
-                });
                 Button teamName = new Button();
                 teamName.setText("" + players[i].getTeamName());
                 teamName.setLayoutX(name.getLayoutX() + name.getMinWidth());
@@ -68,9 +65,23 @@ public class PlayerRankView extends AnchorPane {
                     @Override
                     public void handle(MouseEvent event) {
                         ViewTrans vt = new ViewTrans();
-                        vt.toTeamView(stage, teamName.getText());
+                        vt.toTeamView(stage, teamName.getText(), theLeague);
                     }
                 });
+                name.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ViewTrans vt = new ViewTrans();
+                        vt.toPlayerView(stage, teamName.getText(), name.getText(), theLeague);
+                    }
+                });
+                name.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        name.setBackground(new Background(new BackgroundFill(Color.BLUE, null, null)));
+                    }
+                });
+
                 Button GoalNum = new Button();
                 GoalNum.setText("" + players[i].getScore());
                 GoalNum.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth());

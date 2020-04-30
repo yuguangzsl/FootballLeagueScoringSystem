@@ -34,7 +34,7 @@ public class TeamRankView extends Accordion{
         gm1AP.setLayoutY(0);
         //
         Team[] gm1Teams = theLeague.getTeams("男子甲组");
-        RankData(gm1Teams, gm1AP,stage);
+        RankData(gm1Teams, gm1AP,stage,theLeague);
         //
         gm1SP.setContent(gm1AP);
         TitleLabels(gm1AP0);
@@ -54,7 +54,7 @@ public class TeamRankView extends Accordion{
         gm2AP.setMinSize(1200, 435);
         //
         Team[] gm2Teams = theLeague.getTeams("男子乙组");
-        RankData(gm2Teams, gm2AP,stage);
+        RankData(gm2Teams, gm2AP,stage,theLeague);
         //
         gm2SP.setContent(gm2AP);
         TitleLabels(gm2AP0);
@@ -74,7 +74,7 @@ public class TeamRankView extends Accordion{
         gfAP.setMinSize(1200, 435);
         //
         Team[] gfTeams = theLeague.getTeams("女子组");
-        RankData(gfTeams, gfAP,stage);
+        RankData(gfTeams, gfAP,stage,theLeague);
         //
         gfSP.setContent(gfAP);
         TitleLabels(gfAP0);
@@ -94,7 +94,7 @@ public class TeamRankView extends Accordion{
         gaAP.setMinSize(1200, 400);
         //
         Team[] gaTeams = theLeague.getTeams("成年组");
-        RankData(gaTeams, gaAP,stage);
+        RankData(gaTeams, gaAP,stage,theLeague);
         //
         gaSP.setContent(gaAP);
         TitleLabels(gaAP0);
@@ -102,7 +102,7 @@ public class TeamRankView extends Accordion{
         groupAdult.setContent(gaAP0);
         this.getPanes().addAll(groupMale1, groupMale2, groupFemale, groupAdult);
     }
-    private void RankData(Team[] Teams, AnchorPane AP,Stage stage) {
+    private void RankData(Team[] Teams, AnchorPane AP,Stage stage,League theLeague) {
         if (Teams[0] == null) {
             //数据库中没有查到对应数据
             Button NoData = new Button();
@@ -127,7 +127,7 @@ public class TeamRankView extends Accordion{
                     @Override
                     public void handle(MouseEvent event) {
                         ViewTrans vt = new ViewTrans();
-                        vt.toTeamView(stage,name.getText());
+                        vt.toTeamView(stage,name.getText(),theLeague);
                     }
                 });
                 Button WinNum = new Button();

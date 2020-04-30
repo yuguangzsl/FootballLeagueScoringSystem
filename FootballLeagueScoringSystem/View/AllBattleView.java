@@ -26,7 +26,8 @@ public class AllBattleView extends Pane {
     public ScrollPane getScrollPane() {
         return scrollPane;
     }
-    AllBattleView(){
+    AllBattleView(Stage stage, League theLeague){
+        this.battleSql = theLeague;
         generate();
     }
     public void generate(){
@@ -34,7 +35,6 @@ public class AllBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.battleSql = new League();
         Battle[] battles = battleSql.getAllBattles();
         GridPane gridPane  = new GridPane();
         gridPane.setHgap(5);        //修改为battles.length/3
@@ -70,7 +70,6 @@ public class AllBattleView extends Pane {
         Button button = new Button("确定");
         flowPane.getChildren().addAll(label,datePicker,button);
         gridPane.add(flowPane,3,0);
-
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
