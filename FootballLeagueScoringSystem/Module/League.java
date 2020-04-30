@@ -23,7 +23,7 @@ public class League {
     public League() {
         players = new Player[768];
         teams = new Team[64];
-        battles = new Battle[8192];
+        battles = new Battle[768];
         todayBattles = new Battle[50];
         getPlayers();
         getTeams();
@@ -341,7 +341,9 @@ public class League {
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam where teamname='" + teamName + "'";
             ResultSet rs = statement.executeQuery(sql);
-            if (rs != null) status = true;
+            while (rs.next()) {
+                if (rs != null) status = true;
+            }
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -393,9 +395,11 @@ public class League {
                     "' and password='" + passwd +
                     "'";
             ResultSet rs = statement.executeQuery(sql);
-            if (rs != null) {
-                String position = rs.getString("position");
-                return position;
+            while (rs.next()) {
+                if (rs != null) {
+                    String position = rs.getString("position");
+                    return position;
+                }
             }
             rs.close();
             conn.close();
@@ -406,19 +410,18 @@ public class League {
     }
 
     public void setUserStatus(String position) {
-        if(position.equals("系统管理员")){
+        if (position.equals("系统管理员")) {
             this.userStatus = "root";
         }
-        if(position.equals("其他管理员")){
+        if (position.equals("其他管理员")) {
             this.userStatus = "administrator";
         }
-        if(position.equals("主裁判")){
+        if (position.equals("主裁判")) {
             this.userStatus = "mainJudge";
         }
-        if(position.equals("副裁判")){
+        if (position.equals("副裁判")) {
             this.userStatus = "asJudge";
-        }
-        else
+        } else
             this.userStatus = "visitor";
     }
 
