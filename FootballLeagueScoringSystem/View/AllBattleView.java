@@ -38,7 +38,7 @@ public class AllBattleView extends Pane {
         Battle[] battles =  battleSql.getAllBattles();
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);        //修改为battles.length/3
-        gridPane.setVgap(4);
+        gridPane.setVgap(3);
         gridPane.setPadding(new Insets(20,20,20,20));
         String [] colors = new String[]{"panel-success","panel-info","panel-warning"};      //panel顶部颜色选择
         FlowPane flowPane =  new FlowPane();    //添加label，datePicker,button
