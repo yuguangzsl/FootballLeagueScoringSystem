@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class LoginView extends Pane {
     private League theLeague;
@@ -58,7 +60,11 @@ public class LoginView extends Pane {
                 if(theLeague.checkUser(account,password)!=null){
                     ViewTrans vt = new ViewTrans();
                     theLeague.setUserStatus(theLeague.checkUser(account,password));
-                    vt.toMainView(theLeague,stage);
+                    try {
+                        vt.toMainView(theLeague,stage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -71,7 +77,11 @@ public class LoginView extends Pane {
             public void handle(MouseEvent event) {
                 ViewTrans vt = new ViewTrans();
                 theLeague.setUserStatus("游客登录");
-                vt.toMainView(theLeague,stage);
+                try {
+                    vt.toMainView(theLeague,stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         this.getChildren().addAll(welcome,accountL,accountInput,passwordL,passwordInput,confirm,visitor);

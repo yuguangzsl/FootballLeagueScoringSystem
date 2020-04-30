@@ -16,6 +16,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 /**
  * @author QuanHao
@@ -36,7 +38,11 @@ public class AddDataView extends Pane {
             @Override
             public void handle(ActionEvent event) {
                 ViewTrans vt = new ViewTrans();
-                vt.toMainView(theLeague,stage);
+                try {
+                    vt.toMainView(theLeague,stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         this.getChildren().add(back);
