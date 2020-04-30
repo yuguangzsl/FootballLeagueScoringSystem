@@ -18,6 +18,8 @@ public class League {
     Battle[] battles;
     Battle[] todayBattles;
     Battle[] oneDayBattles;
+    private String userStatus;
+
     public League() {
         players = new Player[768];
         teams = new Team[64];
@@ -178,7 +180,7 @@ public class League {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
-            
+
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam where teamgroup='" + groupName + "' Order BY teamscore DESC ";
             ResultSet rs = statement.executeQuery(sql);
@@ -230,7 +232,7 @@ public class League {
                 battleSide = rs.getString("battleSide");
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
-                this.todayBattles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
+                this.todayBattles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
                 System.out.println(this.todayBattles[i].toString());
                 i++;
             }
@@ -242,39 +244,39 @@ public class League {
         }
         return todayBattles;
     }
+
     /**
      * @author :long
      * 查询某天赛程
      */
-    public Battle[] getOneDayBattles(String date){
+    public Battle[] getOneDayBattles(String date) {
         oneDayBattles = new Battle[50];
-        Connection conn ;
+        Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
         String user = "root";
         String password = "123456";
         try {
-            Class.forName(driver) ;
-            conn = DriverManager.getConnection(url,user,password);
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('"+date+"', '%Y-%m-%d')";
+            String sql = "select * from battledetail where DATE_FORMAT(battleTime, '%Y-%m-%d') = DATE_FORMAT('" + date + "', '%Y-%m-%d')";
             ResultSet rs = statement.executeQuery(sql);
-            Timestamp battleTime ;  //对战时间
+            Timestamp battleTime;  //对战时间
             String teamA = null;
             String teamB = null;
             String battleSide = null;      //比赛场地
             int battleResult = 0;    //比赛结果，1表示A胜，0表示平局，-1表示A负,-2表示未开始
             String battleScore = null;     //比赛比分
-            int i=0;
-            while (rs.next()){
+            int i = 0;
+            while (rs.next()) {
                 battleTime = rs.getTimestamp("battleTime");
                 teamA = rs.getString("teamOne");
                 teamB = rs.getString("teamTwo");
                 battleSide = rs.getString("battleSide");
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
-                this.oneDayBattles[i]=new Battle(teamA,teamB,battleTime,battleSide,battleResult,battleScore);
-                System.out.println(this.oneDayBattles[i].toString());
+                this.oneDayBattles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
                 i++;
             }
 
@@ -316,7 +318,6 @@ public class League {
                 battleResult = rs.getInt("battleResult");
                 battleScore = rs.getString("battleScore");
                 this.battles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
-                System.out.println(this.battles[i].toString());
                 i++;
             }
             rs.close();
@@ -327,7 +328,7 @@ public class League {
         return battles;
     }
 
-    public boolean checkTeam(String teamName){
+    public boolean checkTeam(String teamName) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
@@ -340,7 +341,7 @@ public class League {
             Statement statement = conn.createStatement();
             String sql = "select * from footballteam where teamname='" + teamName + "'";
             ResultSet rs = statement.executeQuery(sql);
-            if(rs!=null)status = true;
+            if (rs != null) status = true;
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -348,7 +349,8 @@ public class League {
         }
         return status;
     }
-    public boolean addSystemUser(String name,String account,String passwd,String position){
+
+    public boolean addSystemUser(String name, String account, String passwd, String position) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
@@ -358,26 +360,26 @@ public class League {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String[] s={"系统管理员","其他管理员","主裁判","副裁判"};
+            String[] s = {"系统管理员", "其他管理员", "主裁判", "副裁判"};
             List<String> strList = new ArrayList<String>();
             strList = Arrays.asList(s);
-            if(strList.contains(position)){
-                String sql = "Insert Into systemuser values ('" +name+
-                        "','" +account+
-                        "','" +passwd+
-                        "','" +position+
+            if (strList.contains(position)) {
+                String sql = "Insert Into systemuser values ('" + name +
+                        "','" + account +
+                        "','" + passwd +
+                        "','" + position +
                         "')";
                 int status = statement.executeUpdate(sql);
                 conn.close();
                 return true;//新用户插入成功
-            }
-            else return false;
+            } else return false;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-    public boolean checkUser(String account,String passwd){
+
+    public String checkUser(String account, String passwd) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
@@ -387,18 +389,37 @@ public class League {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "SELECT * from systemuser where Account='" +account+
-                    "' and password='" +passwd+
+            String sql = "SELECT * from systemuser where Account='" + account +
+                    "' and password='" + passwd +
                     "'";
-                ResultSet rs = statement.executeQuery(sql);
-                if(rs!=null){
-                    return true;
-                }
-                rs.close();
-                conn.close();
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs != null) {
+                String position = rs.getString("position");
+                return position;
+            }
+            rs.close();
+            conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
+
+    public void setUserStatus(String position) {
+        if(position.equals("系统管理员")){
+            this.userStatus = "root";
+        }
+        if(position.equals("其他管理员")){
+            this.userStatus = "administrator";
+        }
+        if(position.equals("主裁判")){
+            this.userStatus = "mainJudge";
+        }
+        if(position.equals("副裁判")){
+            this.userStatus = "asJudge";
+        }
+        else
+            this.userStatus = "visitor";
+    }
+
 }

@@ -1,6 +1,7 @@
 package FootballLeagueScoringSystem.Control;
 
 import FootballLeagueScoringSystem.Module.League;
+import FootballLeagueScoringSystem.View.LoginView;
 import FootballLeagueScoringSystem.View.MainView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,9 +12,8 @@ public class MainStage extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        League league = new League();
-        MainView mainView = new MainView(league,primaryStage);
-        Scene scene = new Scene(mainView);
+        LoginView loginView = new LoginView(primaryStage);
+        Scene scene = new Scene(loginView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         primaryStage.setScene(scene);
         primaryStage.show();
