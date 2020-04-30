@@ -1,6 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
+import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -32,11 +33,13 @@ public class PlayerView extends Pane {
     private ScrollPane scrollPane;
     private Button teamName;
     private Button rank;
-    public PlayerView(Player player, Stage stage) {
+    private League theLeague;
+    public PlayerView(Player player, Stage stage,League theLeague) {
         this.stage = stage;
         this.scrollPane = new ScrollPane();
         this.player = player;
-        Generate(player);
+        this.theLeague= theLeague;
+        Generate(player,theLeague);
         this.setMinSize(1200, 600);
         this.setMaxSize(1920, 1080);
     }
@@ -47,11 +50,11 @@ public class PlayerView extends Pane {
          * */
         
     }
-    private void Generate(Player player) {
+    private void Generate(Player player,League theLeague) {
         /**
          * 各个控件之间的坐标采用相近控件的相对坐标
          * */
-        TopButton topButton = new TopButton(this.stage);//顶部的四个按钮
+        TopButton topButton = new TopButton(this.stage,this.theLeague);//顶部的四个按钮
         //左上一，队名按钮
         this.teamName = new Button();
         teamName.setFont(new Font("Microsoft YaHei", 28));
@@ -63,7 +66,7 @@ public class PlayerView extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 ViewTrans vt = new ViewTrans();
-                vt.toTeamView(stage,teamName.getText());
+                vt.toTeamView(stage,teamName.getText(),theLeague);
                 System.out.println("to player View");
             }
         });

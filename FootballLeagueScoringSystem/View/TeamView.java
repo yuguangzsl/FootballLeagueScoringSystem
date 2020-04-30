@@ -1,6 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
+import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Team;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -28,25 +29,19 @@ public class TeamView extends Pane {
     private ScrollPane players;//显示球员信息的滚动面板
     private ScrollPane schedule;//显示赛程的滚动面板
     private Button rank;//显示积分的按钮
-    public TeamView(Team thisTeam, Stage stage) {
+    private League theLeague;
+    public TeamView(Team thisTeam, Stage stage, League theLeague) {
         this.stage = stage;
+        this.theLeague=theLeague;
         this.players = new ScrollPane();
         this.schedule = new ScrollPane();
         this.rank = new Button();
-        generate(thisTeam);
+        generate(thisTeam,theLeague);
         this.setMinSize(1200, 600);
         this.setMaxSize(1920, 1080);
     }
-
-    private void getInfo(String teamName) {
-        /**
-         * 传入一个球队的名字，然后从数据库中读取到这支球队的信息
-         * 再以此实例化一个球队的信息面板
-         * */
-    }
-
-    public void generate(Team thisTeam) {
-        TopButton topButton = new TopButton(this.stage);//顶部的四个按钮
+    public void generate(Team thisTeam,League theLeague) {
+        TopButton topButton = new TopButton(this.stage,this.theLeague);//顶部的四个按钮
         //中左，标签：球队名
         Button teamName = new Button();
         teamName.setFont(new Font("Microsoft YaHei", 28));
@@ -74,7 +69,6 @@ public class TeamView extends Pane {
         teamLOGO.setMinSize(topButton.getButtonWidth() * 1.5 + topButton.getSpace(),
                 (topButton.getButtonHeight() * 2) * 5);
         //下中，滚动面板：球员列表
-
         FlowPane playerC = new FlowPane();
         this.players.setLayoutX(teamLOGO.getLayoutX() + teamLOGO.getMinWidth() + 10);
         this.players.setLayoutY(teamLOGO.getLayoutY());
@@ -91,7 +85,7 @@ public class TeamView extends Pane {
                 @Override
                 public void handle(MouseEvent event) {
                     ViewTrans vt = new ViewTrans();
-                    vt.toPlayerView(stage,thisTeam.getTeamName(),player.getText());
+                    vt.toPlayerView(stage,thisTeam.getTeamName(),player.getText(),theLeague);
                 }
             });
             playerC.getChildren().add(player);

@@ -12,12 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.awt.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,12 +23,11 @@ public class AllBattleView extends Pane {
     public Stage stage;
     private League battleSql;
     private ScrollPane scrollPane = new ScrollPane();
-
     public ScrollPane getScrollPane() {
         return scrollPane;
     }
-
-    AllBattleView(){
+    AllBattleView(Stage stage, League theLeague){
+        this.battleSql = theLeague;
         generate();
     }
     public void generate(){
@@ -39,15 +35,12 @@ public class AllBattleView extends Pane {
          * @author :Long
          * 生成所有赛程
          */
-        this.battleSql = new League();
         Battle[] battles = battleSql.getAllBattles();
         GridPane gridPane  = new GridPane();
         gridPane.setHgap(5);        //修改为battles.length/3
         gridPane.setVgap(4);
         gridPane.setPadding(new Insets(20,20,20,20));
-
         String [] colors = new String[]{"panel-success","panel-info","panel-warning"};      //panel顶部颜色选择
-
         FlowPane flowPane =  new FlowPane();    //添加label，datePicker,button
         //日期选择器
         DatePicker datePicker = new DatePicker();
@@ -75,10 +68,8 @@ public class AllBattleView extends Pane {
         datePicker.setPromptText("yyyy-MM-dd".toLowerCase());
         Label label = new Label("Choose one day:  ");
         Button button = new Button("确定");
-
         flowPane.getChildren().addAll(label,datePicker,button);
         gridPane.add(flowPane,3,0);
-
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -137,12 +128,12 @@ public class AllBattleView extends Pane {
             String battleSide = battles[i].getBattleSide();      //比赛场地
             int battleResult = battles[i].getBattleResult();    //比赛结果，1表示A胜，0表示平局，-1表示A负
             String battleScore = battles[i].getBattleScore();
-
             org.kordamp.bootstrapfx.scene.layout.Panel panel = new org.kordamp.bootstrapfx.scene.layout.Panel();
             panel.getStyleClass().addAll("panel-primary",colors[i%3],"panel-default");
             panel.setPadding(new Insets(20,20,20,20));
             Label headLable = new Label(battleTime.toString().split("\\.")[0]+"\t"+battleSide);
             Label bodyLable  = new Label(teamA+"\t\t"+battleScore+"\t\t"+teamB);
+
             Label footLable = new Label();
             switch (battleResult){
                 case -2:footLable.setText("\t\t未开始");break;

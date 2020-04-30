@@ -1,5 +1,8 @@
 package FootballLeagueScoringSystem.View;
 
+import FootballLeagueScoringSystem.Control.ViewTrans;
+import FootballLeagueScoringSystem.Module.League;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,10 +22,11 @@ public class TopButton {
     public Button todaySchedule;
     public Button schedule;
 
-   public TopButton(Stage stage) {
+   public TopButton(Stage stage, League theLeague) {
         /**
          * 顶部的四个按钮
          * */
+       ViewTrans vt = new ViewTrans();
         this.teamRank = new Button();//队伍积分榜
         teamRank.setFont(new Font("Microsoft YaHei", 20));
         teamRank.setText("球队积分榜");
@@ -30,6 +34,12 @@ public class TopButton {
         teamRank.setLayoutY(10);
         teamRank.setMinWidth(250);
         teamRank.setMinHeight(40);
+        teamRank.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vt.toMainView(theLeague,stage,"球队排名");
+            }
+        });
         this.playerRank = new Button();//射手积分榜
         playerRank.setFont(new Font("Microsoft YaHei", 20));
         playerRank.setText("射手积分榜");
@@ -37,6 +47,13 @@ public class TopButton {
         playerRank.setLayoutY(10);
         playerRank.setMinWidth(250);
         playerRank.setMinHeight(40);
+        playerRank.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vt.toMainView(theLeague,stage,"射手排名");
+
+            }
+        });
         this.todaySchedule = new Button();//今日赛程
         todaySchedule.setFont(new Font("Microsoft YaHei", 20));
         todaySchedule.setText("今日赛程");
@@ -48,13 +65,7 @@ public class TopButton {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 Stage secondStage = new Stage();
-
-                TodayBattleView todayBattleView = null;
-                try {
-                    todayBattleView = new TodayBattleView();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                TodayBattleView todayBattleView = new TodayBattleView(stage,theLeague);
                 Scene secondScene = new Scene(todayBattleView.getScrollPane(), 270, 600);
                 secondStage.setScene(secondScene);
                 secondStage.show();
@@ -62,7 +73,7 @@ public class TopButton {
         });
         this.schedule = new Button();//赛程表
         schedule.setFont(new Font("Microsoft YaHei", 20));
-        schedule.setText("赛程表");
+        schedule.setText("总赛程表");
         schedule.setLayoutX(910);
         schedule.setLayoutY(10);
         schedule.setMinWidth(250);
@@ -70,11 +81,7 @@ public class TopButton {
         schedule.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                Stage secondStage = new Stage();
-                AllBattleView allBattleView = new AllBattleView();
-                Scene secondScene = new Scene(allBattleView.getScrollPane(), 270, 600);
-                secondStage.setScene(secondScene);
-                secondStage.show();
+                vt.toMainView(theLeague,stage,"全部赛程");
             }
         });
     }
