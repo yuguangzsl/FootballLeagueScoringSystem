@@ -6,6 +6,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 /**
  * @author QuanHao
@@ -17,7 +19,7 @@ public class MainView extends TabPane {
     private Button entryEven;//录入赛事信息
     private Button autoPlay;//自动进行比赛->测试功能
 
-    public MainView(League theLeague, Stage stage) {
+    public MainView(League theLeague, Stage stage) throws IOException {
         this.theLeague = theLeague;
         this.stage = stage;
         generate();
@@ -25,7 +27,7 @@ public class MainView extends TabPane {
         this.setMaxSize(1920, 1080);
     }
 
-    public void generate() {
+    public void generate() throws IOException {
         /**
          * 标签换成按钮仅仅是为了让文本居中，设置背景填充是为了让按钮显示出标签的效果
          * setStyle("-fx-CSS代码")
