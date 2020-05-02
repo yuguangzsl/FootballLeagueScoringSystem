@@ -73,7 +73,7 @@ public class PlayerView extends Pane {
         //右上一，排名按钮
         this.rank = new Button();
         rank.setFont(new Font("Microsoft YaHei", 28));
-        rank.setText("当前排名：" + player.getRank());
+        rank.setText("个人排名：" + player.getRank());
         rank.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth() + topButton.getSpace());
         rank.setLayoutY(teamName.getLayoutY());
         rank.setMinSize(topButton.getButtonWidth() * 2 + topButton.getSpace(), topButton.getButtonHeight() * 2);
@@ -107,16 +107,26 @@ public class PlayerView extends Pane {
         goalNum.setMinSize(playerName.getMinWidth(), playerName.getMinHeight());
         //右下，进球详细信息
         FlowPane container = new FlowPane();
-        String goalInfo = player.getGoalInfo();
-        String[] Infos = goalInfo.split(" ");
-        for (int i = 3; i < Infos.length; i += 4) {
+        String[] goalInfo = player.getGoalInfo();
+        if(goalInfo[0]==null){
             Button info = new Button();
-            info.setFont(new Font("Microsoft YaHei", 28));
+            info.setFont(new Font("LiShu", 28));
             info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
-            info.setText(Infos[i - 2] + "VS" + Infos[i - 1] + "\n" + "in" + Infos[i]);
+            info.setText("无进球数据");
             info.setTextAlignment(TextAlignment.CENTER);
             info.setMinSize(500, 120);
             container.getChildren().add(info);
+        }
+        else {
+            for (int i = 0; goalInfo[i] != null; i++) {
+                Button info = new Button();
+                info.setFont(new Font("Microsoft YaHei", 28));
+                info.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
+                info.setText(goalInfo[i]);
+                info.setTextAlignment(TextAlignment.CENTER);
+                info.setMinSize(500, 120);
+                container.getChildren().add(info);
+            }
         }
         scrollPane.setContent(container);
         scrollPane.setLayoutX(playerName.getLayoutX() + playerName.getMinWidth() + 10);
