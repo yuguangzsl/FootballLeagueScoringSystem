@@ -24,12 +24,12 @@ public class TodayBattleView extends Pane {
     public ScrollPane getScrollPane() {
         return scrollPane;
     }
-    TodayBattleView(Stage stage, League theLeague) throws IOException {
+    TodayBattleView(Stage stage, League theLeague)  {
         this.battleSql = theLeague;
         generate();
     }
 
-    public void generate() throws IOException {
+    public void generate() {
         /**
          * @author :Long
          * 生成所有赛程
@@ -46,7 +46,11 @@ public class TodayBattleView extends Pane {
         if (battles[0] == null) {
 
             //gridPane.setVgap(1);
-            gridPane = FXMLLoader.load(getClass().getResource("TodayBattleView.fxml"));
+            try {
+                gridPane = FXMLLoader.load(getClass().getResource("TodayBattleView.fxml"));
+            }catch (IOException e){
+                System.out.println(e);
+            }
             Text  text = new Text("Today  is no battle");
             FlowPane flowPane = new FlowPane();
             //gridPane.add(text,1,0);

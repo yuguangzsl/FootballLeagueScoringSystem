@@ -19,7 +19,7 @@ public class MainView extends TabPane {
     private Button entryEven;//录入赛事信息
     private Button autoPlay;//自动进行比赛->测试功能
 
-    public MainView(League theLeague, Stage stage) throws IOException {
+    public MainView(League theLeague, Stage stage){
         this.theLeague = theLeague;
         this.stage = stage;
         generate();
@@ -27,7 +27,7 @@ public class MainView extends TabPane {
         this.setMaxSize(1200, 600);
     }
 
-    public void generate() throws IOException {
+    public void generate(){
         /**
          * 标签换成按钮仅仅是为了让文本居中，设置背景填充是为了让按钮显示出标签的效果
          * setStyle("-fx-CSS代码")
