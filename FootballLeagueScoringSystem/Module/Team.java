@@ -159,7 +159,7 @@ public class Team implements Comparable<Team> {
         return this.players;
     }
 
-    public String getGameInfo() {
+    public String[] getGameInfo() {
         /**
          * @author:quanhao
          * 获取这支队伍的比赛信息
@@ -169,33 +169,43 @@ public class Team implements Comparable<Team> {
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
         String user = "root";
         String password = "123456";
-        String result = null;
+        String[] result = new String[50];
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
             String sql = "select * from battledetail where teamone='" + teamName + "'" + "or teamtwo='" + this.teamName + "'";
             ResultSet rs = statement.executeQuery(sql);
+            int i=0;
             while (rs.next()) {
-                result += rs.getString("teamOne") + " ";
-                result += rs.getString("teamTwo") + " ";
-                result += rs.getString("battleSide") + " ";
-                result += rs.getString("battleTime") + " ";
+                result[i] = "";
+                if(rs.getString("teamOne")==teamName) {
+                    result[i] += rs.getString("teamOne") + "VS";
+                    result[i] += rs.getString("teamTwo") + "\t\t";
+
+                }
+                else {
+                    result[i] += rs.getString("teamTwo") + "VS";
+                    result[i] += rs.getString("teamOne") + "\t\t";
+                }
                 int status = rs.getInt("battleResult");
                 switch (status) {
                     case 1:
-                        result += rs.getString("teamOne") + "获胜" + " ";
+                        result[i] += rs.getString("teamOne") + "获胜" + "\n地点：";
                         break;
                     case 0:
-                        result += "平局" + " ";
+                        result[i] += "平局" + "\n地点：";
                         break;
                     case -1:
-                        result += rs.getString("teamTwo") + "获胜" + " ";
+                        result[i] += rs.getString("teamTwo") + "获胜" + "\n地点：";
                         break;
                     case -2:
-                        result += "比赛未开始" + " ";
+                        result[i] += "比赛未开始" + "\n地点：";
                         break;
                 }
+                result[i] += rs.getString("battleSide") + "\t时间：";
+                result[i] += rs.getString("battleTime");
+                i++;
             }
             rs.close();
             conn.close();
