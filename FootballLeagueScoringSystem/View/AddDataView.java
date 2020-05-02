@@ -83,6 +83,8 @@ public class AddDataView extends Pane {
         //选择所属的小组
         ChoiceBox groupNameInput = new ChoiceBox(FXCollections.observableArrayList(
                 "男子甲组", "男子乙组", "女子组", "成年组"));
+        groupNameInput.getStyleClass().addAll("split-menu-btn-info");
+
         /**
          * 请设置默认值
          * */
