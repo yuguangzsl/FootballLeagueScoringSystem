@@ -82,7 +82,8 @@ public class AllBattleView extends Pane {
                 Battle[] oneDayBattles = battleSql.getOneDayBattles(date);
                 if(oneDayBattles[0]==null){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Today is no battle");
+                    alert.setContentText(date+" is no battle");
+                    //alert.text
                     alert.show();
                 }
                 else {

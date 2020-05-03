@@ -16,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 
@@ -58,6 +59,7 @@ public class TeamView extends Pane {
         rank.setLayoutX(teamName.getLayoutX() + teamName.getMinWidth() + topButton.getSpace());
         rank.setLayoutY(teamName.getLayoutY());
         rank.setMinSize(teamName.getMinWidth(), teamName.getMinHeight());
+        rank.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
         //下左，标签：球队LOGO
         Label teamLOGO = new Label();
         Image image = new Image(getPic("LOGO"));
@@ -73,14 +75,16 @@ public class TeamView extends Pane {
         this.players.setLayoutX(teamLOGO.getLayoutX() + teamLOGO.getMinWidth() + 10);
         this.players.setLayoutY(teamLOGO.getLayoutY());
         this.players.setMaxSize(topButton.getButtonWidth(), teamLOGO.getMinHeight());
-        this.players.setMinHeight(topButton.getButtonHeight() * 5);
+        this.players.setMinHeight(topButton.getButtonHeight() * 10);
         this.players.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         playerC.setMaxWidth(topButton.getButtonWidth());
         for (int i = 0; thisTeam.getPlayers()[i]!=null; i++) {
             Button player = new Button();
             player.setFont(new Font("Microsoft YaHei", 24));
             player.setText(thisTeam.getPlayers()[i].getName());
+            player.setTextAlignment(TextAlignment.CENTER);
             player.setMinSize(topButton.getButtonWidth(), topButton.getButtonHeight());
+            player.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
             player.setOnMouseClicked(new EventHandler< MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event) {
@@ -100,14 +104,14 @@ public class TeamView extends Pane {
         this.schedule.setMinHeight(topButton.getButtonHeight() * 15 / 2);
         this.schedule.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         gameC.setMaxWidth(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX());
-        String gameInfo = thisTeam.getGameInfo();
-        String[] Infos = gameInfo.split(" ");
-        for (int i = 4; i < Infos.length; i += 5) {
+        String[] gameInfo = thisTeam.getGameInfo();
+        for (int i = 0; gameInfo[i]!=null; i++) {
             Button game = new Button();
-            game.setFont(new Font("Microsoft YaHei", 28));
-            game.setText(Infos[i - 4] + "VS" + Infos[i - 3] + "in" + Infos[i - 2] +"\n"+ Infos[i]);
+            game.setFont(new Font("Microsoft YaHei", 24));
+            game.setText(gameInfo[i]);
             game.setMinSize(rank.getLayoutX() + rank.getMinWidth() - this.schedule.getLayoutX(),
                     topButton.getButtonHeight() * 1.5);
+            game.setBackground(new Background(new BackgroundFill(Color.LAVENDER, null, null)));
             gameC.getChildren().add(game);
         }
         this.schedule.setContent(gameC);

@@ -61,9 +61,11 @@ public class League {
                 this.players[i] = new Player(teamName, playerName);
                 i++;
             }
-            Arrays.sort(this.players);
-            for (i = 0; i < players.length; i++) {
-                sql = "update footballplayer set playerRank=" + (i + 1) + " where " + "playerName='" + players[i].getName() + "'";
+            Player[] truePlayers = new Player[i];        //获取当前player数，防止sort数组值为null
+            for (i=0;players[i]!=null;i++)truePlayers[i] = players[i];
+            Arrays.sort(truePlayers);
+            for (i = 0; i<truePlayers.length; i++) {
+                sql = "update footballplayer set playerRank=" + (i + 1) + " where " + "playerName='" + truePlayers[i].getName() + "'";
                 statement.executeUpdate(sql);
             }
             rs.close();
@@ -105,7 +107,7 @@ public class League {
         return this.players;
     }
 
-    public void teamSort() {
+    public void teamSort(String groupName) {
         /**
          * @param :
          * @author : long
@@ -120,7 +122,7 @@ public class League {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "select teamName,teamScore from footballteam";
+            String sql = "select teamName,teamScore from footballteam where teamgroup='"+groupName+"'";
             ResultSet rs = statement.executeQuery(sql);
             String teamName = null;
             int i = 0;
@@ -129,9 +131,11 @@ public class League {
                 this.teams[i] = new Team(teamName);
                 i++;
             }
-            Arrays.sort(this.teams);
-            for (i = 0; i < teams.length; i++) {
-                sql = "update footballteam set teamRank=" + (i + 1) + " where " + "teamName='" + teams[i].getTeamName() + "'";
+            Team[] trueTeams =  new Team[i];       //防止出现空team导致排序失败
+            for(i=0;teams[i]!=null;i++)trueTeams[i]=teams[i];
+            Arrays.sort(trueTeams);
+            for (i = 0; i<trueTeams.length; i++) {
+                sql = "update footballteam set teamRank=" + (i + 1) + " where " + "teamName='" + trueTeams[i].getTeamName() + "'";
                 statement.executeUpdate(sql);
             }
             rs.close();

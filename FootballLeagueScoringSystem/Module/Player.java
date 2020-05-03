@@ -114,7 +114,7 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public String getGoalInfo() {
+    public String[] getGoalInfo() {
         /**
          * @author :QUANHAO
          * 从数据库中读取该球员的进球信息
@@ -124,18 +124,21 @@ public class Player implements Comparable<Player> {
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
         String user = "root";
         String password = "123456";
-        String result = null;
+        String[] result = new String[30];
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
             String sql = "select * from goaldetail where playerName = '" + this.name + "'";
             ResultSet rs = statement.executeQuery(sql);
+            int i=0;
             while (rs.next()) {
-                result += rs.getString("playerName")+" ";
-                result += rs.getString("teamA")+" ";
-                result += rs.getString("teamB")+" ";
-                result += rs.getString("time")+" ";
+                result[i] = "";
+                result[i] += rs.getString("time").split(" ")[0]+"\t";
+                result[i] += rs.getString("teamA")+"VS";
+                result[i] += rs.getString("teamB")+"\n进球时间：";
+                result[i] += rs.getString("time").split(" ")[1];
+                i++;
             }
             rs.close();
             conn.close();

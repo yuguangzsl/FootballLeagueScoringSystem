@@ -24,6 +24,7 @@ public class PlayerRankView extends AnchorPane {
         TitleLabels(AP0);
         ScrollPane SP = new ScrollPane();
         AnchorPane AP = new AnchorPane();
+        theLeague.playerSort();
         RankData(theLeague.getPlayers(), AP, stage, theLeague);
         SP.setLayoutX(0);
         SP.setLayoutY(36);
