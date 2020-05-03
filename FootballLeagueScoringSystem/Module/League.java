@@ -1,7 +1,12 @@
 package FootballLeagueScoringSystem.Module;
 
+import javafx.beans.property.ObjectProperty;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -244,6 +249,50 @@ public class League {
         return todayBattles;
     }
 
+    public Battle[] getNoStartBattle() {
+        /**
+         * 返回未开始比赛的赛程信息
+         * */
+        Battle[] noStartBattles = new Battle[100];
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+            java.util.Date todaydate = new java.util.Date();    //今天的日期
+            SimpleDateFormat ft2 = new SimpleDateFormat("yyyy-MM-dd");
+            String date = ft2.format(todaydate);
+            String sql = "select * from battledetail where battleresult = -2";
+            ResultSet rs = statement.executeQuery(sql);
+            Timestamp battleTime;  //对战时间
+            String teamA = null;
+            String teamB = null;
+            String battleSide = null;      //比赛场地
+            int battleResult = 0;    //比赛结果，1表示A胜，0表示平局，-1表示A负,-2表示未开始
+            String battleScore = null;     //比赛比分
+            int i = 0;
+            while (rs.next()) {
+                battleTime = rs.getTimestamp("battleTime");
+                teamA = rs.getString("teamOne");
+                teamB = rs.getString("teamTwo");
+                battleSide = rs.getString("battleSide");
+                battleResult = rs.getInt("battleResult");
+                battleScore = rs.getString("battleScore");
+                noStartBattles[i] = new Battle(teamA, teamB, battleTime, battleSide, battleResult, battleScore);
+                i++;
+            }
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return noStartBattles;
+    }
+
     /**
      * @author :long
      * 查询某天赛程
@@ -370,7 +419,7 @@ public class League {
                         "','" + passwd +
                         "','" + position +
                         "')";
-                int status = statement.executeUpdate(sql);
+                statement.executeUpdate(sql);
                 conn.close();
                 return true;//新用户插入成功
             } else return false;
@@ -398,7 +447,7 @@ public class League {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 if (rs != null) {
-                    String position = rs.getString("position");
+                    position = rs.getString("position");
                     return position;
                 }
             }
@@ -427,4 +476,32 @@ public class League {
             this.userStatus = "visitor";
     }
 
+    public void addGoalDetail(String playerName, String teamA, String teamB, String time) {
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            LocalDateTime localDateTime = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            java.util.Date date = java.util.Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            Timestamp sqlTime = new Timestamp(date.getTime());//LocalDateTime转换成SQL 用的date类型
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+            statement.execute("SET FOREIGN_KEY_CHECKS=0");//关闭外键约束检查
+            String sql = "INSERT INTO goaldetail(playerName, teamA, teamB, time) values (?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, playerName);
+            ps.setString(2, teamA);
+            ps.setString(3, teamB);
+            ps.setTimestamp(4, sqlTime);
+            ps.executeUpdate();
+            System.out.println("添加成功！");
+            statement.execute("SET FOREIGN_KEY_CHECKS=1");//启动外键约束检查
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -27,13 +27,16 @@ public class TeamRankView extends Accordion{
         groupMale1.setText("男子甲组");
         groupMale1.setStyle(titleStyle);
         AnchorPane gm1AP0 = new AnchorPane();
-        gm1AP0.setMinSize(1200, 435);
+        //gm1AP0.setMinSize(1200, 435);
+        gm1AP0.setMinHeight(500);
         ScrollPane gm1SP = new ScrollPane();
-        gm1SP.setMinSize(1200, 435);
+        //gm1SP.setMinSize(1200, 435);
+        gm1SP.setMinHeight(500);
         gm1SP.setLayoutX(0);
         gm1SP.setLayoutY(36);
         AnchorPane gm1AP = new AnchorPane();
-        gm1AP.setMinSize(1200, 435);
+//        gm1AP.setMinSize(1200, 435);
+        gm1SP.setMinHeight(500);
         gm1AP.setLayoutX(0);
         gm1AP.setLayoutY(0);
         //

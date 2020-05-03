@@ -36,5 +36,12 @@ public class MenuView extends AnchorPane {
         updateBattle.setLayoutY(registerTeam.getLayoutY());
         updateBattle.setMinSize(140, 140);
         this.getChildren().addAll(registerTeam, updateBattle);
+        updateBattle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ViewTrans vt = new ViewTrans();
+                vt.toUpdateDataView(stage,theLeague);
+            }
+        });
     }
 }

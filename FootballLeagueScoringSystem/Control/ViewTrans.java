@@ -3,10 +3,7 @@ package FootballLeagueScoringSystem.Control;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import FootballLeagueScoringSystem.Module.Team;
-import FootballLeagueScoringSystem.View.MainView;
-import FootballLeagueScoringSystem.View.PlayerView;
-import FootballLeagueScoringSystem.View.AddDataView;
-import FootballLeagueScoringSystem.View.TeamView;
+import FootballLeagueScoringSystem.View.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -43,6 +40,12 @@ public class ViewTrans {
         MainView mainView = new MainView(theLeague,stage);
         mainView.selectTab(tab);
         Scene scene = new Scene(mainView);
+        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        stage.setScene(scene);
+    }
+    public void toUpdateDataView(Stage stage,League theLeague){
+        UpdateDataView updateDataView = new UpdateDataView(stage,theLeague);
+        Scene scene = new Scene(updateDataView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
