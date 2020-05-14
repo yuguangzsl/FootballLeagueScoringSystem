@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -23,20 +24,18 @@ import javafx.stage.Stage;
 public class TeamRankView extends Accordion{
     public TeamRankView(Stage stage, League theLeague){
         String titleStyle = "-fx-pref-width:1200px;-fx-pref-height:60px;-fx-text-align:center;-fx-font-size:18px;";
+        //男子甲组
         TitledPane groupMale1 = new TitledPane();
         groupMale1.setText("男子甲组");
         groupMale1.setStyle(titleStyle);
 
-        AnchorPane gm1AP0 = new AnchorPane();
-        //gm1AP0.setMinSize(1200, 435);
-        gm1AP0.setMinHeight(500);
+        AnchorPane gm1GP0 = new AnchorPane();
+        gm1GP0.setPrefHeight(500);
         ScrollPane gm1SP = new ScrollPane();
-        //gm1SP.setMinSize(1200, 435);
-        gm1SP.setMinHeight(500);
+        gm1SP.setPrefHeight(500);
         gm1SP.setLayoutX(0);
         gm1SP.setLayoutY(36);
         AnchorPane gm1AP = new AnchorPane();
-//        gm1AP.setMinSize(1200, 435);
         gm1SP.setMinHeight(500);
         gm1AP.setLayoutX(0);
         gm1AP.setLayoutY(0);
@@ -46,9 +45,9 @@ public class TeamRankView extends Accordion{
         RankData(gm1Teams, gm1AP,stage,theLeague);
         //
         gm1SP.setContent(gm1AP);
-        TitleLabels(gm1AP0);
-        gm1AP0.getChildren().add(gm1SP);
-        groupMale1.setContent(gm1AP0);
+        TitleLabels(gm1GP0);
+        gm1GP0.getChildren().add(gm1SP);
+        groupMale1.setContent(gm1GP0);
         //男子乙组
         TitledPane groupMale2 = new TitledPane();
         groupMale2.setText("男子乙组");
@@ -62,7 +61,6 @@ public class TeamRankView extends Accordion{
         AnchorPane gm2AP = new AnchorPane();
         gm2AP.setMinSize(1200, 435);
         //
-        //theLeague.teamSort("男子乙组");
         Team[] gm2Teams = theLeague.getTeams("男子乙组");
         RankData(gm2Teams, gm2AP,stage,theLeague);
         //
@@ -83,7 +81,6 @@ public class TeamRankView extends Accordion{
         AnchorPane gfAP = new AnchorPane();
         gfAP.setMinSize(1200, 435);
         //
-        //theLeague.teamSort("女子组");
         Team[] gfTeams = theLeague.getTeams("女子组");
         RankData(gfTeams, gfAP,stage,theLeague);
         //
@@ -104,7 +101,6 @@ public class TeamRankView extends Accordion{
         AnchorPane gaAP = new AnchorPane();
         gaAP.setMinSize(1200, 400);
         //
-        //theLeague.teamSort("成年组");
         Team[] gaTeams = theLeague.getTeams("成年组");
         RankData(gaTeams, gaAP,stage,theLeague);
         //
@@ -122,7 +118,7 @@ public class TeamRankView extends Accordion{
             NoData.setText("没有找到对应数据！");
             NoData.setLayoutX(0);
             NoData.setLayoutY(0);
-            NoData.setMinSize(1200, 30);
+            NoData.setPrefSize(1200, 30);
             AP.getChildren().add(NoData);
             AP.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
         } else {
