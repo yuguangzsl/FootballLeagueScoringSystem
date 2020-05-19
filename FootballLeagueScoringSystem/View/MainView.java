@@ -23,7 +23,7 @@ public class MainView extends TabPane {
         this.theLeague = theLeague;
         this.stage = stage;
         generate();
-        this.setMinSize(1200, 600);
+        this.setPrefSize(1200, 600);
         this.setMaxSize(1200, 600);
     }
 
@@ -75,6 +75,12 @@ public class MainView extends TabPane {
             this.getSelectionModel().select(3);
         }
     }
+    public boolean updateDate(){
+        this.getChildren().clear();
+        generate();
+        return true;
+    }
+
 }
 
 

@@ -89,7 +89,7 @@ public class TeamView extends Pane {
                 @Override
                 public void handle(MouseEvent event) {
                     ViewTrans vt = new ViewTrans();
-                    vt.toPlayerView(stage,thisTeam.getTeamName(),player.getText(),theLeague);
+                    vt.toPlayerView(theLeague, stage,thisTeam.getTeamName(),player.getText());
                 }
             });
             playerC.getChildren().add(player);

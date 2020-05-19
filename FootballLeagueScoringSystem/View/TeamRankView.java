@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -141,7 +140,7 @@ public class TeamRankView extends Accordion{
                     @Override
                     public void handle(MouseEvent event) {
                         ViewTrans vt = new ViewTrans();
-                        vt.toTeamView(stage,name.getText(),theLeague);
+                        vt.toTeamView(theLeague, stage,name.getText());
                     }
                 });
                 name.setOnMouseEntered(new EventHandler<MouseEvent>() {

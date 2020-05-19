@@ -66,7 +66,7 @@ public class PlayerView extends Pane {
             @Override
             public void handle(MouseEvent event) {
                 ViewTrans vt = new ViewTrans();
-                vt.toTeamView(stage,teamName.getText(),theLeague);
+                vt.toTeamView(theLeague, stage,teamName.getText());
                 System.out.println("to player View");
             }
         });

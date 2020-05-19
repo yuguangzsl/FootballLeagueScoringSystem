@@ -30,9 +30,6 @@ public class League {
         teams = new Team[64];
         battles = new Battle[768];
         todayBattles = new Battle[50];
-/*        getPlayers();
-        getTeams();
-        getAllBattles();*/
     }
 
     public void playerSort() {
@@ -62,9 +59,9 @@ public class League {
                 i++;
             }
             Player[] truePlayers = new Player[i];        //获取当前player数，防止sort数组值为null
-            for (i=0;players[i]!=null;i++)truePlayers[i] = players[i];
+            for (i = 0; players[i] != null; i++) truePlayers[i] = players[i];
             Arrays.sort(truePlayers);
-            for (i = 0; i<truePlayers.length; i++) {
+            for (i = 0; i < truePlayers.length; i++) {
                 sql = "update footballplayer set playerRank=" + (i + 1) + " where " + "playerName='" + truePlayers[i].getName() + "'";
                 statement.executeUpdate(sql);
             }
@@ -122,7 +119,7 @@ public class League {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "select teamName,teamScore from footballteam where teamgroup='"+groupName+"'";
+            String sql = "select teamName,teamScore from footballteam where teamgroup='" + groupName + "'";
             ResultSet rs = statement.executeQuery(sql);
             String teamName = null;
             int i = 0;
@@ -131,10 +128,10 @@ public class League {
                 this.teams[i] = new Team(teamName);
                 i++;
             }
-            Team[] trueTeams =  new Team[i];       //防止出现空team导致排序失败
-            for(i=0;teams[i]!=null;i++)trueTeams[i]=teams[i];
+            Team[] trueTeams = new Team[i];       //防止出现空team导致排序失败
+            for (i = 0; teams[i] != null; i++) trueTeams[i] = teams[i];
             Arrays.sort(trueTeams);
-            for (i = 0; i<trueTeams.length; i++) {
+            for (i = 0; i < trueTeams.length; i++) {
                 sql = "update footballteam set teamRank=" + (i + 1) + " where " + "teamName='" + trueTeams[i].getTeamName() + "'";
                 statement.executeUpdate(sql);
             }
@@ -145,12 +142,11 @@ public class League {
         }
     }
 
-    public void getTeams() {
+    public List<String> getTeams() {
         /**
-         * 获取全部队伍的比赛信息
-         * 在小组赛结束后进入淘汰时，一次获取所有队伍的比赛信息
-         * 女子组（如果必要），用重载方法独立获取排名信息
+         * 获取全部队伍的队名列表
          * */
+        List<String> teamNames = new ArrayList<>();
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
@@ -160,20 +156,44 @@ public class League {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "select * from footballteam Order BY teamscore DESC ";
+            String sql = "select teamname from footballteam ";
             ResultSet rs = statement.executeQuery(sql);
-            String teamName = null;
-            int i = 0;
             while (rs.next()) {
-                teamName = rs.getString("teamName");
-                this.teams[i] = new Team(teamName);
-                i++;
+                teamNames.add(rs.getString("teamName"));
             }
             rs.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        return teamNames;
+    }
+
+    public List<String> getPlayersName(String teamName) {
+        /**
+         * 获取一只队伍的所有球员名字列表
+         * */
+        List<String> playerNames = new ArrayList<>();
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+            String sql = "select playername from footballplayer where playerteamname = '" + teamName + "'";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                playerNames.add(rs.getString("playername"));
+            }
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return playerNames;
     }
 
     public Team[] getTeams(String groupName) {
@@ -380,7 +400,7 @@ public class League {
         return this.battles;
     }
 
-    public boolean checkTeam(String teamName) {
+    public boolean checkeam(String teamName) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
@@ -433,6 +453,30 @@ public class League {
         return false;
     }
 
+    public List<String> getCourts() {
+        List<String> courts = new ArrayList<>();
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=Asia/Shanghai&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+            String sql = "SELECT battleside from court ";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                courts.add(rs.getString("battleSide"));
+            }
+            rs.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return courts;
+    }
+
     public String checkUser(String account, String passwd) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
@@ -447,7 +491,6 @@ public class League {
             String sql = "SELECT * from systemuser where Account='" + account +
                     "' and password='" + passwd +
                     "'";
-            System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 if (rs != null) {
@@ -480,7 +523,7 @@ public class League {
             this.userStatus = "visitor";
     }
 
-    public void addGoalDetail(String playerName, String teamA, String teamB, String time) {
+    public boolean addGoalDetail(String playerName, String teamA, String teamB, String time) {
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
@@ -501,11 +544,68 @@ public class League {
             ps.setString(3, teamB);
             ps.setTimestamp(4, sqlTime);
             ps.executeUpdate();
-            System.out.println("添加成功！");
             statement.execute("SET FOREIGN_KEY_CHECKS=1");//启动外键约束检查
             conn.close();
+            return true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    public boolean addFoul(String[] foulInfo) {
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+            String sql = "INSERT INTO footballplayer(playerfoul) values (?) where playername='" + foulInfo[0]
+                    + "'" + "and playerteamname='" + foulInfo[1] +
+                    "'";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, foulInfo[2] + ":" + foulInfo[3]);
+            ps.executeUpdate();
+            statement.close();
+            conn.close();
+            return true;
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean addBattle(String[] battleInfo) {
+        Connection conn;
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
+        String user = "root";
+        String password = "123456";
+        try {
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            LocalDateTime localDateTime = LocalDateTime.parse(battleInfo[2], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            java.util.Date date = java.util.Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            Timestamp sqlTime = new Timestamp(date.getTime());//LocalDateTime转换成SQL 用的date类型
+            String sql = "INSERT INTO battledetail(teamone, teamtwo, battletime, battleside,battleresult,battlescore) values (?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, battleInfo[0]);
+            ps.setString(2, battleInfo[1]);
+            ps.setTimestamp(3, sqlTime);
+            ps.setString(4, battleInfo[3]);
+            ps.setInt(5, -2);
+            ps.setString(6, null);
+            ps.executeUpdate();
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, password);
+            conn.close();
+            return true;
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
