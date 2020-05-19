@@ -86,7 +86,7 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void insertData() {
+    public boolean insertData() {
         /**
          * @author :QUANHAO
          * 将新生成的对象的数据写入数据库
@@ -109,9 +109,11 @@ public class Player implements Comparable<Player> {
                     + this.rank + ")";
             statement.executeUpdate(sql);
             conn.close();
+            return true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public String[] getGoalInfo() {

@@ -263,6 +263,7 @@ public class UpdateDataView extends Pane {
                              * 检查时间是否在比赛的时间范围内
                              * */
                             goalDetail[0] += (playerName + " " + teamAName + " " + teamBName + " " + formatTime + " ");
+                            button.setText("本条信息已提交");
                         }
                     }
                 });
@@ -284,7 +285,7 @@ public class UpdateDataView extends Pane {
                 for (int i = 0; i < (teamAGoal + teamBGoal) * 5; i += 5) {
                     theLeague.addGoalDetail(goalData[i + 0], goalData[i + 1], goalData[i + 2], goalData[i + 3] + " " + goalData[i + 4]);
                 }
-                System.out.println("信息写入成功！");
+                commit.setText("进球信息写入成功！");
             }
         });
         goalInfoInput.add(commit, 4, 0, 1, 6);
@@ -379,6 +380,7 @@ public class UpdateDataView extends Pane {
                     alert.showAndWait();
                 } else {
                     theLeague.addFoul(foulInfo);
+                    summit.setText("本条信息已提交");
                 }
             }
         });
@@ -394,6 +396,8 @@ public class UpdateDataView extends Pane {
         update.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                container.getChildren().remove(battleSelect(theLeague));
+                container.add(battleSelect(theLeague), 0, 0, 2, 12);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("信息更新成功！你可以继续更新信息或返回上级");
                 alert.show();

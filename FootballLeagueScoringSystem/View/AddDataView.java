@@ -322,7 +322,6 @@ public class AddDataView extends Pane {
         teamNameInput.setLayoutX(teamNameL.getLayoutX() + teamNameL.getMinWidth());
         teamNameInput.setLayoutY(teamNameL.getLayoutY());
         teamNameInput.setPrefSize(teamNameL.getMinWidth(), teamNameL.getMinHeight());
-        teamNameInput.setEditable(true);
         teamNameInput.setPromptText("选择所属球队");
 
         //其他信息
@@ -404,7 +403,11 @@ public class AddDataView extends Pane {
                     alert.showAndWait();
                 }
                 Player player = new Player(playerName, teamName, "", score, rank, "");
-                player.insertData();
+                if(player.insertData()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球员添加成功");
+                    alert.show();
+                };
             }
         });
         this.getChildren().addAll(playerNameL, playerNameInput, teamNameL, teamNameInput, container, registerPlayer);
@@ -486,7 +489,12 @@ public class AddDataView extends Pane {
                     alert.setContentText("输入了非法参数，账号或密码不应为空");
                     alert.showAndWait();
                 }else{
-                    theLeague.addSystemUser(userName, userAccount, userPassword, position);
+                    if(theLeague.addSystemUser(userName, userAccount, userPassword, position)){
+                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                     alert.setContentText("新用户添加成功");
+                     alert.show();
+                    }
+
                 }
             }
         });
