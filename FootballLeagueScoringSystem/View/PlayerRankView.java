@@ -22,8 +22,6 @@ public class PlayerRankView extends AnchorPane {
         AnchorPane AP0 = new AnchorPane();
         TitleLabels(AP0);
         ScrollPane SP = new ScrollPane();
-        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        SP.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         AnchorPane AP = new AnchorPane();
         theLeague.playerSort();
         RankData(theLeague.getPlayers(), AP, stage, theLeague);
@@ -32,6 +30,7 @@ public class PlayerRankView extends AnchorPane {
         SP.setMinSize(1200, 450);
         SP.setMaxSize(1920, 1080);
         SP.setContent(AP);
+        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         AP0.getChildren().add(SP);
         this.getChildren().add(AP0);
     }

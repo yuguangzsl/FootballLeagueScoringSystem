@@ -4,9 +4,7 @@ import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import FootballLeagueScoringSystem.Module.Team;
 import FootballLeagueScoringSystem.View.*;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,7 +31,6 @@ public class ViewTrans {
         stage.setScene(scene);
     }
     public void toMainView(League theLeague,Stage stage) throws IOException {
-
         MainView mainView = new MainView(theLeague,stage);
         Scene scene = new Scene(mainView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
@@ -47,7 +44,6 @@ public class ViewTrans {
          * 今日赛程->今日赛程
          * 其他（""）->其他功能
          * */
-        
         MainView mainView = new MainView(theLeague,stage);
         mainView.selectTab(tab);
         Scene scene = new Scene(mainView);
