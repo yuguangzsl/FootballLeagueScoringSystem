@@ -1,9 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
-import FootballLeagueScoringSystem.Module.League;
-import FootballLeagueScoringSystem.Module.Player;
-import FootballLeagueScoringSystem.Module.Team;
+import FootballLeagueScoringSystem.Module.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

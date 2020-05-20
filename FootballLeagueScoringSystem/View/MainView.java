@@ -75,11 +75,6 @@ public class MainView extends TabPane {
             this.getSelectionModel().select(3);
         }
     }
-    public boolean updateDate(){
-        this.getChildren().clear();
-        generate();
-        return true;
-    }
 
 }
 
