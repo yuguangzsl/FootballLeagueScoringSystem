@@ -15,9 +15,7 @@ public class ViewTrans {
         PlayerView playerView = new PlayerView(player, stage, theLeague);
         Scene scene = new Scene(playerView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
+        stage.setScene(scene);;
     }
 
     public void toTeamView(League theLeague, Stage stage, String teamName) {
@@ -25,18 +23,14 @@ public class ViewTrans {
         TeamView teamView = new TeamView(team, stage, theLeague);
         Scene scene = new Scene(teamView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
+        stage.setScene(scene);;
     }
 
     public void toAddDataView(League theLeague, Stage stage) {
         AddDataView registerTeamView = new AddDataView(stage, theLeague);
         Scene scene = new Scene(registerTeamView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
+        stage.setScene(scene);;
     }
 
     public void toMainView(League theLeague, Stage stage) throws IOException {
@@ -59,24 +53,22 @@ public class ViewTrans {
         Scene scene = new Scene(mainView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
+        
     }
 
     public void toUpdateDataView(League theLeague, Stage stage) {
         UpdateDataView updateDataView = new UpdateDataView(stage, theLeague);
         Scene scene = new Scene(updateDataView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
+        stage.setScene(scene);;
     }
 
     public void toUpdateSchedule(League theLeague, Stage stage) {
         UpdateSchedule updateSchedule = new UpdateSchedule(theLeague, stage);
         Scene scene = new Scene(updateSchedule);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
+        
+        stage.setScene(scene);;
     }
 
 }

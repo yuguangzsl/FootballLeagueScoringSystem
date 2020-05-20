@@ -284,7 +284,15 @@ public class AddDataView extends Pane {
                     alert.showAndWait();
                 }
                 Team team = new Team(teamName, teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, groupName, score);
-                team.insertData();
+                if(team.insertData()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球队添加成功");
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球队添加失败，请检查数据库设置");
+                    alert.showAndWait();
+                }
             }
         });
         this.getChildren().addAll(tips, teamNameL, teamNameInput, groupNameL, groupNameInput,
