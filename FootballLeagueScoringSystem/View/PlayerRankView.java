@@ -4,7 +4,6 @@ import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -20,21 +19,21 @@ import javafx.stage.Stage;
  */
 public class PlayerRankView extends AnchorPane {
     PlayerRankView(Stage stage, League theLeague) {
-                AnchorPane AP0 = new AnchorPane();
-                TitleLabels(AP0);
-                ScrollPane SP = new ScrollPane();
-                SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                SP.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-                AnchorPane AP = new AnchorPane();
-                theLeague.playerSort();
-                RankData(theLeague.getPlayers(), AP, stage, theLeague);
-                SP.setLayoutX(0);
-                SP.setLayoutY(36);
-                SP.setMinSize(1200, 450);
-                SP.setMaxSize(1920, 1080);
-                SP.setContent(AP);
-                AP0.getChildren().add(SP);
-                getChildren().add(AP0);
+        AnchorPane AP0 = new AnchorPane();
+        TitleLabels(AP0);
+        ScrollPane SP = new ScrollPane();
+        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        SP.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        AnchorPane AP = new AnchorPane();
+        theLeague.playerSort();
+        RankData(theLeague.getPlayers(), AP, stage, theLeague);
+        SP.setLayoutX(0);
+        SP.setLayoutY(36);
+        SP.setMinSize(1200, 450);
+        SP.setMaxSize(1920, 1080);
+        SP.setContent(AP);
+        AP0.getChildren().add(SP);
+        this.getChildren().add(AP0);
     }
 
     private void RankData(Player[] players, AnchorPane AP, Stage stage, League theLeague) {

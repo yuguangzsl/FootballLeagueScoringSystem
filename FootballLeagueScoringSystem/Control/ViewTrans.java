@@ -1,45 +1,45 @@
 package FootballLeagueScoringSystem.Control;
 
-import FootballLeagueScoringSystem.Module.*;
+import FootballLeagueScoringSystem.Module.League;
+import FootballLeagueScoringSystem.Module.Player;
+import FootballLeagueScoringSystem.Module.Team;
 import FootballLeagueScoringSystem.View.*;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ViewTrans {
-    public void toPlayerView(League theLeague, Stage stage, String teamName, String playerName) {
-        Player player = new Player(teamName, playerName);
-        PlayerView playerView = new PlayerView(player, stage, theLeague);
+    public void toPlayerView(League theLeague,Stage stage,String teamName,String playerName){
+        Player player = new Player(teamName,playerName);
+        PlayerView playerView = new PlayerView(player,stage,theLeague);
         Scene scene = new Scene(playerView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
-
-    public void toTeamView(League theLeague, Stage stage, String teamName) {
+    public void toTeamView(League theLeague,Stage stage,String teamName){
         Team team = new Team(teamName);
-        TeamView teamView = new TeamView(team, stage, theLeague);
+        TeamView teamView = new TeamView(team,stage,theLeague);
         Scene scene = new Scene(teamView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
-
-    public void toAddDataView(League theLeague, Stage stage) {
-        AddDataView registerTeamView = new AddDataView(stage, theLeague);
+    public void toAddDataView(League theLeague,Stage stage){
+        AddDataView registerTeamView = new AddDataView(stage,theLeague);
         Scene scene = new Scene(registerTeamView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
+    public void toMainView(League theLeague,Stage stage) throws IOException {
 
-    public void toMainView(League theLeague, Stage stage) throws IOException {
-
-        MainView mainView = new MainView(theLeague, stage);
+        MainView mainView = new MainView(theLeague,stage);
         Scene scene = new Scene(mainView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
-
-    public void toMainView(League theLeague, Stage stage, String tab) throws IOException {
+    public void toMainView(League theLeague,Stage stage,String tab) throws IOException {
         /**
          * tab:
          * 球队排名->球队排名
@@ -47,22 +47,21 @@ public class ViewTrans {
          * 今日赛程->今日赛程
          * 其他（""）->其他功能
          * */
-        MainView mainView1 = new MainView(theLeague,stage);
-        mainView1.getSelectionModel().select(mainView1.selectTab(tab));
-        Scene scene = new Scene(mainView1);
+        
+        MainView mainView = new MainView(theLeague,stage);
+        mainView.selectTab(tab);
+        Scene scene = new Scene(mainView);
+        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
-        stage.show();
     }
-
-    public void toUpdateDataView(League theLeague, Stage stage) {
-        UpdateDataView updateDataView = new UpdateDataView(stage, theLeague);
+    public void toUpdateDataView(League theLeague,Stage stage){
+        UpdateDataView updateDataView = new UpdateDataView(stage,theLeague);
         Scene scene = new Scene(updateDataView);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setScene(scene);
     }
-
-    public void toUpdateSchedule(League theLeague, Stage stage) {
-        UpdateSchedule updateSchedule = new UpdateSchedule(theLeague, stage);
+    public void toUpdateSchedule(League theLeague,Stage stage){
+        UpdateSchedule updateSchedule = new UpdateSchedule(theLeague,stage);
         Scene scene = new Scene(updateSchedule);
         stage.setScene(scene);
     }

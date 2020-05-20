@@ -37,8 +37,7 @@ public class AddDataView extends Pane {
             public void handle(ActionEvent event) {
                 ViewTrans vt = new ViewTrans();
                 try {
-
-                    vt.toMainView(theLeague, stage,"");
+                    vt.toMainView(theLeague, stage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

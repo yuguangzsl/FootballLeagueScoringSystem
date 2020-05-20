@@ -14,13 +14,13 @@ import javafx.stage.Stage;
  * 显示菜单页面：添加队伍，更新赛事信息，更新赛程信息
  */
 public class MenuView extends AnchorPane {
-    public MenuView(Stage stage, League theLeague,MainView mainView) {
+    public MenuView(Stage stage, League theLeague) {
         this.setMinSize(1200, 500);
         this.setMaxSize(1920, 1080);
-        generate(stage, theLeague,mainView);
+        generate(stage, theLeague);
     }
 
-    private void generate(Stage stage, League theLeague,MainView mainView) {
+    private void generate(Stage stage, League theLeague) {
         ViewTrans vt = new ViewTrans();
         Button registerTeam = new Button("新建参赛队伍");
         registerTeam.setLayoutX(0);

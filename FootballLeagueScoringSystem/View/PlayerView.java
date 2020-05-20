@@ -43,7 +43,13 @@ public class PlayerView extends Pane {
         this.setMinSize(1200, 600);
         this.setMaxSize(1920, 1080);
     }
-
+    private void getInfo(String playerName){
+        /**
+         * 传入一个球员的名字，然后从数据库中读取到这个球员的信息
+         * 再以此实例化一个球员的个人信息面板
+         * */
+        
+    }
     private void Generate(Player player,League theLeague) {
         /**
          * 各个控件之间的坐标采用相近控件的相对坐标
