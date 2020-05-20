@@ -74,11 +74,7 @@ public class TopButton {
             public void handle(MouseEvent mouseEvent) {
                 Stage secondStage = new Stage();
                 TodayBattleView todayBattleView = null;
-                try {
-                    todayBattleView = new TodayBattleView(stage,theLeague);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                todayBattleView = new TodayBattleView(stage,theLeague);
                 Scene secondScene = new Scene(todayBattleView.getScrollPane(), 1200
                         , 600);
                 secondStage.setScene(secondScene);

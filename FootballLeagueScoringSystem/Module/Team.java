@@ -31,7 +31,7 @@ public class Team implements Comparable<Team> {
         this.goalLostNum = goalLostNum;
         this.teamGroup = teamGroup;
         this.teamScore = teamScore;
-        this.players = new Player[11];
+        this.players = new Player[20];
         getPlayers();
     }
 
@@ -133,6 +133,7 @@ public class Team implements Comparable<Team> {
     }
 
     public Player[] getPlayers() {
+        Player[] players = new Player[20];
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
@@ -148,7 +149,7 @@ public class Team implements Comparable<Team> {
             int i = 0;
             while (rs.next()) {
                 playerName = rs.getString("playerName");
-                this.players[i] = new Player(this.teamName, playerName);
+                players[i] = new Player(this.teamName, playerName);
                 i++;
             }
             rs.close();
@@ -156,7 +157,7 @@ public class Team implements Comparable<Team> {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return this.players;
+        return players;
     }
 
     public String[] getGameInfo() {

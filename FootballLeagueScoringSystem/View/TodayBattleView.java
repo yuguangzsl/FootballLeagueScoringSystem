@@ -45,7 +45,6 @@ public class TodayBattleView extends Pane {
 
         if (battles[0] == null) {
 
-            //gridPane.setVgap(1);
             try {
                 gridPane = FXMLLoader.load(getClass().getResource("TodayBattleView.fxml"));
             }catch (IOException e){
@@ -53,7 +52,6 @@ public class TodayBattleView extends Pane {
             }
             Text  text = new Text("Today  is no battle");
             FlowPane flowPane = new FlowPane();
-            //gridPane.add(text,1,0);
         } else {
             gridPane.setVgap(3);
             for (int i = 0; battles[i] != null; i++) {

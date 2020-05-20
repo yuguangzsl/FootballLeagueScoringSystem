@@ -4,8 +4,6 @@ import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
 import FootballLeagueScoringSystem.Module.Team;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +19,7 @@ import java.io.IOException;
 
 /**
  * @author QuanHao
- * 显示新建球队的界面
+ * 新建球队，新建球员，增加裁判界面
  */
 public class AddDataView extends Pane {
     public AddDataView(Stage stage, League theLeague) {
@@ -39,7 +37,7 @@ public class AddDataView extends Pane {
             public void handle(ActionEvent event) {
                 ViewTrans vt = new ViewTrans();
                 try {
-                    vt.toMainView(theLeague,stage);
+                    vt.toMainView(theLeague, stage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -81,7 +79,7 @@ public class AddDataView extends Pane {
         groupNameL.setMinSize(185, 40);
         groupNameL.setStyle(style);
         //选择所属的小组
-        ChoiceBox groupNameInput = new ChoiceBox(FXCollections.observableArrayList(
+        ComboBox<String> groupNameInput = new ComboBox<>(FXCollections.observableArrayList(
                 "男子甲组", "男子乙组", "女子组", "成年组"));
         groupNameInput.getStyleClass().addAll("split-menu-btn-info");
 
@@ -103,6 +101,8 @@ public class AddDataView extends Pane {
         TitledPane titledPane = new TitledPane();
         titledPane.setText("其他信息(可以使用默认值)");
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setMaxSize(310, 260);
         titledPane.setBorder(Border.EMPTY);
         FlowPane flowPane = new FlowPane();
@@ -211,7 +211,7 @@ public class AddDataView extends Pane {
         scrollPane.setContent(flowPane);
         titledPane.setContent(scrollPane);
         container.getPanes().addAll(titledPane);
-        //添加球员按钮
+        //添加球队按钮
         Button registerTeam = new Button("添加球队");
         registerTeam.setLayoutX(40);
         registerTeam.setLayoutY(465);
@@ -220,51 +220,72 @@ public class AddDataView extends Pane {
             @Override
             public void handle(ActionEvent event) {
                 String teamName = teamNameInput.getText();
-                final String[] groupName = new String[1];
-                String[] s =new String[] {"男子甲组","男子乙组","女子组","成年组"};
-                groupNameInput.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                        groupName[0] = s[newValue.intValue()];
-                    }
-                });
+                String groupName = groupNameInput.getValue();
                 int teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, score;
-                if (teamRankInput.getText() == null) {
-                    teamRank = -1;
-                } else {
+                try {
                     teamRank = Integer.valueOf(teamRankInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    teamRank = -1;
+                    alert.showAndWait();
                 }
-                if (winNumInput.getText() == null) {
-                    winNum = 0;
-                } else {
+                try {
                     winNum = Integer.valueOf(winNumInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    winNum = 0;
+                    alert.showAndWait();
                 }
-                if (loseNumInput.getText() == null) {
-                    loseNum = 0;
-                } else {
+                try {
                     loseNum = Integer.valueOf(loseNumInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    loseNum = 0;
+                    alert.showAndWait();
                 }
-                if (drawNumInput.getText() == null) {
-                    drawNum = 0;
-                } else {
+                try {
                     drawNum = Integer.valueOf(drawNumInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    drawNum = 0;
+                    alert.showAndWait();
                 }
-                if (goalNumInput.getText() == null) {
-                    goalNum = 0;
-                } else {
+                try {
                     goalNum = Integer.valueOf(goalNumInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    goalNum = 0;
+                    alert.showAndWait();
                 }
-                if (goalLostNumInput.getText() == null) {
-                    goalLostNum = 0;
-                } else {
+                try {
                     goalLostNum = Integer.valueOf(goalLostNumInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    goalLostNum = 0;
+                    alert.showAndWait();
                 }
-                if (scoreInput.getText() == null) {
-                    score = 0;
-                } else {
+                try {
                     score = Integer.valueOf(scoreInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    score = 0;
+                    alert.showAndWait();
                 }
-                Team team = new Team(teamName, teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, groupName[0], score);
+                Team team = new Team(teamName, teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, groupName, score);
                 team.insertData();
             }
         });
@@ -285,7 +306,7 @@ public class AddDataView extends Pane {
         playerNameL.setMinSize(185, 40);
         playerNameL.setStyle(style);
         TextField playerNameInput = new TextField();
-        playerNameInput.setLayoutX(playerNameL.getLayoutX()+playerNameL.getMinWidth());
+        playerNameInput.setLayoutX(playerNameL.getLayoutX() + playerNameL.getMinWidth());
         playerNameInput.setLayoutY(playerNameL.getLayoutY());
         playerNameInput.setPrefSize(playerNameL.getMinWidth(), playerNameL.getMinHeight());
         playerNameInput.setEditable(true);
@@ -294,16 +315,15 @@ public class AddDataView extends Pane {
         //输入球队的名字
         Label teamNameL = new Label("输入所属球队的名字：");
         teamNameL.setLayoutX(playerNameL.getLayoutX());
-        teamNameL.setLayoutY(playerNameL.getLayoutY()+playerNameL.getMinHeight());
+        teamNameL.setLayoutY(playerNameL.getLayoutY() + playerNameL.getMinHeight());
         teamNameL.setMinSize(playerNameL.getMinWidth(), playerNameL.getMinHeight());
         teamNameL.setStyle(style);
-        TextField teamNameInput = new TextField();
-        teamNameInput.setLayoutX(teamNameL.getLayoutX()+teamNameL.getMinWidth());
+        ComboBox<String> teamNameInput = new ComboBox<>(FXCollections.observableArrayList(theLeague.getTeams()));
+        teamNameInput.setLayoutX(teamNameL.getLayoutX() + teamNameL.getMinWidth());
         teamNameInput.setLayoutY(teamNameL.getLayoutY());
         teamNameInput.setPrefSize(teamNameL.getMinWidth(), teamNameL.getMinHeight());
-        teamNameInput.setEditable(true);
-        teamNameInput.setPromptText("输入球队的名字");
-        teamNameInput.setAlignment(Pos.CENTER_LEFT);
+        teamNameInput.setPromptText("选择所属球队");
+
         //其他信息
         Accordion container = new Accordion();
         container.setMinSize(310, 260);
@@ -313,6 +333,8 @@ public class AddDataView extends Pane {
         TitledPane titledPane = new TitledPane();
         titledPane.setText("其他信息(可以使用默认值)");
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setMaxSize(310, 260);
         titledPane.setBorder(Border.EMPTY);
         FlowPane flowPane = new FlowPane();
@@ -335,7 +357,7 @@ public class AddDataView extends Pane {
         //输入球员进球数
         Label playerGoalL = new Label("输入进球数(选填)：");
         playerGoalL.setLayoutX(playerRankL.getLayoutX());
-        playerGoalL.setLayoutY(playerRankL.getLayoutY()+playerRankL.getMinHeight());
+        playerGoalL.setLayoutY(playerRankL.getLayoutY() + playerRankL.getMinHeight());
         playerGoalL.setMinSize(playerRankL.getMinWidth(), playerRankL.getMinHeight());
         playerGoalL.setStyle(style);
         //输入进球数
@@ -347,7 +369,7 @@ public class AddDataView extends Pane {
         playerGoalInput.setLayoutX(playerGoalL.getLayoutX() + playerGoalL.getMinWidth());
         playerGoalInput.setLayoutY(playerGoalL.getLayoutY());
         //
-        flowPane.getChildren().addAll(playerRankL,playerRankInput,playerGoalL,playerGoalInput);
+        flowPane.getChildren().addAll(playerRankL, playerRankInput, playerGoalL, playerGoalInput);
         scrollPane.setContent(flowPane);
         titledPane.setContent(scrollPane);
         container.getPanes().addAll(titledPane);
@@ -359,32 +381,39 @@ public class AddDataView extends Pane {
         registerPlayer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String playerName,teamName;
-                int rank,score;
-                playerName= playerNameInput.getText();
-                String s= playerNameInput.getText();
-                if(theLeague.checkTeam(s)){
-                    teamName = s;
-                }else{
-                    teamName= "";
+                String playerName = playerNameInput.getText();
+                String teamName = teamNameInput.getValue();
+                int rank, score;
+                try {
+                    rank = Integer.valueOf(playerRankInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    rank = 0;
+                    alert.showAndWait();
                 }
-                if(playerRankInput.getText()!=null){
-                    rank= Integer.valueOf(playerRankInput.getText());
-                }else {
-                    rank=0;
+                try {
+                    score = Integer.valueOf(playerGoalInput.getText());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，将设置这个值为默认值");
+                    score = 0;
+                    alert.showAndWait();
                 }
-                if(playerGoalInput.getText()!=null){
-                    score= Integer.valueOf(playerGoalInput.getText());
-                }else {
-                    score=0;
-                }
-                Player player = new Player(playerName,teamName,"",score,rank,"");
-                player.insertData();
+                Player player = new Player(playerName, teamName, "", score, rank, "");
+                if(player.insertData()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球员添加成功");
+                    alert.show();
+                };
             }
         });
-        this.getChildren().addAll(playerNameL,playerNameInput,teamNameL,teamNameInput,container,registerPlayer);
+        this.getChildren().addAll(playerNameL, playerNameInput, teamNameL, teamNameInput, container, registerPlayer);
     }
-    private void addJudger(League theLeague){
+
+    private void addJudger(League theLeague) {
         /**
          * 添加管理员/裁判
          * */
@@ -396,7 +425,7 @@ public class AddDataView extends Pane {
         userNameL.setMinSize(185, 40);
         userNameL.setStyle(style);
         TextField userNameInput = new TextField();
-        userNameInput.setLayoutX(userNameL.getLayoutX()+userNameL.getMinWidth());
+        userNameInput.setLayoutX(userNameL.getLayoutX() + userNameL.getMinWidth());
         userNameInput.setLayoutY(userNameL.getLayoutY());
         userNameInput.setPrefSize(userNameL.getMinWidth(), userNameL.getMinHeight());
         userNameInput.setEditable(true);
@@ -405,11 +434,11 @@ public class AddDataView extends Pane {
         //输入管理员/裁判账号
         Label userAccountL = new Label("输入管理员/裁判账号：");
         userAccountL.setLayoutX(userNameL.getLayoutX());
-        userAccountL.setLayoutY(userNameL.getLayoutY()+userNameL.getMinHeight());
+        userAccountL.setLayoutY(userNameL.getLayoutY() + userNameL.getMinHeight());
         userAccountL.setMinSize(userNameL.getMinWidth(), userNameL.getMinHeight());
         userAccountL.setStyle(style);
         TextField userAccountInput = new TextField();
-        userAccountInput.setLayoutX(userAccountL.getLayoutX()+userAccountL.getMinWidth());
+        userAccountInput.setLayoutX(userAccountL.getLayoutX() + userAccountL.getMinWidth());
         userAccountInput.setLayoutY(userAccountL.getLayoutY());
         userAccountInput.setPrefSize(userAccountL.getMinWidth(), userAccountL.getMinHeight());
         userAccountInput.setEditable(true);
@@ -418,7 +447,7 @@ public class AddDataView extends Pane {
         //输入管理员/裁判密码
         Label userPasswordL = new Label("输入管理员/裁判密码：");
         userPasswordL.setLayoutX(userAccountL.getLayoutX());
-        userPasswordL.setLayoutY(userAccountL.getLayoutY()+userAccountL.getMinHeight());
+        userPasswordL.setLayoutY(userAccountL.getLayoutY() + userAccountL.getMinHeight());
         userPasswordL.setMinSize(185, 40);
         userPasswordL.setStyle(style);
         //输入管理员/裁判密码
@@ -432,15 +461,13 @@ public class AddDataView extends Pane {
         //输入用户职位
         Label positionL = new Label("输入管理员/裁判职位：");
         positionL.setLayoutX(userPasswordL.getLayoutX());
-        positionL.setLayoutY(userPasswordL.getLayoutY()+userPasswordL.getMinHeight());
+        positionL.setLayoutY(userPasswordL.getLayoutY() + userPasswordL.getMinHeight());
         positionL.setMinSize(userPasswordL.getMinWidth(), userPasswordL.getMinHeight());
         positionL.setStyle(style);
         //输入职位
-        TextField positionInput = new TextField();
-        positionInput.setPromptText("输入管理员/裁判职位:");//提示信息
-        positionInput.setEditable(true);//可编辑
+        ComboBox<String> positionInput = new ComboBox<String>(FXCollections.observableArrayList("其他管理员","主裁判","副裁判"));
+        positionInput.setPromptText("选择职位:");//提示信息
         positionInput.setPrefSize(110, 40);//预设大小
-        positionInput.setAlignment(Pos.CENTER_LEFT);//文字对齐方式
         positionInput.setLayoutX(positionL.getLayoutX() + positionL.getMinWidth());
         positionInput.setLayoutY(positionL.getLayoutY());
         //
@@ -452,16 +479,26 @@ public class AddDataView extends Pane {
         registerUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String userName,userAccount,userPassword,position;
-                userName= userNameInput.getText();
-                userAccount= userAccountInput.getText();
-                userPassword= userPasswordInput.getText();
-                position= positionInput.getText();
-                if(theLeague.addSystemUser(userName,userAccount,userPassword,position)){
+                String userName, userAccount, userPassword, position;
+                userName = userNameInput.getText();
+                userAccount = userAccountInput.getText();
+                userPassword = userPasswordInput.getText();position = positionInput.getValue();
+                if((userAccount==null&&userAccount.length()==0)||(userPassword==null&&userPassword.length()==0)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("参数错误");
+                    alert.setContentText("输入了非法参数，账号或密码不应为空");
+                    alert.showAndWait();
+                }else{
+                    if(theLeague.addSystemUser(userName, userAccount, userPassword, position)){
+                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                     alert.setContentText("新用户添加成功");
+                     alert.show();
+                    }
+
                 }
             }
         });
-       this.getChildren().addAll(userNameL,userNameInput,userAccountL,userAccountInput,
-               userPasswordL,userPasswordInput,positionL,positionInput,registerUser);
+        this.getChildren().addAll(userNameL, userNameInput, userAccountL, userAccountInput,
+                userPasswordL, userPasswordInput, positionL, positionInput, registerUser);
     }
 }

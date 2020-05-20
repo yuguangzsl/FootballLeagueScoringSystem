@@ -3,7 +3,6 @@ package FootballLeagueScoringSystem.View;
 import FootballLeagueScoringSystem.Control.ViewTrans;
 import FootballLeagueScoringSystem.Module.League;
 import FootballLeagueScoringSystem.Module.Player;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -23,6 +22,8 @@ public class PlayerRankView extends AnchorPane {
         AnchorPane AP0 = new AnchorPane();
         TitleLabels(AP0);
         ScrollPane SP = new ScrollPane();
+        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        SP.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         AnchorPane AP = new AnchorPane();
         theLeague.playerSort();
         RankData(theLeague.getPlayers(), AP, stage, theLeague);
@@ -31,7 +32,6 @@ public class PlayerRankView extends AnchorPane {
         SP.setMinSize(1200, 450);
         SP.setMaxSize(1920, 1080);
         SP.setContent(AP);
-        SP.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         AP0.getChildren().add(SP);
         this.getChildren().add(AP0);
     }
@@ -71,7 +71,7 @@ public class PlayerRankView extends AnchorPane {
                     @Override
                     public void handle(MouseEvent event) {
                         ViewTrans vt = new ViewTrans();
-                        vt.toTeamView(stage, teamName.getText(), theLeague);
+                        vt.toTeamView(theLeague, stage, teamName.getText());
                     }
                 });
                 teamName.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -91,7 +91,7 @@ public class PlayerRankView extends AnchorPane {
                     @Override
                     public void handle(MouseEvent event) {
                         ViewTrans vt = new ViewTrans();
-                        vt.toPlayerView(stage, teamName.getText(), name.getText(), theLeague);
+                        vt.toPlayerView(theLeague, stage, teamName.getText(), name.getText());
                     }
                 });
                 name.setOnMouseEntered(new EventHandler<MouseEvent>() {
