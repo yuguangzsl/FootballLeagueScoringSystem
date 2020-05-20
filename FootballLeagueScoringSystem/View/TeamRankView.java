@@ -121,7 +121,7 @@ public class TeamRankView extends Accordion{
             AP.getChildren().add(NoData);
             AP.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
         } else {
-            for (int i = 0; Teams[i] != null; i++) {
+            for (int i = 0; i<16&&Teams[i] != null; i++) {
                 Button Rank = new Button();
                 Rank.setBackground(new Background(new BackgroundFill(Color.LAVENDERBLUSH,null,null)));
                 Rank.setText("" + Teams[i].getTeamRank());
