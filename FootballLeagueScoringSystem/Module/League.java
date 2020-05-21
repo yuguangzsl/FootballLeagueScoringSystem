@@ -1,6 +1,5 @@
 package FootballLeagueScoringSystem.Module;
 
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -25,8 +24,8 @@ public class League {
     private String userStatus;
 
     public League() {
-        players = new Player[768];
-        teams = new Team[100];
+        players = new Player[800];
+        teams = new Team[80];
         battles = new Battle[800];
         todayBattles = new Battle[50];
     }
@@ -72,6 +71,7 @@ public class League {
     }
 
     public Player[] getPlayers() {
+
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";
@@ -199,7 +199,7 @@ public class League {
         /**
          * 获取特定组别的排名信息
          * */
-        Team[] teams = new Team[20];//每一个组最多不超过20支队伍
+        Team[] teams = new Team[20];
         Connection conn;
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/football?serverTimezone=UTC&characterEncoding=utf-8";

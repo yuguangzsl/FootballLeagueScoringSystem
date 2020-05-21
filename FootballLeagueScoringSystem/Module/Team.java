@@ -31,7 +31,7 @@ public class Team implements Comparable<Team> {
         this.goalLostNum = goalLostNum;
         this.teamGroup = teamGroup;
         this.teamScore = teamScore;
-        this.players = new Player[20];
+        this.players = new Player[11];
         getPlayers();
     }
 
@@ -101,7 +101,7 @@ public class Team implements Comparable<Team> {
         }
     }
 
-    public void insertData() {
+    public boolean insertData() {
         /**
          * @author :QUANHAO
          * 将新生成的对象的数据写入数据库
@@ -115,21 +115,26 @@ public class Team implements Comparable<Team> {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password);
             Statement statement = conn.createStatement();
-            String sql = "INSERT INTO footballteam values ('"
-                    + this.teamName + "'," +
-                    +this.teamRank + "," +
-                    +this.winNum + "," +
-                    +this.loseNum + "," +
-                    +this.drawNum + "," +
-                    +this.goalNum + "," +
-                    +this.goalLostNum + "," +
-                    +this.teamScore + "," +
-                    "'" + this.teamGroup + "')";
-            statement.executeUpdate(sql);
+            statement.execute("SET FOREIGN_KEY_CHECKS=0");//关闭外键约束检查
+            String sql = "INSERT INTO footballteam (teamname,teamrank,winNum,loseNum,drawNum,goalNum,goalLostNum,teamscore,teamgroup) values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, this.teamName);
+            ps.setInt(2, this.teamRank);
+            ps.setInt(3, this.winNum);
+            ps.setInt(4, this.loseNum);
+            ps.setInt(5, this.drawNum);
+            ps.setInt(6, this.goalNum);
+            ps.setInt(7, this.goalLostNum);
+            ps.setInt(8, this.teamScore);
+            ps.setString(9, this.teamGroup);
+            ps.executeUpdate();
+            statement.execute("SET FOREIGN_KEY_CHECKS=1");
             conn.close();
+            return true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public Player[] getPlayers() {
@@ -246,38 +251,6 @@ public class Team implements Comparable<Team> {
 
     public String getTeamName() {
         return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public void setTeamRank(int teamRank) {
-        this.teamRank = teamRank;
-    }
-
-    public void setWinNum(int winNum) {
-        this.winNum = winNum;
-    }
-
-    public void setLoseNum(int loseNum) {
-        this.loseNum = loseNum;
-    }
-
-    public void setDrawNum(int drawNum) {
-        this.drawNum = drawNum;
-    }
-
-    public void setGoalNum(int goalNum) {
-        this.goalNum = goalNum;
-    }
-
-    public void setGoalLostNum(int goalLostNum) {
-        this.goalLostNum = goalLostNum;
-    }
-
-    public void setTeamScore(int teamScore) {
-        this.teamScore = teamScore;
     }
 
     @Override

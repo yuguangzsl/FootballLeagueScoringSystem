@@ -1,9 +1,7 @@
 package FootballLeagueScoringSystem.View;
 
 import FootballLeagueScoringSystem.Control.ViewTrans;
-import FootballLeagueScoringSystem.Module.League;
-import FootballLeagueScoringSystem.Module.Player;
-import FootballLeagueScoringSystem.Module.Team;
+import FootballLeagueScoringSystem.Module.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -286,7 +284,15 @@ public class AddDataView extends Pane {
                     alert.showAndWait();
                 }
                 Team team = new Team(teamName, teamRank, winNum, loseNum, drawNum, goalNum, goalLostNum, groupName, score);
-                team.insertData();
+                if(team.insertData()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球队添加成功");
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("球队添加失败，请检查数据库设置");
+                    alert.showAndWait();
+                }
             }
         });
         this.getChildren().addAll(tips, teamNameL, teamNameInput, groupNameL, groupNameInput,
@@ -322,6 +328,7 @@ public class AddDataView extends Pane {
         teamNameInput.setLayoutX(teamNameL.getLayoutX() + teamNameL.getMinWidth());
         teamNameInput.setLayoutY(teamNameL.getLayoutY());
         teamNameInput.setPrefSize(teamNameL.getMinWidth(), teamNameL.getMinHeight());
+        teamNameInput.setEditable(true);
         teamNameInput.setPromptText("选择所属球队");
 
         //其他信息
@@ -403,11 +410,7 @@ public class AddDataView extends Pane {
                     alert.showAndWait();
                 }
                 Player player = new Player(playerName, teamName, "", score, rank, "");
-                if(player.insertData()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("球员添加成功");
-                    alert.show();
-                };
+                player.insertData();
             }
         });
         this.getChildren().addAll(playerNameL, playerNameInput, teamNameL, teamNameInput, container, registerPlayer);
@@ -489,12 +492,7 @@ public class AddDataView extends Pane {
                     alert.setContentText("输入了非法参数，账号或密码不应为空");
                     alert.showAndWait();
                 }else{
-                    if(theLeague.addSystemUser(userName, userAccount, userPassword, position)){
-                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                     alert.setContentText("新用户添加成功");
-                     alert.show();
-                    }
-
+                    theLeague.addSystemUser(userName, userAccount, userPassword, position);
                 }
             }
         });
